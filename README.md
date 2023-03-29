@@ -11,7 +11,7 @@
 |Vad Kristóf|`front-end`|
 
    
-   > **Megjegyzés:**  Aki a bmw seket szigya minket szigy!
+   > **Megjegyzés:**   [Aki a bmw seket szigya minket szigy!](https://www.youtube.com/watch?v=U-tf1qKtt0Y)
 ## Az alkalmazás
 
 - Rendelkezik felhasználó kezeléssel, biztosít regisztrációs és bejelentkezési felületet.
