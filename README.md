@@ -16,7 +16,6 @@ Mint egy badboy, rossz arcokkal lógok, minden megvan, minden pénzt elszórok..
    
   > **Megjegyzés:**   [Aki a bmw seket szigya minket szigy!](https://www.youtube.com/watch?v=U-tf1qKtt0Y)
 ## Az alkalmazás
-
 - Rendelkezik felhasználó kezeléssel, biztosít regisztrációs és bejelentkezési felületet.
 - A bejelentkezés után a elérhető egy választó felület itt város/szálláshely kiválasztása után az adott szálláshelyen foglalhat szállást (amennyiben van szabad a kiválasztott időpontban).
 - A profiljában látja a korábbi foglalásait illetve az aktuális foglalásokat ezeket le is mondhatja.
