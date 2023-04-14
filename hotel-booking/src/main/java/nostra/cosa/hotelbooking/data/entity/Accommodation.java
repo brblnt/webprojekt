@@ -1,8 +1,10 @@
 package nostra.cosa.hotelbooking.data.entity;
 
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import nostra.cosa.hotelbooking.data.entity.enums.AccommodationType;
 import nostra.cosa.hotelbooking.data.entity.enums.ServiceType;
@@ -16,11 +18,14 @@ import nostra.cosa.hotelbooking.data.entity.enums.ServiceType;
 @Entity
 @Data
 @Table(name = "accommodation_table")
-public class Accommodation extends AuthenticationData{
+public class Accommodation{
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+
+  @Column(name = "authentication_id", nullable = false)
+  private Long authenticationId;
 
   @Column(name = "address_id", nullable = false)
   private Long addressId;
@@ -34,9 +39,9 @@ public class Accommodation extends AuthenticationData{
   @Column(name = "accommodation_type", nullable = false)
   private AccommodationType accommodationType;
 
-  @Column(name = "service_type", nullable = false)
-  private ServiceType serviceType;
+  @Column(name = "service_types", nullable = false)
+  private List<ServiceType> serviceTypes;
 
-  @ElementCollection
+  @Column(name = "room_ids", nullable = false)
   private Set<Integer> roomIds;
 }

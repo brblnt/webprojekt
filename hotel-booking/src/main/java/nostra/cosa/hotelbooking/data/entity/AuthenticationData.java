@@ -1,8 +1,22 @@
 package nostra.cosa.hotelbooking.data.entity;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.*;
+import lombok.*;
 
-public abstract class AuthenticationData {
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
+@ToString
+@Entity
+@Data
+@Table(name = "authentication_data_table")
+public class AuthenticationData {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  private Long id;
 
   @Column(name = "user_name", nullable = false)
   private String userName;

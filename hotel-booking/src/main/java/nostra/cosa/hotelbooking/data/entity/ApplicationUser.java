@@ -12,11 +12,14 @@ import lombok.*;
 @Entity
 @Data
 @Table(name = "users_table")
-public class ApplicationUser extends AuthenticationData{
+public class ApplicationUser{
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+
+  @Column(name = "authentication_id", nullable = false)
+  private Long authenticationId;
 
   @Column(name = "first_name", nullable = false)
   private String firstName;
