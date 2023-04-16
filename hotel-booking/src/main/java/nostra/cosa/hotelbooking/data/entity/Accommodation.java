@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import nostra.cosa.hotelbooking.data.entity.enums.AccommodationType;
 import nostra.cosa.hotelbooking.data.entity.enums.ServiceType;
@@ -23,6 +22,9 @@ public class Accommodation{
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
+
+  @Column(name = "authentication", nullable = false)
+  private AuthenticationData authenticationData;
 
   @Column(name = "authentication_id", nullable = false)
   private Long authenticationId;

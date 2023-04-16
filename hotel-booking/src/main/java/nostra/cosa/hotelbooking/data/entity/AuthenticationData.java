@@ -24,6 +24,9 @@ public class AuthenticationData {
   @Column(name = "password", nullable = false)
   private String password;
 
+  @Column(name = "role", nullable = false)
+  private String role;
+
   @Column(name = "registration_date", nullable = false)
   private String registrationDate;
 
