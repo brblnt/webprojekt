@@ -43,4 +43,5 @@ public class Accommodation{
 
   @Column(name = "room_ids", nullable = false)
   private Set<Integer> roomIds;
+
 }

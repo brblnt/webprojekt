@@ -16,7 +16,7 @@ public class Address {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+  private Long addressId;
 
   @Column(name = "country", nullable = false)
   private String country;

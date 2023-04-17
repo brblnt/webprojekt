@@ -14,17 +14,17 @@ public class ConvertAddressToAddressDTO implements Converter<Address, AddressDTO
 
   private final CityUtilities cityUtilities;
 
-  @Override
+
+ @Override
   public AddressDTO convert(Address source) {
     return new AddressDTO(
-            source.getId(),
+            source.getAddressId(),
             source.getCountry(),
             cityUtilities.getActualCity(source.getPostalCode()),
             source.getAddress(),
             source.getOther()
     );
   }
-
 
 
 }

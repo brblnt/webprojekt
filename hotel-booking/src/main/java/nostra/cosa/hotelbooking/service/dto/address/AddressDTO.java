@@ -11,7 +11,7 @@ import lombok.*;
 
 public class AddressDTO {
 
-  private Long id;
+  private Long addressId;
 
   private String country;
 

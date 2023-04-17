@@ -16,7 +16,7 @@ public class AuthenticationData {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+  private Long authenticationId;
 
   @Column(name = "user_name", nullable = false)
   private String userName;
@@ -41,4 +41,5 @@ public class AuthenticationData {
 
   @Column(name = "account_enabled", nullable = false)
   private boolean accountEnabled;
+
 }

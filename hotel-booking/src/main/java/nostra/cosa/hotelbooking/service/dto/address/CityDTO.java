@@ -10,8 +10,6 @@ import lombok.*;
 @ToString
 public class CityDTO {
 
-  private Long id;
-
   private String postalCode;
 
   private String cityName;

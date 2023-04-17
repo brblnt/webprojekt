@@ -15,10 +15,7 @@ import lombok.*;
 public class City {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
-
-  @Column(name = "postal_code", nullable = false)
+  @Column(name = "postal_code", nullable = false, unique = true)
   private String postalCode;
 
   @Column(name = "city_name", nullable = false)
