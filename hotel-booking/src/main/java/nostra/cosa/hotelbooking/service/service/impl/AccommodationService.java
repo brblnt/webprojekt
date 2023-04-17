@@ -6,6 +6,9 @@ import nostra.cosa.hotelbooking.service.dto.AccommodationDTO;
 import nostra.cosa.hotelbooking.service.service.ServiceInterface;
 import org.springframework.stereotype.Service;
 
+/**
+ * Accommodation Service class, implements ServiceInterface with AccommodationDTO.
+ */
 @Service
 public class AccommodationService implements ServiceInterface<AccommodationDTO> {
 

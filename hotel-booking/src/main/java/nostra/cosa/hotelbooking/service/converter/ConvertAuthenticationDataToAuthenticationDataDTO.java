@@ -6,6 +6,9 @@ import nostra.cosa.hotelbooking.service.dto.AuthenticationDataDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+/**
+ * Convert AuthenticationData to AuthenticationDataDTO via ModelMapper.
+ */
 @Component
 @RequiredArgsConstructor
 public class ConvertAuthenticationDataToAuthenticationDataDTO {

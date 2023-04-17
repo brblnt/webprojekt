@@ -3,6 +3,9 @@ package nostra.cosa.hotelbooking.data.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * Application User data layer representation.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

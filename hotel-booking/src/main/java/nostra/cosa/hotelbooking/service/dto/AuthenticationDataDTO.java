@@ -2,6 +2,9 @@ package nostra.cosa.hotelbooking.service.dto;
 
 import lombok.*;
 
+/**
+ * Authentication service layer representation.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

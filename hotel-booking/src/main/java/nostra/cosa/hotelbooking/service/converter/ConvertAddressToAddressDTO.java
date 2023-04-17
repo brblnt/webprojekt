@@ -8,14 +8,16 @@ import nostra.cosa.hotelbooking.service.util.CityUtilities;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+/**
+ * Convert Address to AddressDTO.
+ */
 @Component
 @RequiredArgsConstructor
 public class ConvertAddressToAddressDTO implements Converter<Address, AddressDTO> {
 
   private final CityUtilities cityUtilities;
 
-
- @Override
+  @Override
   public AddressDTO convert(Address source) {
     return new AddressDTO(
             source.getAddressId(),

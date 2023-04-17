@@ -3,6 +3,9 @@ package nostra.cosa.hotelbooking.data.entity.address;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * City data layer representation.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

@@ -2,6 +2,9 @@ package nostra.cosa.hotelbooking.service.service;
 
 import java.util.List;
 
+/**
+ * Service interface with generic parameter.
+ */
 public interface ServiceInterface<DTO> {
 
   List<DTO> getAll();

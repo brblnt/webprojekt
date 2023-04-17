@@ -8,6 +8,9 @@ import lombok.*;
 import nostra.cosa.hotelbooking.data.entity.enums.AccommodationType;
 import nostra.cosa.hotelbooking.data.entity.enums.ServiceType;
 
+/**
+ * Accommodation data layer representation.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

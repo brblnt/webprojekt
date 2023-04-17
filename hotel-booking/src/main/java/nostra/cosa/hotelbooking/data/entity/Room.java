@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import nostra.cosa.hotelbooking.data.entity.enums.RoomType;
 
+/**
+ * Room data layer representation.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -36,6 +39,12 @@ public class Room {
 
   @Column(name = "has_own_bathroom", nullable = false)
   private boolean hasOwnBathroom;
+
+  @Column(name = "active", nullable = false)
+  private boolean active;
+
+  @Column(name = "price_of_a_day", nullable = false)
+  private double priceOfADay;
 
   @Column(name = "other", nullable = false)
   private String other;

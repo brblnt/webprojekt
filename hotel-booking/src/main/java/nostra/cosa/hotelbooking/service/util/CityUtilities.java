@@ -6,10 +6,12 @@ import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import nostra.cosa.hotelbooking.data.entity.address.City;
 import nostra.cosa.hotelbooking.data.repository.address.CityRepository;
-import nostra.cosa.hotelbooking.service.dto.address.AddressDTO;
 import nostra.cosa.hotelbooking.service.dto.address.CityDTO;
 import org.springframework.stereotype.Service;
 
+/**
+ * City Utilities.
+ */
 @Service
 @RequiredArgsConstructor
 public class CityUtilities {

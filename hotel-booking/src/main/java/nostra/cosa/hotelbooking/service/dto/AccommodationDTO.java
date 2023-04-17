@@ -9,6 +9,9 @@ import nostra.cosa.hotelbooking.data.entity.enums.AccommodationType;
 import nostra.cosa.hotelbooking.data.entity.enums.ServiceType;
 import nostra.cosa.hotelbooking.service.dto.address.AddressDTO;
 
+/**
+ * Accommodation service layer representation.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

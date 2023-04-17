@@ -7,6 +7,9 @@ import nostra.cosa.hotelbooking.service.dto.AuthenticationDataDTO;
 import nostra.cosa.hotelbooking.service.exceptions.AuthenticationNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * Authentication Utilities.
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthenticationUtilities {

@@ -3,6 +3,9 @@ package nostra.cosa.hotelbooking.service.dto;
 import lombok.*;
 import nostra.cosa.hotelbooking.data.entity.enums.ServiceType;
 
+/**
+ * Booking service layer representation.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

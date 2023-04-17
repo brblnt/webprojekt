@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import nostra.cosa.hotelbooking.data.entity.enums.ServiceType;
 
+/**
+ * Booking data layer representation.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

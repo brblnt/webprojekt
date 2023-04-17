@@ -1,8 +1,12 @@
 package nostra.cosa.hotelbooking.service.dto;
 
+import jakarta.persistence.Column;
 import lombok.*;
 import nostra.cosa.hotelbooking.data.entity.enums.RoomType;
 
+/**
+ * Room service layer representation.
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -24,6 +28,10 @@ public class RoomDTO {
   private boolean hasOwnKitchen;
 
   private boolean hasOwnBathroom;
+
+  private boolean active;
+
+  private double priceOfADay;
 
   private String other;
 
