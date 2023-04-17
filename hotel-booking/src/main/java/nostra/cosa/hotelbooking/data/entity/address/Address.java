@@ -29,4 +29,5 @@ public class Address {
 
   @Column(name = "other", nullable = false)
   private String other;
+
 }
