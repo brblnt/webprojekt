@@ -28,10 +28,10 @@ public class Booking {
   private Long roomId;
 
   @Column(name = "start_date", nullable = false)
-  private String dateStart;
+  private String startDate;
 
   @Column(name = "finish_date", nullable = false)
-  private String dateFinish;
+  private String finishDate;
 
   @Column(name = "service_type", nullable = false)
   private ServiceType serviceType;
