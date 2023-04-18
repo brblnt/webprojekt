@@ -1,4 +1,4 @@
-package nostra.cosa.hotelbooking.service.converter;
+package nostra.cosa.hotelbooking.service.converter.address;
 
 
 import lombok.RequiredArgsConstructor;

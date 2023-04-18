@@ -1,6 +1,7 @@
 package nostra.cosa.hotelbooking.service.dto.address;
 
 import lombok.*;
+import nostra.cosa.hotelbooking.data.entity.address.City;
 
 /**
  * City service layer representation.

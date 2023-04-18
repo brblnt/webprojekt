@@ -2,24 +2,37 @@ package nostra.cosa.hotelbooking.service.service.impl;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
+import nostra.cosa.hotelbooking.data.entity.Accommodation;
+import nostra.cosa.hotelbooking.data.repository.AccommodationRepository;
 import nostra.cosa.hotelbooking.service.dto.AccommodationDTO;
+import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.BookingService;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
 /**
  * Accommodation Service class, implements ServiceInterface with AccommodationDTO.
  */
 @Service
+@RequiredArgsConstructor
 public class AccommodationServiceImpl implements BookingService<AccommodationDTO> {
+
+  private final AccommodationRepository accommodationRepository;
+  private final Converter<Accommodation, AccommodationDTO> convertAccommodationEntityToDTO;
 
   @Override
   public List<AccommodationDTO> getAll() {
-    return null;
+    return accommodationRepository.findAll().stream()
+            .map(convertAccommodationEntityToDTO::convert)
+            .toList();
   }
 
   @Override
-  public AccommodationDTO getById(Long id) {
-    return null;
+  public AccommodationDTO getById(Long id) throws NotFoundException {
+    return accommodationRepository.findById(id)
+            .map(convertAccommodationEntityToDTO::convert)
+            .orElseThrow(() -> new NotFoundException("There is no Accommodation with ID:" + id));
   }
 
   @Override
@@ -33,7 +46,12 @@ public class AccommodationServiceImpl implements BookingService<AccommodationDTO
   }
 
   @Override
-  public void delete(Long id) {
-
+  public boolean delete(Long id) {
+    try {
+      accommodationRepository.deleteById(id);
+      return true;
+    } catch (Exception e) { // TODO: legyen konkrétabb exception?
+      return false;
+    }
   }
 }

@@ -30,15 +30,15 @@ public class AuthenticationData {
   private String registrationDate;
 
   @Column(name = "account_non_expired", nullable = false)
-  private boolean accountNonExpired;
+  private Boolean accountNonExpired;
 
   @Column(name = "account_non_locked", nullable = false)
-  private boolean accountNonLocked;
+  private Boolean accountNonLocked;
 
   @Column(name = "account_credentials_non_expired", nullable = false)
-  private boolean accountCredentialsNonExpired;
+  private Boolean accountCredentialsNonExpired;
 
   @Column(name = "account_enabled", nullable = false)
-  private boolean accountEnabled;
+  private Boolean accountEnabled;
 
 }

@@ -9,6 +9,7 @@ import nostra.cosa.hotelbooking.data.entity.Room;
 import nostra.cosa.hotelbooking.data.repository.RoomRepository;
 import nostra.cosa.hotelbooking.service.converter.ConvertRoomEntityToDTO;
 import nostra.cosa.hotelbooking.service.dto.RoomDTO;
+import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,6 +33,12 @@ public class RoomUtilities {
       }
     }
     return roomDTOList;
+  }
+
+  public RoomDTO getRoomById(Long roomId) throws NotFoundException {
+    return repository.findById(roomId)
+            .map(convertRoomEntityToDTO::convert)
+            .orElseThrow(() -> new NotFoundException("There is no Room with ID:" + roomId));
   }
 
 }
