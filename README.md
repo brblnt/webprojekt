@@ -4,7 +4,7 @@
 ## A nagy csapat:
 
 
-|      Cosa Nostra |         || |
+|      Cosa Nostra |Traditional Terminology|Title|Crime Area|
 |----------------|-|-|-|
 | Bor Bálint |`Crime Boss`|`CEO`|`back-end`            |
 |Négyesi Zoltán|`Capo`|`CTO`|`back-end`            |
