@@ -3,12 +3,13 @@
 
 ## A nagy csapat:
 
-|      Cosa Nostra |         | |
-|----------------|-|-|
-| Bor Bálint |`Crime Boss`|`back-end`            |
-|Négyesi Zoltán|`Capo`|`back-end`            |
-|Hoffner Marcell|`Consigliere`|`front-end`|
-|Vad Kristóf|`Capo`|`front-end`|
+
+|      Cosa Nostra |         || |
+|----------------|-|-|-|
+| Bor Bálint |`Crime Boss`|`CEO`|`back-end`            |
+|Négyesi Zoltán|`Capo`|`CTO`|`back-end`            |
+|Hoffner Marcell|`Consigliere`|`CFO`|`front-end`|
+|Vad Kristóf|`Capo`|`CCO`|`front-end`|
 
 ```
 Mint egy badboy, rossz arcokkal lógok, minden megvan, minden pénzt elszórok...
