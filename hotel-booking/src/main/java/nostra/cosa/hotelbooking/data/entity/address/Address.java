@@ -8,17 +8,13 @@ import lombok.*;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
 @Entity
 @Data
 @Table(name = "address_table")
 public class Address {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long addressId;
 
   @Column(name = "country", nullable = false)

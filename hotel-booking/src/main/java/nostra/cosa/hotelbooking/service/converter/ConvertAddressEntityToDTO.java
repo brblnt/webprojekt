@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class ConvertAddressToAddressDTO implements Converter<Address, AddressDTO> {
+public class ConvertAddressEntityToDTO implements Converter<Address, AddressDTO> {
 
   private final CityUtilities cityUtilities;
 

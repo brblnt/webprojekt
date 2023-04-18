@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class ConvertRoomToRoomDTO {
+public class ConvertRoomEntityToDTO {
 
   private final ModelMapper modelMapper;
 

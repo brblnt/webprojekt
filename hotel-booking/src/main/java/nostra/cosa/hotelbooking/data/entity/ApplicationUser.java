@@ -8,17 +8,13 @@ import lombok.*;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
 @Entity
 @Data
 @Table(name = "users_table")
 public class ApplicationUser{
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(name = "authentication_id", nullable = false)

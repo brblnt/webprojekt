@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class ConvertAuthenticationDataToAuthenticationDataDTO {
+public class ConvertAuthenticationDataEntityToDTO {
 
   private final ModelMapper modelMapper;
 

@@ -3,14 +3,14 @@ package nostra.cosa.hotelbooking.service.service.impl;
 import java.util.List;
 
 import nostra.cosa.hotelbooking.service.dto.AccommodationDTO;
-import nostra.cosa.hotelbooking.service.service.ServiceInterface;
+import nostra.cosa.hotelbooking.service.service.BookingService;
 import org.springframework.stereotype.Service;
 
 /**
  * Accommodation Service class, implements ServiceInterface with AccommodationDTO.
  */
 @Service
-public class AccommodationService implements ServiceInterface<AccommodationDTO> {
+public class AccommodationServiceImpl implements BookingService<AccommodationDTO> {
 
   @Override
   public List<AccommodationDTO> getAll() {

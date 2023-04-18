@@ -8,10 +8,6 @@ import lombok.*;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
 @Entity
 @Data
 @Table(name = "city_table")

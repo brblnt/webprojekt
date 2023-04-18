@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class ConvertAccommodationToAccommodationDTO implements Converter<Accommodation, AccommodationDTO> {
+public class ConvertAccommodationEntityToDTO implements Converter<Accommodation, AccommodationDTO> {
 
   private final AuthenticationUtilities authenticationUtilities;
   private final AddressUtilities addressUtilities;

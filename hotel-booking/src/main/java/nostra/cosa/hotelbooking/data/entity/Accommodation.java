@@ -13,17 +13,13 @@ import nostra.cosa.hotelbooking.data.entity.enums.ServiceType;
  */
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode
-@ToString
 @Entity
 @Data
 @Table(name = "accommodation_table")
 public class Accommodation{
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @Column(name = "authentication_id", nullable = false)

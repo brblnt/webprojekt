@@ -4,8 +4,10 @@ import java.util.List;
 
 /**
  * Service interface with generic parameter.
+ *
+ * TODO: interface name?.
  */
-public interface ServiceInterface<DTO> {
+public interface BookingService<DTO> {
 
   List<DTO> getAll();
 
