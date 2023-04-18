@@ -22,13 +22,13 @@ public class Room {
   private RoomType roomType;
 
   @Column(name = "number_of_rooms", nullable = false)
-  private int numberOfRooms;
+  private Integer numberOfRooms;
 
   @Column(name = "number_of_single_beds", nullable = false)
-  private int numberOfSingleBeds;
+  private Integer numberOfSingleBeds;
 
   @Column(name = "number_of_double_beds", nullable = false)
-  private int numberOfDoubleBeds;
+  private Integer numberOfDoubleBeds;
 
   @Column(name = "has_own_kitchen", nullable = false)
   private boolean hasOwnKitchen;
@@ -40,7 +40,7 @@ public class Room {
   private boolean active;
 
   @Column(name = "price_of_a_day", nullable = false)
-  private double priceOfADay;
+  private Double priceOfADay;
 
   @Column(name = "other", nullable = false)
   private String other;
