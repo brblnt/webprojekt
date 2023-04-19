@@ -2,7 +2,7 @@ package nostra.cosa.hotelbooking.auth.service;
 
 import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
-import nostra.cosa.hotelbooking.auth.dto.UserPrincipal;
+import nostra.cosa.hotelbooking.auth.dto.AuthorizationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,21 +16,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private static final String TOKEN_NOT_FOUND_MESSAGE = "Token not found: %s";
-
     @Autowired
-    private AuthenticationService authenticationService;
+    private HotelBookingAuthenticationService hotelBookingAuthenticationService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AuthenticationDataDTO authData = authenticationService.getAuthenticationData(username);
+        AuthenticationDataDTO authData = hotelBookingAuthenticationService.getAuthenticationData(username);
         if (authData == null) {
-            String message = String.format(TOKEN_NOT_FOUND_MESSAGE, username);
+            String message = String.format("User data not found: %s", username);
             log.error(message);
             throw new UsernameNotFoundException(message);
         }
-
-        return new UserPrincipal(authData, username, authData.getPassword());
+        return new AuthorizationDTO(authData, username, authData.getPassword());
     }
 
 }

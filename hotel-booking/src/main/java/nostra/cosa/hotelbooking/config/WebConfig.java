@@ -11,12 +11,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${auth.origin.url}")
-    private String authOriginUrl;
+    @Value("${authentication.origin.url}")
+    private String originUrl;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/User/login").allowedOrigins(authOriginUrl).allowCredentials(true);
-        registry.addMapping("/User/register").allowedOrigins(authOriginUrl).allowCredentials(true);
+        registry.addMapping("/User/login").allowedOrigins(originUrl).allowCredentials(true);
+        registry.addMapping("/User/register").allowedOrigins(originUrl).allowCredentials(true);
     }
 }

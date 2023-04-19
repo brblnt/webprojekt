@@ -16,12 +16,11 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public class CustomAuthenticationProvider implements AuthenticationProvider {
+public class HotelBookingAuthenticationProvider implements AuthenticationProvider {
 
-    private static final String INVALID_MESSAGE = "Invalid login details";
     private final InMemoryUserDetailsManager userDetailsManager;
 
-    public CustomAuthenticationProvider() {
+    public HotelBookingAuthenticationProvider() {
         this.userDetailsManager = new InMemoryUserDetailsManager();
     }
 
@@ -32,16 +31,10 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         try {
             user = userDetailsManager.loadUserByUsername(authentication.getName());
         } catch (UsernameNotFoundException e) {
-            log.error(INVALID_MESSAGE);
-            throw new BadCredentialsException(INVALID_MESSAGE);
+            log.error("Not valid login details");
+            throw new BadCredentialsException("Not valid login details");
         }
         return createAuthentication(authentication, user);
-    }
-
-    private Authentication createAuthentication(Authentication authentication, UserDetails user) {
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(), authentication.getCredentials());
-        token.setDetails(authentication.getDetails());
-        return token;
     }
 
     @Override
@@ -49,4 +42,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 
+    private Authentication createAuthentication(Authentication authentication, UserDetails user) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user.getUsername(), authentication.getCredentials());
+        token.setDetails(authentication.getDetails());
+        return token;
+    }
 }
