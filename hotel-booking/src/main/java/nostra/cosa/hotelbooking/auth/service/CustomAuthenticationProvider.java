@@ -11,6 +11,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Component;
 
+/**
+ * Provider component for Authentication.
+ */
 @Component
 @Slf4j
 public class CustomAuthenticationProvider implements AuthenticationProvider {

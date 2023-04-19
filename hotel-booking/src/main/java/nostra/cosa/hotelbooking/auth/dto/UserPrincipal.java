@@ -10,6 +10,9 @@ import org.springframework.security.core.userdetails.User;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * UserPrincipal used for Authorization.
+ */
 @Setter
 @Getter
 @EqualsAndHashCode(callSuper = false)
@@ -23,7 +26,7 @@ public class UserPrincipal extends User {
     }
 
     private static List<GrantedAuthority> getAuthorities(AuthenticationDataDTO authData) {
-        List<String> permission = authData.getPermission().getAllPermissions();
+        List<String> permission = authData.getPermissionDTO().getAllPermissions();
         return permission.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 

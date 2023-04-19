@@ -29,5 +29,5 @@ public class AuthenticationDataDTO {
 
   private Boolean accountEnabled;
 
-  private Permission permission;
+  private PermissionDTO permissionDTO;
 }

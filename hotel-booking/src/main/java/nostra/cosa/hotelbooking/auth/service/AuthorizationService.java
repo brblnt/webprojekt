@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 
+/**
+ * Service for Authorization.
+ */
 @Service
 public class AuthorizationService implements PermissionEvaluator {
 

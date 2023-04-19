@@ -8,10 +8,13 @@ import nostra.cosa.hotelbooking.auth.dto.enums.Role;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Permission DTO for permissions.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Permission {
+public class PermissionDTO {
 
     private List<String> applicationUser;
 
