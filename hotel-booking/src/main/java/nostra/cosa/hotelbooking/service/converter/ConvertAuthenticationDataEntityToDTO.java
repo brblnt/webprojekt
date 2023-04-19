@@ -2,7 +2,7 @@ package nostra.cosa.hotelbooking.service.converter;
 
 import lombok.RequiredArgsConstructor;
 import nostra.cosa.hotelbooking.data.entity.AuthenticationData;
-import nostra.cosa.hotelbooking.service.dto.AuthenticationDataDTO;
+import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 

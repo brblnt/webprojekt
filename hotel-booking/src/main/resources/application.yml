@@ -8,3 +8,7 @@ spring:
             enabled: true
 server:
     port : 8080
+
+auth:
+    origin:
+        url: http://localhost:8080

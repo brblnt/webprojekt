@@ -1,6 +1,7 @@
 package nostra.cosa.hotelbooking.service.dto;
 
 import lombok.*;
+import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
 
 /**
  * ApplicationUser service layer representation.

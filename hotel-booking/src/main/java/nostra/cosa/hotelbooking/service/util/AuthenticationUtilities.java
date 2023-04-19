@@ -3,7 +3,7 @@ package nostra.cosa.hotelbooking.service.util;
 import lombok.RequiredArgsConstructor;
 import nostra.cosa.hotelbooking.data.repository.AuthenticationRepository;
 import nostra.cosa.hotelbooking.service.converter.ConvertAuthenticationDataEntityToDTO;
-import nostra.cosa.hotelbooking.service.dto.AuthenticationDataDTO;
+import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
 import nostra.cosa.hotelbooking.service.exceptions.AuthenticationNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -23,5 +23,10 @@ public class AuthenticationUtilities {
     } catch (Exception e) {
       throw new AuthenticationNotFoundException("AuthenticationData Not found!");
     }
+  }
+
+  //TODO
+  public AuthenticationDataDTO getAuthenticationDataDTOByUserName(String userName) {
+    return null;
   }
 }
