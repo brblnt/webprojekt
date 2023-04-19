@@ -3,11 +3,10 @@ package nostra.cosa.hotelbooking.auth.service;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
 import nostra.cosa.hotelbooking.auth.dto.UserPrincipal;
 import nostra.cosa.hotelbooking.service.util.AuthenticationUtilities;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,9 +16,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class AuthenticationService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationService.class);
 
     private final InMemoryUserDetailsManager userDetailsManager;
 
@@ -49,13 +47,13 @@ public class AuthenticationService {
     }
 
     public AuthenticationDataDTO getAuthenticationData(String userName) {
-        LOGGER.info("Login attempt: " + userName);
+        log.info("Login attempt: " + userName);
         return authUtility.getAuthenticationDataDTOByUserName(userName);
     }
 
     public ResponseEntity<String> logout(String userName) {
         this.userDetailsManager.deleteUser(userName);
-        LOGGER.info("The user has been logged out.");
+        log.info("The user has been logged out.");
         return ResponseEntity.ok().build();
     }
 
@@ -64,6 +62,6 @@ public class AuthenticationService {
         userDetailsManager.createUser(user);
         Authentication authentication = new UsernamePasswordAuthenticationToken(authData.getPassword(), null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        LOGGER.info("The user has been logged in.");
+        log.info("The user has been logged in.");
     }
 }

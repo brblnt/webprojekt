@@ -1,17 +1,17 @@
 package nostra.cosa.hotelbooking.auth.service;
 
+import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
 import nostra.cosa.hotelbooking.auth.dto.UserPrincipal;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+@Slf4j
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
     private static final String TOKEN_NOT_FOUND_MESSAGE = "Token not found: %s";
 
@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         AuthenticationDataDTO authData = authenticationService.getAuthenticationData(username);
         if (authData == null) {
             String message = String.format(TOKEN_NOT_FOUND_MESSAGE, username);
-            LOGGER.error(message);
+            log.error(message);
             throw new UsernameNotFoundException(message);
         }
 

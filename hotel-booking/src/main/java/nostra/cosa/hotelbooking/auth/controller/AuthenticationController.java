@@ -5,18 +5,20 @@ import nostra.cosa.hotelbooking.auth.service.AuthenticationService;
 import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/user")
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationService authenticationService;
+    private final AuthenticationService authenticationService;
 
-    @PostMapping(value = "User/login")
+    @Autowired
+    public AuthenticationController(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
+    }
+
+    @PostMapping(value = "/login")
     @CrossOrigin
     public ResponseEntity<AuthenticationDataDTO> getUserData(@RequestParam("userName") String userName, @RequestParam("password") String password, HttpServletRequest request) {
         if (userName == null && password == null) {
@@ -29,7 +31,7 @@ public class AuthenticationController {
 
     //TODO: register
 
-    @PostMapping(value = "/User/logout")
+    @PostMapping(value = "/logout")
     public ResponseEntity<String> logout(@RequestParam("userName") String userName, HttpServletRequest request) {
         authenticationService.deleteCookies(request);
         return authenticationService.logout(userName);

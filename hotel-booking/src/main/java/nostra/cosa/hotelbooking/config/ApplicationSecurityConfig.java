@@ -16,7 +16,7 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class ApplicationSecurityConfig {
 
-    private static final String[] AUTH_WHITELIST = {"/User/Login", "/User/Register"};
+    private static final String[] AUTH_WHITELIST = {"/user/login", "/user/register"};
 
     @Value("${auth.origin.url}")
     private String authOriginUrl;
@@ -31,7 +31,8 @@ public class ApplicationSecurityConfig {
                 .requestMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
-                .cors().configurationSource(request -> setCorsConfiguration())
+                .rememberMe()
+                .and().cors().configurationSource(request -> setCorsConfiguration())
                 .and().authenticationProvider(authProvider);
         return http.build();
     }

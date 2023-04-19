@@ -3,6 +3,7 @@ package nostra.cosa.hotelbooking.auth.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import nostra.cosa.hotelbooking.auth.dto.enums.Role;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +21,9 @@ public class Permission {
 
     public List<String> getAllPermissions() {
         List<String> result = new ArrayList<>();
-        applicationUser.forEach(role -> result.add("APPLICATIONUSER_" + role));
-        accommodation.forEach(role -> result.add("ACCOMMODATION_" + role));
-        admin.forEach(role -> result.add("ADMIN_" + role));
+        applicationUser.forEach(role -> result.add(Role.APPLICATION_USER + "_" + role));
+        accommodation.forEach(role -> result.add(Role.ACCOMMODATION + "_" + role));
+        admin.forEach(role -> result.add(Role.ADMIN + "_"  + role));
         return result;
     }
 

@@ -1,7 +1,6 @@
 package nostra.cosa.hotelbooking.auth.service;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,9 +12,9 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomAuthenticationProvider.class);
     private static final String INVALID_MESSAGE = "Invalid login details";
     private final InMemoryUserDetailsManager userDetailsManager;
 
@@ -30,7 +29,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         try {
             user = userDetailsManager.loadUserByUsername(authentication.getName());
         } catch (UsernameNotFoundException e) {
-            LOGGER.error(INVALID_MESSAGE);
+            log.error(INVALID_MESSAGE);
             throw new BadCredentialsException(INVALID_MESSAGE);
         }
         return createAuthentication(authentication, user);
