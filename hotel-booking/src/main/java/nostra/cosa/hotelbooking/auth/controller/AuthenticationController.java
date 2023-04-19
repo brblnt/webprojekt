@@ -1,22 +1,21 @@
 package nostra.cosa.hotelbooking.auth.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import nostra.cosa.hotelbooking.auth.service.AuthenticationService;
 import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Rest controller for authentication.
+ */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/user")
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
-
-    @Autowired
-    public AuthenticationController(AuthenticationService authenticationService) {
-        this.authenticationService = authenticationService;
-    }
 
     @PostMapping(value = "/login")
     @CrossOrigin

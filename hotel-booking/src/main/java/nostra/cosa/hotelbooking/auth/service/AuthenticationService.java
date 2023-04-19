@@ -14,6 +14,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service for Authentication.
+ */
 @Service
 @AllArgsConstructor
 @Slf4j
