@@ -22,6 +22,9 @@ Mint egy badboy, rossz arcokkal lógok, minden megvan, minden pénzt elszórok..
 - A felhasználók a profiljukban láthatják a korábbi, illetve az aktuális foglalásaikat, amelyeket le is mondhatnak.
 - Lehet szálláshelyként regisztrálni az alkalmazásba, ezáltal új szállások lesznek elérhetőek (képes beállítani a szállás adatait szobák/ágyak száma, ár, elérhető időszak).
 - A szálláshelyeknek is van saját profiljuk, ahol megtalálhatóak az adataik. Szálláshelyként belépve lehet módosítani az adataikat, illetve látni az aktuális foglalásokat.
+- Amennyiben a felhasználó adminisztrátori szerepet tölt be, úgy képes a felhasználókat illetve szálláshelyeket kezelni (létrehozni, módosítani és törölni).
+
+
 
 
 
