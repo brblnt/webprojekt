@@ -31,13 +31,13 @@ public class Room {
   private Integer numberOfDoubleBeds;
 
   @Column(name = "has_own_kitchen", nullable = false)
-  private boolean hasOwnKitchen;
+  private Boolean hasOwnKitchen;
 
   @Column(name = "has_own_bathroom", nullable = false)
-  private boolean hasOwnBathroom;
+  private Boolean hasOwnBathroom;
 
   @Column(name = "active", nullable = false)
-  private boolean active;
+  private Boolean active;
 
   @Column(name = "price_of_a_day", nullable = false)
   private Double priceOfADay;

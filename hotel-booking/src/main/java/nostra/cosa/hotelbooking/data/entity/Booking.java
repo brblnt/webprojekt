@@ -37,13 +37,13 @@ public class Booking {
   private ServiceType serviceType;
 
   @Column(name = "archived", nullable = false)
-  private boolean archived;
+  private Boolean archived;
 
   @Column(name = "resigned", nullable = false)
-  private boolean resigned;
+  private Boolean resigned;
 
   @Column(name = "payed", nullable = false)
-  private boolean payed;
+  private Boolean payed;
 
   @Column(name = "other", nullable = false)
   private String other;
