@@ -1,6 +1,7 @@
 package nostra.cosa.hotelbooking.service.converter;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.data.entity.Accommodation;
 import nostra.cosa.hotelbooking.service.dto.AccommodationDTO;
 import nostra.cosa.hotelbooking.service.exceptions.AuthenticationNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ConvertAccommodationEntityToDTO implements Converter<Accommodation, AccommodationDTO> {
 
   private final AuthenticationUtilities authenticationUtilities;
@@ -35,6 +37,7 @@ public class ConvertAccommodationEntityToDTO implements Converter<Accommodation,
               roomUtilities.getRoomDTOsByIdList(source.getRoomIds())
       );
     } catch (AuthenticationNotFoundException e) {
+      log.error("Authentication not found with id : {}, message : {}", source.getAuthenticationId(), e);
       throw new RuntimeException(e);
     }
   }

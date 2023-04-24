@@ -19,5 +19,5 @@ public interface BookingService<DTO> {
 
   DTO create(DTO create);
 
-  boolean delete(Long id);
+  Boolean delete(Long id);
 }

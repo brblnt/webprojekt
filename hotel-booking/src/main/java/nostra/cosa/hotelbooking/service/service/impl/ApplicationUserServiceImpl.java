@@ -49,11 +49,11 @@ public class ApplicationUserServiceImpl implements BookingService<ApplicationUse
   }
 
   @Override
-  public boolean delete(Long id) {
+  public Boolean delete(Long id) {
     try {
       applicationUserRepository.deleteById(id);
       return true;
-    } catch (Exception e) { // TODO: legyen konkrétabb exception?
+    } catch (Exception e) { // TODO: egyenlőre nem találtam konkrétabbat ha később lenne itt hagyom a todot
       return false;
     }
   }

@@ -46,11 +46,11 @@ public class AccommodationServiceImpl implements BookingService<AccommodationDTO
   }
 
   @Override
-  public boolean delete(Long id) {
+  public Boolean delete(Long id) {
     try {
       accommodationRepository.deleteById(id);
       return true;
-    } catch (Exception e) { // TODO: legyen konkrétabb exception?
+    } catch (Exception e) { // TODO: egyenlőre nem találtam konkrétabbat ha később lenne itt hagyom a todot
       return false;
     }
   }
