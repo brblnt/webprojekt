@@ -11,26 +11,29 @@ import java.io.Serializable;
  * Service for Authorization.
  */
 @Service
-public class AuthorizationService implements PermissionEvaluator {
+public class HotelBookingAuthorizationService implements PermissionEvaluator {
 
     @Override
     public boolean hasPermission(Authentication authentication, Object targetDomainObject, Object permission) {
         if ((authentication == null) || (targetDomainObject == null) || (permission == null)) {
             return false;
         }
-        return hasPrivilege(authentication, targetDomainObject.toString(), permission.toString());
+        return hasAuthority(authentication, targetDomainObject.toString(), permission.toString());
     }
 
+
+    /**
+     * We do not use this. We use the first method.
+     */
     @Override
-    public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
-        // We don't use this.
+    public boolean hasPermission(Authentication authentication, Serializable targetId, String role, Object permission) {
         return false;
     }
 
-    private boolean hasPrivilege(Authentication authentication, String targetType, String permission) {
-        String privilege = targetType + "_" + permission;
+    private boolean hasAuthority(Authentication authentication, String role, String permission) {
+        String authority = role + "_" + permission;
         for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
-            if (grantedAuthority.getAuthority().equals(privilege)) {
+            if (grantedAuthority.getAuthority().equals(authority)) {
                 return true;
             }
         }
