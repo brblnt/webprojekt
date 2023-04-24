@@ -3,6 +3,7 @@ package nostra.cosa.hotelbooking.service.service.impl;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.data.entity.ApplicationUser;
 import nostra.cosa.hotelbooking.data.entity.Booking;
 import nostra.cosa.hotelbooking.data.repository.ApplicationUserRepository;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BookingServiceImpl implements BookingService<BookingDTO> {
 
   private final BookingRepository bookingRepository;
@@ -26,6 +28,7 @@ public class BookingServiceImpl implements BookingService<BookingDTO> {
 
   @Override
   public List<BookingDTO> getAll() {
+    log.info("Get all BookingDTOs.");
     return bookingRepository.findAll().stream()
             .map(convertBookingEntityToDTO::convert)
             .toList();
@@ -33,6 +36,7 @@ public class BookingServiceImpl implements BookingService<BookingDTO> {
 
   @Override
   public BookingDTO getById(Long id) throws NotFoundException {
+    log.info("Get BookingDTO by id : {}", id);
     return bookingRepository.findById(id)
             .map(convertBookingEntityToDTO::convert)
             .orElseThrow(() -> new NotFoundException("There is no Booking with ID:" + id));
@@ -53,7 +57,8 @@ public class BookingServiceImpl implements BookingService<BookingDTO> {
     try {
       bookingRepository.deleteById(id);
       return true;
-    } catch (Exception e) { // TODO: egyenlőre nem találtam konkrétabbat ha később lenne itt hagyom a todot
+    } catch (IllegalArgumentException e) {
+      log.warn("Data integrity violation [DELETE]");
       return false;
     }
   }
