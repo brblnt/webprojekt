@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.data.entity.Accommodation;
 import nostra.cosa.hotelbooking.data.repository.AccommodationRepository;
+import nostra.cosa.hotelbooking.service.converter.ConvertAccommodationEntityToDTO;
 import nostra.cosa.hotelbooking.service.dto.AccommodationDTO;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.BookingService;
@@ -41,10 +42,18 @@ public class AccommodationServiceImpl implements BookingService<AccommodationDTO
             .orElseThrow(() -> new NotFoundException("There is no Accommodation with ID:" + id));
   }
 
+
+  public AccommodationDTO update(AccommodationDTO oldAccommodation, AccommodationDTO newAccommodation) {
+    //TODO: ezt majd megcsinálod rendesen
+    AccommodationDTO accommodationDTO = ((ConvertAccommodationEntityToDTO) convertAccommodationEntityToDTO).update(oldAccommodation, newAccommodation);
+    return create(accommodationDTO);
+  }
+
   @Override
   public AccommodationDTO update(AccommodationDTO newAccommodation) throws NotFoundException {
     return create(accommodationUtilities.update(getById(newAccommodation.getId()), newAccommodation));
   }
+
 
   @Override
   public AccommodationDTO create(AccommodationDTO newAccommodation) {
