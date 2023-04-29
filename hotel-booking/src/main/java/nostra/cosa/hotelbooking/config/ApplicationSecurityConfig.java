@@ -1,8 +1,8 @@
 package nostra.cosa.hotelbooking.config;
 
+import lombok.RequiredArgsConstructor;
 import nostra.cosa.hotelbooking.auth.service.HotelBookingAuthenticationProvider;
 import nostra.cosa.hotelbooking.auth.service.HotelBookingAuthorizationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +22,7 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@RequiredArgsConstructor
 public class ApplicationSecurityConfig {
 
     private static final String[] URL_WHITELIST = {"/user/login", "/user/register"};
@@ -31,9 +32,7 @@ public class ApplicationSecurityConfig {
     @Value("${authentication.origin.url}")
     private String authOriginUrl;
 
-    @Autowired
-    private HotelBookingAuthenticationProvider authProvider;
-
+    private final HotelBookingAuthenticationProvider authProvider;
 
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -41,8 +40,8 @@ public class ApplicationSecurityConfig {
                 .requestMatchers(URL_WHITELIST).permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()
-                .rememberMe()
-                .and().cors().configurationSource(request -> setCorsConfiguration())
+                //.rememberMe().and() TODO: ez most hibát dob, mert null a userDetailsService. Majd később megcsinálom.
+                .cors().configurationSource(request -> setCorsConfiguration())
                 .and().authenticationProvider(authProvider);
         return http.build();
     }
