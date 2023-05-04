@@ -41,10 +41,8 @@ public class AccommodationController extends BookingController {
 
     @PutMapping("/{id}")
     public ResponseEntity<AccommodationDTO> update(final @PathVariable("id") Long id, @RequestBody AccommodationDTO accommodationDTO) throws NotFoundException {
-        final AccommodationDTO oldAccommodation = accommodationService.getById(id);
-
-        final AccommodationDTO result = accommodationService.update(oldAccommodation, accommodationDTO);
-
+        accommodationDTO.setId(id);
+        final AccommodationDTO result = accommodationService.update(accommodationDTO);
         return ResponseEntity.ok().body(result);
     }
 

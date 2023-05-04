@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.data.entity.Accommodation;
 import nostra.cosa.hotelbooking.data.repository.AccommodationRepository;
-import nostra.cosa.hotelbooking.service.converter.ConvertAccommodationEntityToDTO;
 import nostra.cosa.hotelbooking.service.dto.AccommodationDTO;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.BookingService;
@@ -40,13 +39,6 @@ public class AccommodationServiceImpl implements BookingService<AccommodationDTO
     return accommodationRepository.findById(id)
             .map(convertAccommodationEntityToDTO::convert)
             .orElseThrow(() -> new NotFoundException("There is no Accommodation with ID:" + id));
-  }
-
-
-  public AccommodationDTO update(AccommodationDTO oldAccommodation, AccommodationDTO newAccommodation) {
-    //TODO: ezt majd megcsinálod rendesen
-    AccommodationDTO accommodationDTO = ((ConvertAccommodationEntityToDTO) convertAccommodationEntityToDTO).update(oldAccommodation, newAccommodation);
-    return create(accommodationDTO);
   }
 
   @Override
