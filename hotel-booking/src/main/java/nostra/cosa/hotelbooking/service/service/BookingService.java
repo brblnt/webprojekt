@@ -15,7 +15,7 @@ public interface BookingService<DTO> {
 
   DTO getById(Long id) throws NotFoundException;
 
-  DTO update(DTO update);
+  DTO update(DTO update) throws NotFoundException;
 
   DTO create(DTO create);
 
