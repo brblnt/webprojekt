@@ -41,24 +41,4 @@ public class ConvertAccommodationEntityToDTO implements Converter<Accommodation,
       throw new RuntimeException(e);
     }
   }
-
-  //TODO: Ezt majd átteszed oda, ahova szeretnéd
-  public AccommodationDTO update(final AccommodationDTO defaultValue, final AccommodationDTO newValue) {
-    final AccommodationDTO result = new AccommodationDTO();
-
-    result.setId(defaultValue.getId());
-    result.setAuthenticationData(getValue(defaultValue.getAuthenticationData(), newValue.getAuthenticationData()));
-    result.setAddress(getValue(defaultValue.getAddress(), newValue.getAddress()));
-    result.setEmailAddress(getValue(defaultValue.getEmailAddress(), newValue.getEmailAddress()));
-    result.setPhoneNumber(getValue(defaultValue.getPhoneNumber(), newValue.getPhoneNumber()));
-    result.setAccommodationType(getValue(defaultValue.getAccommodationType(), newValue.getAccommodationType()));
-    result.setServiceTypes(getValue(defaultValue.getServiceTypes(), newValue.getServiceTypes()));
-    result.setRooms(getValue(defaultValue.getRooms(), newValue.getRooms()));
-
-    return result;
-  }
-
-  private <T> T getValue(final T defaultValue, final T newValue) {
-    return newValue == null ? defaultValue : newValue;
-  }
 }
