@@ -1,4 +1,4 @@
-package nostra.cosa.hotelbooking.service.converter;
+package nostra.cosa.hotelbooking.service.converter.entityToDTO;
 
 import lombok.RequiredArgsConstructor;
 import nostra.cosa.hotelbooking.data.entity.Booking;
@@ -6,7 +6,7 @@ import nostra.cosa.hotelbooking.service.dto.BookingDTO;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.impl.AccommodationServiceImpl;
 import nostra.cosa.hotelbooking.service.service.impl.ApplicationUserServiceImpl;
-import nostra.cosa.hotelbooking.service.util.RoomUtilities;
+import nostra.cosa.hotelbooking.service.util.data.RoomUtilities;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

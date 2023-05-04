@@ -12,6 +12,7 @@ import nostra.cosa.hotelbooking.service.dto.AccommodationDTO;
 import nostra.cosa.hotelbooking.service.dto.ApplicationUserDTO;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.BookingService;
+import nostra.cosa.hotelbooking.service.util.service.impl.ApplicationUserUtilities;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 public class ApplicationUserServiceImpl implements BookingService<ApplicationUserDTO> {
 
   private final ApplicationUserRepository applicationUserRepository;
+  private final ApplicationUserUtilities applicationUserUtilities;
   private final Converter<ApplicationUser, ApplicationUserDTO> convertApplicationUserEntityToDTO;
 
   @Override
@@ -43,12 +45,15 @@ public class ApplicationUserServiceImpl implements BookingService<ApplicationUse
   }
 
   @Override
-  public ApplicationUserDTO update(ApplicationUserDTO newAccommodation) {
-    return null;
+  public ApplicationUserDTO update(ApplicationUserDTO newApplicationUser) throws NotFoundException {
+    return create(
+            applicationUserUtilities.update(
+                    getById(newApplicationUser.getId()),
+                    newApplicationUser));
   }
 
   @Override
-  public ApplicationUserDTO create(ApplicationUserDTO newAccommodation) {
+  public ApplicationUserDTO create(ApplicationUserDTO newApplicationUser) {
     return null;
   }
 

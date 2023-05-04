@@ -1,4 +1,4 @@
-package nostra.cosa.hotelbooking.service.converter;
+package nostra.cosa.hotelbooking.service.converter.entityToDTO;
 
 import lombok.RequiredArgsConstructor;
 import nostra.cosa.hotelbooking.data.entity.AuthenticationData;

@@ -1,4 +1,4 @@
-package nostra.cosa.hotelbooking.service.util;
+package nostra.cosa.hotelbooking.service.util.data;
 
 import java.util.List;
 import java.util.Objects;

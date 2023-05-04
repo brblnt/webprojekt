@@ -1,7 +1,10 @@
-package nostra.cosa.hotelbooking.service.util;
+package nostra.cosa.hotelbooking.service.util.service.impl;
+
+import static nostra.cosa.hotelbooking.service.util.Utilities.checkNull;
 
 import lombok.RequiredArgsConstructor;
 import nostra.cosa.hotelbooking.service.dto.AccommodationDTO;
+import nostra.cosa.hotelbooking.service.util.service.UtilitiesForService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,8 +12,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @RequiredArgsConstructor
-public class AccommodationUtilities {
+public class AccommodationUtilities implements UtilitiesForService<AccommodationDTO> {
 
+  @Override
   public AccommodationDTO update(AccommodationDTO oldDTO, AccommodationDTO newDTO) {
     return new AccommodationDTO(
             oldDTO.getId(),
@@ -22,10 +26,6 @@ public class AccommodationUtilities {
             checkNull(oldDTO.getServiceTypes(), newDTO.getServiceTypes()),
             checkNull(oldDTO.getRooms(), newDTO.getRooms())
     );
-  }
-
-  private <T> T checkNull(final T defaultValue, final T newValue) {
-    return newValue == null ? defaultValue : newValue;
   }
 
 }
