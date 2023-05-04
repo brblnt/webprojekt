@@ -46,7 +46,6 @@ public class AccommodationServiceImpl implements BookingService<AccommodationDTO
     return create(accommodationUtilities.update(getById(newAccommodation.getId()), newAccommodation));
   }
 
-
   @Override
   public AccommodationDTO create(AccommodationDTO newAccommodation) {
     return null;
