@@ -2,7 +2,7 @@ package nostra.cosa.hotelbooking.auth.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
 import nostra.cosa.hotelbooking.auth.dto.AuthorizationDTO;
@@ -18,13 +18,13 @@ import org.springframework.stereotype.Service;
  * Service for Authentication.
  */
 @Service
-@AllArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 public class HotelBookingAuthenticationService {
 
-    private final InMemoryUserDetailsManager userDetailsManager;
-
     private final AuthenticationUtilities authUtility;
+
+    private final InMemoryUserDetailsManager userDetailsManager;
 
     public ResponseEntity<AuthenticationDataDTO> login(String userName) {
         AuthenticationDataDTO authData = authUtility.getAuthenticationDataDTOByUserName(userName);

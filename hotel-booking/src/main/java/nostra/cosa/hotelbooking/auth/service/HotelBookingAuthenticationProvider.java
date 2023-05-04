@@ -1,6 +1,8 @@
 package nostra.cosa.hotelbooking.auth.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,12 +18,15 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
+@RequiredArgsConstructor
 public class HotelBookingAuthenticationProvider implements AuthenticationProvider {
 
-    private final InMemoryUserDetailsManager userDetailsManager;
+    private InMemoryUserDetailsManager userDetailsManager;
 
-    public HotelBookingAuthenticationProvider() {
+    @Bean
+    public InMemoryUserDetailsManager userDetailsManager() {
         this.userDetailsManager = new InMemoryUserDetailsManager();
+        return userDetailsManager;
     }
 
 
