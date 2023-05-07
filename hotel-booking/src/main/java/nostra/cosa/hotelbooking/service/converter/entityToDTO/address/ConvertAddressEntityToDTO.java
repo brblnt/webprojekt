@@ -1,10 +1,10 @@
-package nostra.cosa.hotelbooking.service.converter.address;
+package nostra.cosa.hotelbooking.service.converter.entityToDTO.address;
 
 
 import lombok.RequiredArgsConstructor;
 import nostra.cosa.hotelbooking.data.entity.address.Address;
 import nostra.cosa.hotelbooking.service.dto.address.AddressDTO;
-import nostra.cosa.hotelbooking.service.util.CityUtilities;
+import nostra.cosa.hotelbooking.service.util.data.CityUtilities;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

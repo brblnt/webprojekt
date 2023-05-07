@@ -28,11 +28,11 @@ public class BookingDTO {
 
   private ServiceType serviceType;
 
-  private boolean archived;
+  private Boolean archived;
 
-  private boolean resigned;
+  private Boolean resigned;
 
-  private boolean payed;
+  private Boolean payed;
 
   private String other;
 

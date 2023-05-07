@@ -19,19 +19,19 @@ public class RoomDTO {
 
   private RoomType roomType;
 
-  private int numberOfRooms;
+  private Integer numberOfRooms;
 
-  private int numberOfSingleBeds;
+  private Integer numberOfSingleBeds;
 
-  private int numberOfDoubleBeds;
+  private Integer numberOfDoubleBeds;
 
-  private boolean hasOwnKitchen;
+  private Boolean hasOwnKitchen;
 
-  private boolean hasOwnBathroom;
+  private Boolean hasOwnBathroom;
 
-  private boolean active;
+  private Boolean active;
 
-  private double priceOfADay;
+  private Double priceOfADay;
 
   private String other;
 
