@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("hotel-booking/accommodation")
 @Slf4j
 @RequiredArgsConstructor
-public class AccommodationController extends BookingController {
+public class AccommodationController extends HotelBookingController {
 
     private final AccommodationServiceImpl accommodationService;
 
@@ -43,6 +43,7 @@ public class AccommodationController extends BookingController {
     public ResponseEntity<AccommodationDTO> update(final @PathVariable("id") Long id, @RequestBody AccommodationDTO accommodationDTO) throws NotFoundException {
         accommodationDTO.setId(id);
         final AccommodationDTO result = accommodationService.update(accommodationDTO);
+
         return ResponseEntity.ok().body(result);
     }
 
