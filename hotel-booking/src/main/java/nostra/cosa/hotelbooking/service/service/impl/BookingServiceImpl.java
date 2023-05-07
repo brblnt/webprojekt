@@ -27,6 +27,7 @@ public class BookingServiceImpl implements BookingService<BookingDTO> {
   private final BookingRepository bookingRepository;
   private final BookingUtilities bookingUtilities;
   private final Converter<Booking, BookingDTO> convertBookingEntityToDTO;
+  private final Converter<BookingDTO, Booking> convertBookingDTOToEntity;
 
   @Override
   public List<BookingDTO> getAll() {
@@ -54,7 +55,8 @@ public class BookingServiceImpl implements BookingService<BookingDTO> {
 
   @Override
   public BookingDTO create(BookingDTO newBooking) {
-    return null;
+    return convertBookingEntityToDTO.convert(
+            bookingRepository.save(convertBookingDTOToEntity.convert(newBooking)));
   }
 
   @Override

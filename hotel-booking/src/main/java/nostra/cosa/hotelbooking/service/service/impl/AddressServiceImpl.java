@@ -1,48 +1,42 @@
 package nostra.cosa.hotelbooking.service.service.impl;
 
 import java.util.List;
-import java.util.Set;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nostra.cosa.hotelbooking.service.dto.RoomDTO;
+import nostra.cosa.hotelbooking.service.dto.address.AddressDTO;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.BookingService;
 import org.springframework.stereotype.Service;
 
-
 /**
- * Room Service class, implements ServiceInterface with RoomDTOs.
+ * Address Service class, implements ServiceInterface with AddressDTO.
  */
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class RoomServiceImpl implements BookingService<RoomDTO> {
+public class AddressServiceImpl implements BookingService<AddressDTO> {
 
   /**
    * No implementation need.
    */
   @Override
-  public List<RoomDTO> getAll() {
+  public List<AddressDTO> getAll() {
     return null;
   }
 
   @Override
-  public RoomDTO getById(Long id) throws NotFoundException {
+  public AddressDTO getById(Long id) throws NotFoundException {
     return null;
   }
 
   @Override
-  public RoomDTO update(RoomDTO update) throws NotFoundException {
+  public AddressDTO update(AddressDTO update) throws NotFoundException {
     return null;
   }
 
   @Override
-  public RoomDTO create(RoomDTO create) {
-    return null;
-  }
-
-  public Set<RoomDTO> create(Set<RoomDTO> creates) {
+  public AddressDTO create(AddressDTO create) {
     return null;
   }
 
