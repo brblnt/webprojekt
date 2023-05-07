@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class RoomServiceImpl implements BookingService<RoomDTO> {
 
   /**
-   * No implementation need.
+   * No implementation needed.
    */
   @Override
   public List<RoomDTO> getAll() {
