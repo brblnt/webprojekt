@@ -33,16 +33,16 @@ public class ApplicationUserController extends HotelBookingController {
     }
 
     @PostMapping
-    public ResponseEntity<ApplicationUserDTO> create(final @RequestBody ApplicationUserDTO bookingDTO) {
-        final ApplicationUserDTO result = applicationUserService.create(bookingDTO);
+    public ResponseEntity<ApplicationUserDTO> create(final @RequestBody ApplicationUserDTO applicationDTO) {
+        final ApplicationUserDTO result = applicationUserService.create(applicationDTO);
 
         return ResponseEntity.ok().body(result);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApplicationUserDTO> update(final @PathVariable("id") Long id, @RequestBody ApplicationUserDTO bookingDTO) {
-        bookingDTO.setId(id);
-        final ApplicationUserDTO result = applicationUserService.update(bookingDTO);
+    public ResponseEntity<ApplicationUserDTO> update(final @PathVariable("id") Long id, @RequestBody ApplicationUserDTO applicationDTO) throws NotFoundException {
+        applicationDTO.setId(id);
+        final ApplicationUserDTO result = applicationUserService.update(applicationDTO);
 
         return ResponseEntity.ok().body(result);
     }
