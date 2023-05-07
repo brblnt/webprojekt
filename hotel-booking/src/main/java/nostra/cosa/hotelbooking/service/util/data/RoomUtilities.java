@@ -35,6 +35,14 @@ public class RoomUtilities {
     return roomDTOList;
   }
 
+  public Set<Integer> getIdsByRoomDTOs(Set<RoomDTO> rooms) {
+    Set<Integer> roomIdList = new HashSet<>();
+    for (RoomDTO room : rooms) {
+      roomIdList.add(Math.toIntExact(room.getId()));
+    }
+    return roomIdList;
+  }
+
   public RoomDTO getRoomById(Long roomId) throws NotFoundException {
     return repository.findById(roomId)
             .map(convertRoomEntityToDTO::convert)

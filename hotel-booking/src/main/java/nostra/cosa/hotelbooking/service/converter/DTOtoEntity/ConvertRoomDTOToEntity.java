@@ -1,4 +1,4 @@
-package nostra.cosa.hotelbooking.service.converter.entityToDTO;
+package nostra.cosa.hotelbooking.service.converter.DTOtoEntity;
 
 import lombok.RequiredArgsConstructor;
 import nostra.cosa.hotelbooking.data.entity.Room;
@@ -8,17 +8,17 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 /**
- * Convert Room to RoomDTO via ModelMapper.
+ * Convert RoomDTO to Room via ModelMapper.
  */
 @Component
 @RequiredArgsConstructor
-public class ConvertRoomEntityToDTO implements Converter<Room, RoomDTO> {
+public class ConvertRoomDTOToEntity implements Converter<RoomDTO, Room> {
 
   private final ModelMapper modelMapper;
 
   @Override
-  public RoomDTO convert(Room source) {
-    return modelMapper.map(source, RoomDTO.class);
+  public Room convert(RoomDTO source) {
+    return modelMapper.map(source, Room.class);
   }
 
 }
