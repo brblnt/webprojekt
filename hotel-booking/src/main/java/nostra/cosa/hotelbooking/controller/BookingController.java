@@ -1,5 +1,7 @@
 package nostra.cosa.hotelbooking.controller;
 
+import static nostra.cosa.hotelbooking.auth.constants.PermissionConstants.*;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.service.dto.BookingDTO;
@@ -17,15 +19,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookingController extends HotelBookingController {
 
-    private static final String GET_ALL_PERMISSION = "hasPermission('[ \"ADMIN\", \"APPLICATION_USER\", \"ACCOMMODATION\" ]', 'GET_ALL')";
-    private static final String GET_BY_ID_PERMISSION = "hasPermission('[ \"ADMIN\", \"APPLICATION_USER\", \"ACCOMMODATION\" ]', 'GET_BY_ID')";
-    private static final String CREATE_PERMISSION = "hasPermission('[ \"ADMIN\", \"APPLICATION_USER\", \"ACCOMMODATION\" ]', 'CREATE')";
-    private static final String UPDATE_PERMISSION = "hasPermission('[ \"ADMIN\", \"APPLICATION_USER\", \"ACCOMMODATION\" ]', 'UPDATE')";
-    private static final String DELETE_PERMISSION = "hasPermission('[ \"ADMIN\", \"APPLICATION_USER\", \"ACCOMMODATION\" ]', 'DELETE')";
 
     private final BookingServiceImpl bookingService;
 
-    @PreAuthorize(GET_ALL_PERMISSION)
+    @PreAuthorize(GET_ALL_PERMISSION_ALL)
     @GetMapping
     public ResponseEntity<List<BookingDTO>> getAll() {
         final List<BookingDTO> result = bookingService.getAll();
@@ -33,7 +30,7 @@ public class BookingController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(GET_BY_ID_PERMISSION)
+    @PreAuthorize(GET_BY_ID_PERMISSION_ALL)
     @GetMapping("/{id}")
     public ResponseEntity<BookingDTO> getById(final @PathVariable("id") Long id) throws NotFoundException {
         final BookingDTO result = bookingService.getById(id);
@@ -41,7 +38,7 @@ public class BookingController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(CREATE_PERMISSION)
+    @PreAuthorize(CREATE_PERMISSION_ALL)
     @PostMapping
     public ResponseEntity<BookingDTO> create(final @RequestBody BookingDTO bookingDTO) {
         final BookingDTO result = bookingService.create(bookingDTO);
@@ -49,7 +46,7 @@ public class BookingController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(UPDATE_PERMISSION)
+    @PreAuthorize(UPDATE_PERMISSION_ALL)
     @PutMapping("/{id}")
     public ResponseEntity<BookingDTO> update(final @PathVariable("id") Long id, @RequestBody BookingDTO bookingDTO) throws NotFoundException {
         bookingDTO.setId(id);
@@ -58,7 +55,7 @@ public class BookingController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(DELETE_PERMISSION)
+    @PreAuthorize(DELETE_PERMISSION_ALL)
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(final @PathVariable("id") Long id) {
         final Boolean result = bookingService.delete(id);

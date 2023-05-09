@@ -1,5 +1,7 @@
 package nostra.cosa.hotelbooking.controller;
 
+import static nostra.cosa.hotelbooking.auth.constants.PermissionConstants.*;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.service.dto.ApplicationUserDTO;
@@ -17,16 +19,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ApplicationUserController extends HotelBookingController {
 
-    private static final String GET_ALL_PERMISSION = "hasPermission('[ \"ADMIN\", \"APPLICATION_USER\" ]', 'GET_ALL')";
-    private static final String GET_BY_ID_PERMISSION = "hasPermission('[ \"ADMIN\", \"APPLICATION_USER\" ]', 'GET_BY_ID')";
-    private static final String CREATE_PERMISSION = "hasPermission('[ \"ADMIN\", \"APPLICATION_USER\" ]', 'CREATE')";
-    private static final String UPDATE_PERMISSION = "hasPermission('[ \"ADMIN\", \"APPLICATION_USER\" ]', 'UPDATE')";
-    private static final String DELETE_PERMISSION = "hasPermission('[ \"ADMIN\", \"APPLICATION_USER\" ]', 'DELETE')";
-
-
     private final ApplicationUserServiceImpl applicationUserService;
 
-    @PreAuthorize(GET_ALL_PERMISSION)
+    @PreAuthorize(GET_ALL_PERMISSION_ADMIN_APPLICATION_USER)
     @GetMapping
     public ResponseEntity<List<ApplicationUserDTO>> getAll() {
         final List<ApplicationUserDTO> result = applicationUserService.getAll();
@@ -34,7 +29,7 @@ public class ApplicationUserController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(GET_BY_ID_PERMISSION)
+    @PreAuthorize(GET_BY_ID_PERMISSION_ADMIN_APPLICATION_USER)
     @GetMapping("/{id}")
     public ResponseEntity<ApplicationUserDTO> getById(final @PathVariable("id") Long id) throws NotFoundException {
         final ApplicationUserDTO result = applicationUserService.getById(id);
@@ -42,7 +37,7 @@ public class ApplicationUserController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(CREATE_PERMISSION)
+    @PreAuthorize(CREATE_PERMISSION_ADMIN_APPLICATION_USER)
     @PostMapping
     public ResponseEntity<ApplicationUserDTO> create(final @RequestBody ApplicationUserDTO bookingDTO) {
         final ApplicationUserDTO result = applicationUserService.create(bookingDTO);
@@ -50,7 +45,7 @@ public class ApplicationUserController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(UPDATE_PERMISSION)
+    @PreAuthorize(UPDATE_PERMISSION_ADMIN_APPLICATION_USER)
     @PutMapping("/{id}")
     public ResponseEntity<ApplicationUserDTO> update(final @PathVariable("id") Long id, @RequestBody ApplicationUserDTO bookingDTO) throws NotFoundException{
         bookingDTO.setId(id);
@@ -59,7 +54,7 @@ public class ApplicationUserController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(DELETE_PERMISSION)
+    @PreAuthorize(DELETE_PERMISSION_ADMIN_APPLICATION_USER)
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(final @PathVariable("id") Long id) {
         final Boolean result = applicationUserService.delete(id);
