@@ -1,0 +1,5 @@
+export enum Role {
+  APPLICATION_USER,
+  ACCOMMODATION,
+  ADMIN
+}
