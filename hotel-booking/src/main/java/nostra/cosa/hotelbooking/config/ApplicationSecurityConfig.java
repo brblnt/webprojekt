@@ -38,7 +38,7 @@ public class ApplicationSecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
                 .requestMatchers(URL_WHITELIST).permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().permitAll() //TODO: visszatenni authenticated()-re
                 .and().csrf().disable()
                 //.rememberMe().and() TODO: ez most hibát dob, mert null a userDetailsService. Majd később megcsinálom.
                 .cors().configurationSource(request -> setCorsConfiguration())
