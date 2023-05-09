@@ -39,17 +39,17 @@ public class ApplicationUserController extends HotelBookingController {
 
     @PreAuthorize(CREATE_PERMISSION_ADMIN_APPLICATION_USER)
     @PostMapping
-    public ResponseEntity<ApplicationUserDTO> create(final @RequestBody ApplicationUserDTO bookingDTO) {
-        final ApplicationUserDTO result = applicationUserService.create(bookingDTO);
+    public ResponseEntity<ApplicationUserDTO> create(final @RequestBody ApplicationUserDTO applicationUserDTO) {
+        final ApplicationUserDTO result = applicationUserService.create(applicationUserDTO);
 
         return ResponseEntity.ok().body(result);
     }
 
     @PreAuthorize(UPDATE_PERMISSION_ADMIN_APPLICATION_USER)
     @PutMapping("/{id}")
-    public ResponseEntity<ApplicationUserDTO> update(final @PathVariable("id") Long id, @RequestBody ApplicationUserDTO bookingDTO) throws NotFoundException{
-        bookingDTO.setId(id);
-        final ApplicationUserDTO result = applicationUserService.update(bookingDTO);
+    public ResponseEntity<ApplicationUserDTO> update(final @PathVariable("id") Long id, @RequestBody ApplicationUserDTO applicationUserDTO) throws NotFoundException {
+        applicationUserDTO.setId(id);
+        final ApplicationUserDTO result = applicationUserService.update(applicationUserDTO);
 
         return ResponseEntity.ok().body(result);
     }
