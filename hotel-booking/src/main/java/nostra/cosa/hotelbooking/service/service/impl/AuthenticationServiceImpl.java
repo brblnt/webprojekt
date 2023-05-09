@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationServiceImpl implements BookingService<AuthenticationDataDTO> {
 
   /**
-   * No implementation need.
+   * No implementation needed.
    */
   @Override
   public List<AuthenticationDataDTO> getAll() {
