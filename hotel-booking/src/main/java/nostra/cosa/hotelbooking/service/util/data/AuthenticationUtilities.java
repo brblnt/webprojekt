@@ -33,7 +33,7 @@ public class AuthenticationUtilities {
     //TEMPORARY
     PermissionDTO permissionDTO = new PermissionDTO();
     permissionDTO.setAdmin(PermissionConstants.ADMIN_PERMISSIONS);
-    return new AuthenticationDataDTO(1L, "admin", "password", Role.ADMIN, "2023.05.9",
+    return new AuthenticationDataDTO(1L, "admin", "password", Role.ADMIN,"img-url", "2023.05.9",
             true, true, true, true, permissionDTO);
     //return null;
   }
