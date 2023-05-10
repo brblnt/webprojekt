@@ -7,8 +7,8 @@ spring:
         console:
             enabled: true
 server:
-    port : 8080
+    port : 3010
 
 authentication:
     origin:
-        url: http://localhost:8080
+        url: http://localhost:3000

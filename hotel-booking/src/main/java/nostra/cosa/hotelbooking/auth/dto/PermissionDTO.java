@@ -24,9 +24,15 @@ public class PermissionDTO {
 
     public List<String> getAllPermissions() {
         List<String> result = new ArrayList<>();
-        applicationUser.forEach(role -> result.add(Role.APPLICATION_USER + "_" + role));
-        accommodation.forEach(role -> result.add(Role.ACCOMMODATION + "_" + role));
-        admin.forEach(role -> result.add(Role.ADMIN + "_"  + role));
+        if (applicationUser != null) {
+            applicationUser.forEach(role -> result.add(Role.APPLICATION_USER + "_" + role));
+        }
+        if (accommodation != null) {
+            accommodation.forEach(role -> result.add(Role.ACCOMMODATION + "_" + role));
+        }
+        if (admin != null) {
+            admin.forEach(role -> result.add(Role.ADMIN + "_"  + role));
+        }
         return result;
     }
 

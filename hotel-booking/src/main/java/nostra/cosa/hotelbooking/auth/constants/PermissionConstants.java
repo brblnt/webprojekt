@@ -1,9 +1,19 @@
 package nostra.cosa.hotelbooking.auth.constants;
 
+import java.util.List;
+
 public class PermissionConstants {
 
     public PermissionConstants() {
     }
+
+    public static final List<String> ADMIN_PERMISSIONS = List.of(
+             "ADMIN_GET_ALL",
+            "ADMIN_GET_BY_ID",
+            "ADMIN_CREATE",
+            "ADMIN_UPDATE",
+            "ADMIN_DELETE"
+    );
 
     public static final String GET_ALL_PERMISSION_ADMIN_APPLICATION_USER = "hasPermission('[ \"ADMIN\", \"APPLICATION_USER\" ]', 'GET_ALL')";
     public static final String GET_BY_ID_PERMISSION_ADMIN_APPLICATION_USER = "hasPermission('[ \"ADMIN\", \"APPLICATION_USER\" ]', 'GET_BY_ID')";
