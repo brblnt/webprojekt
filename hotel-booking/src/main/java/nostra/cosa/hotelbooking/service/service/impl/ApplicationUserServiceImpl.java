@@ -4,8 +4,10 @@ import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
 import nostra.cosa.hotelbooking.data.entity.Accommodation;
 import nostra.cosa.hotelbooking.data.entity.ApplicationUser;
+import nostra.cosa.hotelbooking.data.entity.AuthenticationData;
 import nostra.cosa.hotelbooking.data.repository.AccommodationRepository;
 import nostra.cosa.hotelbooking.data.repository.ApplicationUserRepository;
 import nostra.cosa.hotelbooking.service.dto.AccommodationDTO;
@@ -24,9 +26,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ApplicationUserServiceImpl implements BookingService<ApplicationUserDTO> {
 
+
   private final ApplicationUserRepository applicationUserRepository;
   private final ApplicationUserUtilities applicationUserUtilities;
   private final Converter<ApplicationUser, ApplicationUserDTO> convertApplicationUserEntityToDTO;
+  private final Converter<ApplicationUserDTO, ApplicationUser> convertApplicationUserDTOToEntity;
 
   @Override
   public List<ApplicationUserDTO> getAll() {
@@ -54,7 +58,8 @@ public class ApplicationUserServiceImpl implements BookingService<ApplicationUse
 
   @Override
   public ApplicationUserDTO create(ApplicationUserDTO newApplicationUser) {
-    return null;
+    return convertApplicationUserEntityToDTO.convert(
+            applicationUserRepository.save(convertApplicationUserDTOToEntity.convert(newApplicationUser)));
   }
 
   @Override

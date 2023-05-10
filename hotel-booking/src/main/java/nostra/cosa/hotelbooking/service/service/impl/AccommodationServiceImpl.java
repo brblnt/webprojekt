@@ -21,9 +21,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class AccommodationServiceImpl implements BookingService<AccommodationDTO> {
 
+
+  private final AddressServiceImpl addressService;
   private final AccommodationRepository accommodationRepository;
   private final AccommodationUtilities accommodationUtilities;
   private final Converter<Accommodation, AccommodationDTO> convertAccommodationEntityToDTO;
+  private final Converter<AccommodationDTO, Accommodation> convertAccommodationDTOToEntity;
 
   @Override
   public List<AccommodationDTO> getAll() {
@@ -46,12 +49,14 @@ public class AccommodationServiceImpl implements BookingService<AccommodationDTO
     return create(
             accommodationUtilities.update(
                     getById(newAccommodation.getId()),
-                    newAccommodation));   //TODO: szétszedés?
+                    newAccommodation));
   }
 
   @Override
   public AccommodationDTO create(AccommodationDTO newAccommodation) {
-    return null;
+    addressService.create(newAccommodation.getAddress());
+    return convertAccommodationEntityToDTO.convert(
+            accommodationRepository.save(convertAccommodationDTOToEntity.convert(newAccommodation)));
   }
 
   @Override
