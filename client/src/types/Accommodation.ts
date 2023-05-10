@@ -11,6 +11,6 @@ export type Accommodation = {
   emailAddress: string;
   phoneNumber: string;
   accommodationType: AccommodationType;
-  serviceTypes: ServiceType[];
+  serviceTypes: ServiceType;
   rooms: Room[];
 }
