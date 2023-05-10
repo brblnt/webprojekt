@@ -19,6 +19,8 @@ public class AuthenticationDataDTO {
 
   private Role role;
 
+  private String imgPath;
+
   private String registrationDate;
 
   private Boolean accountNonExpired;

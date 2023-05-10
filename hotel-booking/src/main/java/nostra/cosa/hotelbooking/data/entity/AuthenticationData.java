@@ -26,6 +26,9 @@ public class AuthenticationData {
   @Column(name = "role", nullable = false)
   private String role;
 
+  @Column(name = "img_path", nullable = false)
+  private String imgPath;
+
   @Column(name = "registration_date", nullable = false)
   private String registrationDate;
 
