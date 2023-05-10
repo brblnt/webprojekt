@@ -26,8 +26,11 @@ public class HotelBookingAuthenticationService {
 
     private final InMemoryUserDetailsManager userDetailsManager;
 
-    public ResponseEntity<AuthenticationDataDTO> login(String userName) {
+    public ResponseEntity<AuthenticationDataDTO> login(String userName, String password) {
         AuthenticationDataDTO authData = authUtility.getAuthenticationDataDTOByUserName(userName);
+        if (!password.equals(authData.getPassword())) {
+            return ResponseEntity.status(401).build();
+        }
         saveUser(authData);
         return ResponseEntity.ok().body(authData);
     }
@@ -55,7 +58,7 @@ public class HotelBookingAuthenticationService {
         userDetailsManager.createUser(user);
         Authentication authentication = new UsernamePasswordAuthenticationToken(authData.getPassword(), null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        log.info("User: {} logged in" + authData.getUserName());
+        log.info("User: {} logged in", authData.getUserName());
     }
 
     private void clearSession(HttpServletRequest request) {

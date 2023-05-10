@@ -20,11 +20,11 @@ public class HotelBookingAuthenticationController {
 
     @PostMapping(value = "/login")
     public ResponseEntity<AuthenticationDataDTO> login(HttpServletRequest request, @RequestParam("userName") String userName, @RequestParam("password") String password) {
-        if (userName == null && password == null) {
+        if (userName == null || password == null) {
             return ResponseEntity.badRequest().build();
         }
         hotelBookingAuthenticationService.clearUserSession(request, userName);
-        return hotelBookingAuthenticationService.login(userName);
+        return hotelBookingAuthenticationService.login(userName, password);
     }
 
     //TODO: register
