@@ -45,4 +45,9 @@ public class AuthenticationServiceImpl implements BookingService<AuthenticationD
     return null;
   }
 
+  public Boolean existsByUserName(String userName) {
+    return false;
+  }
 }
+
+
