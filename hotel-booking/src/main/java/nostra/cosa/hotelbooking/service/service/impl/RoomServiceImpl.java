@@ -29,25 +29,25 @@ public class RoomServiceImpl implements BookingService<RoomDTO> {
 
   @Override
   public RoomDTO getById(Long id) throws NotFoundException {
-    return null;
+    return null;//TODO
   }
 
   @Override
   public RoomDTO update(RoomDTO update) throws NotFoundException {
-    return null;
+    return null;//TODO
   }
 
   @Override
   public RoomDTO create(RoomDTO create) {
-    return null;
+    return null;//TODO
   }
 
   public Set<RoomDTO> create(Set<RoomDTO> creates) {
-    return null;
+    return null;//TODO
   }
 
   @Override
   public Boolean delete(Long id) {
-    return null;
+    return null;//TODO
   }
 }

@@ -27,19 +27,22 @@ public class AddressServiceImpl implements BookingService<AddressDTO> {
 
   @Override
   public AddressDTO getById(Long id) throws NotFoundException {
-    return null;
+    return null;//TODO
   }
 
   @Override
   public AddressDTO update(AddressDTO update) throws NotFoundException {
-    return null;
+    return null;//TODO
   }
 
   @Override
   public AddressDTO create(AddressDTO create) {
-    return null;
+    return null;//TODO
   }
 
+  /**
+   * No implementation needed.
+   */
   @Override
   public Boolean delete(Long id) {
     return null;

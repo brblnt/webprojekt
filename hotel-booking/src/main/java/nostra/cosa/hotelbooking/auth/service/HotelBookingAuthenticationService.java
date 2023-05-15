@@ -36,7 +36,7 @@ public class HotelBookingAuthenticationService {
     }
 
     public AuthenticationDataDTO getAuthenticationData(String userName) {
-        log.info("Logging in... " + userName);
+        log.info("Logging in... {}", userName);
         return authUtility.getAuthenticationDataDTOByUserName(userName);
     }
 

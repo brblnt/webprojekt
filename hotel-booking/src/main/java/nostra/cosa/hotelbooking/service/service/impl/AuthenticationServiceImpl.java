@@ -27,19 +27,22 @@ public class AuthenticationServiceImpl implements BookingService<AuthenticationD
 
   @Override
   public AuthenticationDataDTO getById(Long id) throws NotFoundException {
-    return null;
+    return null;//TODO
   }
 
   @Override
   public AuthenticationDataDTO update(AuthenticationDataDTO update) throws NotFoundException {
-    return null;
+    return null;//TODO
   }
 
   @Override
   public AuthenticationDataDTO create(AuthenticationDataDTO create) {
-    return null;
+    return null;//TODO
   }
 
+  /**
+   * No implementation needed.
+   */
   @Override
   public Boolean delete(Long id) {
     return null;
