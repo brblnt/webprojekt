@@ -46,12 +46,13 @@ public class AuthenticationServiceImpl implements BookingService<AuthenticationD
 
   @Override
   public AuthenticationDataDTO update(AuthenticationDataDTO update) throws NotFoundException {
-    return null;//TODO
+    return null; //TODO
   }
 
   @Override
   public AuthenticationDataDTO create(AuthenticationDataDTO create) {
-    return null;//TODO
+    return convertAuthenticationEntityToDTO.convert(
+            authenticationRepository.save(convertAuthenticationDTOToEntity.convert(create)));
   }
 
   /**

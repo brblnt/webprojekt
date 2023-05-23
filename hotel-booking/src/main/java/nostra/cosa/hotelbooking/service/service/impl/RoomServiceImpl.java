@@ -1,5 +1,6 @@
 package nostra.cosa.hotelbooking.service.service.impl;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -50,11 +51,16 @@ public class RoomServiceImpl implements BookingService<RoomDTO> {
 
   @Override
   public RoomDTO create(RoomDTO create) {
-    return null;//TODO
+    return convertRoomEntityToDTO.convert(
+            roomRepository.save(convertRoomDTOToEntity.convert(create)));
   }
 
   public Set<RoomDTO> create(Set<RoomDTO> creates) {
-    return null;//TODO
+    Set<RoomDTO> newSet = new HashSet<>();
+    for (RoomDTO room : creates) {
+      newSet.add(create(room));
+    }
+    return newSet;
   }
 
   @Override
