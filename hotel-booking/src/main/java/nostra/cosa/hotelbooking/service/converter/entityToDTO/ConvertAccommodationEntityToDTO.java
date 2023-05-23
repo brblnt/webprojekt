@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.data.entity.Accommodation;
 import nostra.cosa.hotelbooking.service.dto.AccommodationDTO;
 import nostra.cosa.hotelbooking.service.exceptions.AuthenticationNotFoundException;
+import nostra.cosa.hotelbooking.service.service.impl.AddressServiceImpl;
 import nostra.cosa.hotelbooking.service.util.data.AddressUtilities;
 import nostra.cosa.hotelbooking.service.util.data.AuthenticationUtilities;
 import nostra.cosa.hotelbooking.service.util.data.RoomUtilities;
@@ -20,7 +21,7 @@ import org.springframework.stereotype.Component;
 public class ConvertAccommodationEntityToDTO implements Converter<Accommodation, AccommodationDTO> {
 
   private final AuthenticationUtilities authenticationUtilities;
-  private final AddressUtilities addressUtilities;
+  private final AddressServiceImpl addressService;
   private final RoomUtilities roomUtilities;
 
   @Override
@@ -29,7 +30,7 @@ public class ConvertAccommodationEntityToDTO implements Converter<Accommodation,
       return new AccommodationDTO(
               source.getId(),
               authenticationUtilities.getAuthenticationDataDTOById(source.getAuthenticationId()),
-              addressUtilities.getAddressById(source.getAddressId()),
+              addressService.getById(source.getAddressId()),
               source.getEmailAddress(),
               source.getPhoneNumber(),
               source.getAccommodationType(),

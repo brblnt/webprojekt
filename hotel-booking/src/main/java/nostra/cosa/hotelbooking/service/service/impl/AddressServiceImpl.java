@@ -4,9 +4,13 @@ import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nostra.cosa.hotelbooking.data.entity.address.Address;
+import nostra.cosa.hotelbooking.data.repository.address.AddressRepository;
 import nostra.cosa.hotelbooking.service.dto.address.AddressDTO;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.BookingService;
+import nostra.cosa.hotelbooking.service.util.data.AddressUtilities;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,17 +21,25 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class AddressServiceImpl implements BookingService<AddressDTO> {
 
-  /**
-   * No implementation need.
-   */
+  private final AddressUtilities addressUtilities;
+  private final AddressRepository addressRepository;
+  private final Converter<AddressDTO, Address> convertAddressDTOToEntity;
+  private final Converter<Address, AddressDTO> convertAddressEntityToDTO;
+
   @Override
   public List<AddressDTO> getAll() {
-    return null;
+    log.info("Get all AddressDTOs.");
+    return addressRepository.findAll().stream()
+            .map(convertAddressEntityToDTO::convert)
+            .toList();
   }
 
   @Override
-  public AddressDTO getById(Long id) throws NotFoundException {
-    return null;//TODO
+  public AddressDTO getById(Long id) {
+    log.info("Get AddressDTO by id : {}", id);
+    return addressRepository.findById(id)
+            .map(convertAddressEntityToDTO::convert)
+            .orElse(addressUtilities.createEmptyAddress());
   }
 
   @Override

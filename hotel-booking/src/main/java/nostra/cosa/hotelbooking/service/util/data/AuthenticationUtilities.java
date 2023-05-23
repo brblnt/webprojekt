@@ -25,7 +25,6 @@ public class AuthenticationUtilities {
     }
   }
 
-  public AuthenticationDataDTO getAuthenticationDataDTOByUserName(String userName) {
-    return convertAuthenticationDataEntityToDTO.convert(authenticationRepository.getByUserName(userName));
-  }
+
+
 }
