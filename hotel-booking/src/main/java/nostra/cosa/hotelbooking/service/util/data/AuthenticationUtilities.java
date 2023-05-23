@@ -7,6 +7,7 @@ import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
 import nostra.cosa.hotelbooking.service.exceptions.AuthenticationNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 /**
  * Authentication Utilities.
  */
@@ -24,7 +25,6 @@ public class AuthenticationUtilities {
       throw new AuthenticationNotFoundException("AuthenticationData Not found!");
     }
   }
-
 
 
 }
