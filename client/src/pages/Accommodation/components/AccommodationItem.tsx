@@ -3,17 +3,10 @@ import {
   chakra,
   Box,
   Stack,
-  VStack,
-  HStack,
   Flex,
   Text,
   Image,
-  Container,
-  Icon,
-  StackProps,
-  Button,
 } from "@chakra-ui/react";
-import { AiOutlineHeart, AiOutlineExclamationCircle } from "react-icons/ai";
 import { Accommodation } from "../../../types/Accommodation";
 import { Link } from "react-router-dom";
 
