@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AccommodationPage } from "./pages/Accommodation";
 import { LoginPage } from "./pages/Auth/LoginPage";
 import { RegisterPage } from "./pages/Auth/RegisterPage";
+import { AccommodationSearch } from "./pages/Accommodation/components/AccommodationSearch";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -14,6 +15,7 @@ export const App = () => (
       <Routes>
         <Route path={`/`} element={<HomePage />} />
         <Route path={`/accommodation`} element={<AccommodationPage />} />
+        <Route path={`/accommodation/search`} element={<AccommodationSearch />} />
         <Route path={`/login`} element={<LoginPage />} />
         <Route path={`/register`} element={<RegisterPage />} />
       </Routes>
