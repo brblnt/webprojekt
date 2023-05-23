@@ -6,6 +6,7 @@ import nostra.cosa.hotelbooking.service.dto.BookingDTO;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.impl.AccommodationServiceImpl;
 import nostra.cosa.hotelbooking.service.service.impl.ApplicationUserServiceImpl;
+import nostra.cosa.hotelbooking.service.service.impl.RoomServiceImpl;
 import nostra.cosa.hotelbooking.service.util.data.RoomUtilities;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,7 @@ public class ConvertBookingEntityToDTO implements Converter<Booking, BookingDTO>
 
   private final AccommodationServiceImpl accommodationService;
   private final ApplicationUserServiceImpl applicationUserService;
-  private final RoomUtilities roomUtilities;
+  private final RoomServiceImpl roomService;
 
 
   @Override
@@ -29,7 +30,7 @@ public class ConvertBookingEntityToDTO implements Converter<Booking, BookingDTO>
               source.getId(),
               applicationUserService.getById(source.getUserId()),
               accommodationService.getById(source.getAccommodationId()),
-              roomUtilities.getRoomById(source.getRoomId()),
+              roomService.getById(source.getRoomId()),
               source.getStartDate(),
               source.getFinishDate(),
               source.getServiceType(),

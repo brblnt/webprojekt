@@ -4,9 +4,14 @@ import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import nostra.cosa.hotelbooking.data.entity.address.Address;
+import nostra.cosa.hotelbooking.data.repository.address.AddressRepository;
 import nostra.cosa.hotelbooking.service.dto.address.AddressDTO;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.BookingService;
+import nostra.cosa.hotelbooking.service.util.data.AddressUtilities;
+import nostra.cosa.hotelbooking.service.util.data.CityUtilities;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,31 +22,49 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class AddressServiceImpl implements BookingService<AddressDTO> {
 
-  /**
-   * No implementation need.
-   */
+  private final AddressUtilities addressUtilities;
+  private final CityUtilities cityUtilities;
+  private final AddressRepository addressRepository;
+  private final Converter<AddressDTO, Address> convertAddressDTOToEntity;
+  private final Converter<Address, AddressDTO> convertAddressEntityToDTO;
+
   @Override
   public List<AddressDTO> getAll() {
-    return null;
+    log.info("Get all AddressDTOs.");
+    return addressRepository.findAll().stream()
+            .map(convertAddressEntityToDTO::convert)
+            .toList();
   }
 
   @Override
-  public AddressDTO getById(Long id) throws NotFoundException {
-    return null;
+  public AddressDTO getById(Long id) {
+    log.info("Get AddressDTO by id : {}", id);
+    return addressRepository.findById(id)
+            .map(convertAddressEntityToDTO::convert)
+            .orElse(addressUtilities.createEmptyAddress());
   }
 
   @Override
   public AddressDTO update(AddressDTO update) throws NotFoundException {
-    return null;
+    return null;//TODO
   }
 
   @Override
   public AddressDTO create(AddressDTO create) {
-    return null;
+    cityUtilities.saveCity(create.getCity());
+    return convertAddressEntityToDTO.convert(
+            addressRepository.save(convertAddressDTOToEntity.convert(create)));
   }
+
 
   @Override
   public Boolean delete(Long id) {
-    return null;
+    try {
+      addressRepository.deleteById(id);
+      return true;
+    } catch (IllegalArgumentException e) {
+      log.warn("Data integrity violation [DELETE]");
+      return false;
+    }
   }
 }

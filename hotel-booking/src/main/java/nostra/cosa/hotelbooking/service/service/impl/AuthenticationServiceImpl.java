@@ -5,8 +5,11 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
+import nostra.cosa.hotelbooking.data.entity.AuthenticationData;
+import nostra.cosa.hotelbooking.data.repository.AuthenticationRepository;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.BookingService;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,32 +20,50 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class AuthenticationServiceImpl implements BookingService<AuthenticationDataDTO> {
 
-  /**
-   * No implementation needed.
-   */
+  private final AuthenticationRepository authenticationRepository;
+  private final Converter<AuthenticationDataDTO, AuthenticationData> convertAuthenticationDTOToEntity;
+  private final Converter<AuthenticationData, AuthenticationDataDTO> convertAuthenticationEntityToDTO;
+
   @Override
   public List<AuthenticationDataDTO> getAll() {
-    return null;
+    log.info("Get all AuthenticationDTOs.");
+    return authenticationRepository.findAll().stream()
+            .map(convertAuthenticationEntityToDTO::convert)
+            .toList();
   }
 
   @Override
   public AuthenticationDataDTO getById(Long id) throws NotFoundException {
-    return null;
+    log.info("Get AuthenticationDTO by id : {}", id);
+    return authenticationRepository.findById(id)
+            .map(convertAuthenticationEntityToDTO::convert)
+            .orElseThrow(() -> new NotFoundException("There is no AuthenticationDTO with ID:" + id));
+  }
+
+  public AuthenticationDataDTO getAuthenticationDataDTOByUserName(String userName) {
+    return convertAuthenticationEntityToDTO.convert(authenticationRepository.getByUserName(userName));
   }
 
   @Override
   public AuthenticationDataDTO update(AuthenticationDataDTO update) throws NotFoundException {
-    return null;
+    return null; //TODO
   }
 
   @Override
   public AuthenticationDataDTO create(AuthenticationDataDTO create) {
-    return null;
+    return convertAuthenticationEntityToDTO.convert(
+            authenticationRepository.save(convertAuthenticationDTOToEntity.convert(create)));
   }
 
   @Override
   public Boolean delete(Long id) {
-    return null;
+    try {
+      authenticationRepository.deleteById(id);
+      return true;
+    } catch (IllegalArgumentException e) {
+      log.warn("Data integrity violation [DELETE]");
+      return false;
+    }
   }
 
   public Boolean existsByUserName(String userName) {

@@ -1,8 +1,6 @@
 package nostra.cosa.hotelbooking.service.util.data;
 
 import lombok.RequiredArgsConstructor;
-import nostra.cosa.hotelbooking.data.repository.address.AddressRepository;
-import nostra.cosa.hotelbooking.service.converter.entityToDTO.address.ConvertAddressEntityToDTO;
 import nostra.cosa.hotelbooking.service.dto.address.AddressDTO;
 import org.springframework.stereotype.Service;
 
@@ -12,20 +10,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AddressUtilities {
-
-  private final AddressRepository addressRepository;
-  private final ConvertAddressEntityToDTO convertAddressEntityToDTO;
   private final CityUtilities cityUtilities;
 
-  public AddressDTO getAddressById(Long id) {
-    try {
-      return convertAddressEntityToDTO.convert(addressRepository.findById(id).get());
-    } catch (Exception e) {
-      return createEmptyAddress();
-    }
-  }
-
-  private AddressDTO createEmptyAddress() {
+  public AddressDTO createEmptyAddress() {
     return new AddressDTO(
             0L, "", cityUtilities.createEmptyCity(), "", "");
   }

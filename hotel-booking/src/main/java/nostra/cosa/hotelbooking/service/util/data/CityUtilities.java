@@ -37,4 +37,9 @@ public class CityUtilities {
     return new CityDTO("", "");
   }
 
+
+  public CityDTO saveCity(CityDTO cityDTO) {
+    City city = cityRepository.save(new City(cityDTO.getPostalCode(), cityDTO.getCityName()));
+    return new CityDTO(city.getPostalCode(), city.getCityName());
+  }
 }

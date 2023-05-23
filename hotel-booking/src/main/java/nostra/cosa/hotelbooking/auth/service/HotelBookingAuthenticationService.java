@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
 import nostra.cosa.hotelbooking.auth.dto.AuthorizationDTO;
+import nostra.cosa.hotelbooking.service.service.impl.AuthenticationServiceImpl;
 import nostra.cosa.hotelbooking.auth.dto.RegistrationDTO;
 import nostra.cosa.hotelbooking.auth.validation.RegistrationDataNotValidException;
 import nostra.cosa.hotelbooking.auth.validation.RegistrationValidationError;
@@ -28,7 +29,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HotelBookingAuthenticationService {
 
-    private final AuthenticationUtilities authUtility;
+    //átkerültek a metódusok a szerviz osztályba
+    private final AuthenticationServiceImpl authUtility;
 
     private final InMemoryUserDetailsManager userDetailsManager;
 
@@ -52,8 +54,9 @@ public class HotelBookingAuthenticationService {
         return ResponseEntity.ok().body(authData);
     }
 
+
     public AuthenticationDataDTO getAuthenticationData(final String userName) {
-        log.info("Logging in... " + userName);
+        log.info("Logging in... {}", userName);
         return authUtility.getAuthenticationDataDTOByUserName(userName);
     }
 
