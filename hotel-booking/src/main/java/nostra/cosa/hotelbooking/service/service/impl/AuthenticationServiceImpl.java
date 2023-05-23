@@ -1,10 +1,16 @@
 package nostra.cosa.hotelbooking.service.service.impl;
 
+import static nostra.cosa.hotelbooking.auth.constants.PermissionConstants.*;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
+import nostra.cosa.hotelbooking.auth.dto.PermissionDTO;
+import nostra.cosa.hotelbooking.auth.dto.RegistrationDTO;
+import nostra.cosa.hotelbooking.auth.dto.enums.Role;
 import nostra.cosa.hotelbooking.data.entity.AuthenticationData;
 import nostra.cosa.hotelbooking.data.repository.AuthenticationRepository;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
@@ -53,6 +59,27 @@ public class AuthenticationServiceImpl implements BookingService<AuthenticationD
   public AuthenticationDataDTO create(AuthenticationDataDTO create) {
     return convertAuthenticationEntityToDTO.convert(
             authenticationRepository.save(convertAuthenticationDTOToEntity.convert(create)));
+  }
+
+  public AuthenticationDataDTO toAuthenticationDataDTO(final RegistrationDTO registrationDTO) {
+    final Role role = Role.valueOf(registrationDTO.getRole());
+    return new AuthenticationDataDTO(null, registrationDTO.getUserName(),
+            registrationDTO.getPassword(), role, "", LocalDateTime.now().toString(),
+            true, true, true, true, getPermissionsByRole(role));
+  }
+
+  public PermissionDTO getPermissionsByRole(final Role role) {
+    final PermissionDTO permissionDTO = new PermissionDTO();
+    if (Role.ADMIN.equals(role)) {
+      permissionDTO.setAdmin(ADMIN_PERMISSIONS);
+    }
+    if (Role.APPLICATION_USER.equals(role)) {
+      permissionDTO.setApplicationUser(APPLICATION_USER_PERMISSIONS);
+    }
+    if (Role.ACCOMMODATION.equals(role)) {
+      permissionDTO.setAccommodation(ACCOMMODATION_PERMISSIONS);
+    }
+    return permissionDTO;
   }
 
   @Override

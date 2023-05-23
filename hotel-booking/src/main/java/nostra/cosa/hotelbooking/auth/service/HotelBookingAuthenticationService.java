@@ -41,7 +41,7 @@ public class HotelBookingAuthenticationService {
         }
         // TODO: Bálint, ezt majd nézd meg. Itt az authenticationService-ben nincsenek ilyen metódusok.
         final AuthenticationDataDTO authenticationDataDTO = authenticationService.toAuthenticationDataDTO(registrationDTO);
-        return ResponseEntity.ok().body(authenticationService.saveUser(authenticationDataDTO));
+        return ResponseEntity.ok().body(authenticationService.create(authenticationDataDTO));
     }
 
     public ResponseEntity<AuthenticationDataDTO> login(final String userName, final String password) {
