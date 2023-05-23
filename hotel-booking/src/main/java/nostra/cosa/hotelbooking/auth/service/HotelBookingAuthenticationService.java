@@ -11,7 +11,6 @@ import nostra.cosa.hotelbooking.auth.dto.RegistrationDTO;
 import nostra.cosa.hotelbooking.auth.validation.RegistrationDataNotValidException;
 import nostra.cosa.hotelbooking.auth.validation.RegistrationValidationError;
 import nostra.cosa.hotelbooking.auth.validation.RegistrationValidator;
-import nostra.cosa.hotelbooking.service.util.data.AuthenticationUtilities;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -29,8 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HotelBookingAuthenticationService {
 
-    //átkerültek a metódusok a szerviz osztályba
-    private final AuthenticationServiceImpl authUtility;
+    private final AuthenticationServiceImpl authenticationService;
 
     private final InMemoryUserDetailsManager userDetailsManager;
 
@@ -41,12 +39,13 @@ public class HotelBookingAuthenticationService {
         if (validationErrors.isEmpty()) {
             throw new RegistrationDataNotValidException(validationErrors);
         }
-        final AuthenticationDataDTO authenticationDataDTO = authUtility.toAuthenticationDataDTO(registrationDTO);
-        return ResponseEntity.ok().body(authUtility.saveUser(authenticationDataDTO));
+        // TODO: Bálint, ezt majd nézd meg. Itt az authenticationService-ben nincsenek ilyen metódusok.
+        final AuthenticationDataDTO authenticationDataDTO = authenticationService.toAuthenticationDataDTO(registrationDTO);
+        return ResponseEntity.ok().body(authenticationService.saveUser(authenticationDataDTO));
     }
 
     public ResponseEntity<AuthenticationDataDTO> login(final String userName, final String password) {
-        final AuthenticationDataDTO authData = authUtility.getAuthenticationDataDTOByUserName(userName);
+        final AuthenticationDataDTO authData = authenticationService.getAuthenticationDataDTOByUserName(userName);
         if (!password.equals(authData.getPassword())) {
             return ResponseEntity.status(401).build();
         }
@@ -57,7 +56,7 @@ public class HotelBookingAuthenticationService {
 
     public AuthenticationDataDTO getAuthenticationData(final String userName) {
         log.info("Logging in... {}", userName);
-        return authUtility.getAuthenticationDataDTOByUserName(userName);
+        return authenticationService.getAuthenticationDataDTOByUserName(userName);
     }
 
     public ResponseEntity<String> logout(final String userName) {
