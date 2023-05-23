@@ -55,12 +55,15 @@ public class AuthenticationServiceImpl implements BookingService<AuthenticationD
             authenticationRepository.save(convertAuthenticationDTOToEntity.convert(create)));
   }
 
-  /**
-   * No implementation needed.
-   */
   @Override
   public Boolean delete(Long id) {
-    return null;
+    try {
+      authenticationRepository.deleteById(id);
+      return true;
+    } catch (IllegalArgumentException e) {
+      log.warn("Data integrity violation [DELETE]");
+      return false;
+    }
   }
 
 }

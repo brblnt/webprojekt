@@ -56,11 +56,15 @@ public class AddressServiceImpl implements BookingService<AddressDTO> {
             addressRepository.save(convertAddressDTOToEntity.convert(create)));
   }
 
-  /**
-   * No implementation needed.
-   */
+
   @Override
   public Boolean delete(Long id) {
-    return null;
+    try {
+      addressRepository.deleteById(id);
+      return true;
+    } catch (IllegalArgumentException e) {
+      log.warn("Data integrity violation [DELETE]");
+      return false;
+    }
   }
 }
