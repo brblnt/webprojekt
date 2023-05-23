@@ -9,7 +9,7 @@
 | Bor Bálint |`Crime Boss`|`CEO`|`back-end`            |
 |Négyesi Zoltán|`Capo`|`CTO`|`back-end`            |
 |Hoffner Marcell|`Consigliere`|`CMO`|`front-end`|
-|Vad Kristóf|`Capo`|`helpdesk`|`front-end`|
+|Vad Kristóf|`Capo`|`CIO`|`front-end`|
 
 ```
 Mint egy badboy, rossz arcokkal lógok, minden megvan, minden pénzt elszórok...
