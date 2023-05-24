@@ -47,7 +47,7 @@ public class AuthenticationServiceImpl implements BookingService<AuthenticationD
   }
 
   public AuthenticationDataDTO getAuthenticationDataDTOByUserName(String userName) {
-    return convertAuthenticationEntityToDTO.convert(authenticationRepository.getByUserName(userName));
+    return convertAuthenticationEntityToDTO.convert(authenticationRepository.findByUserName(userName));
   }
 
   @Override
