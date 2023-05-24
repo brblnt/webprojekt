@@ -39,7 +39,6 @@ public class HotelBookingAuthenticationService {
         if (validationErrors.isEmpty()) {
             throw new RegistrationDataNotValidException(validationErrors);
         }
-        // TODO: Bálint, ezt majd nézd meg. Itt az authenticationService-ben nincsenek ilyen metódusok.
         final AuthenticationDataDTO authenticationDataDTO = authenticationService.toAuthenticationDataDTO(registrationDTO);
         return ResponseEntity.ok().body(authenticationService.create(authenticationDataDTO));
     }
