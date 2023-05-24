@@ -30,6 +30,7 @@ public class ConvertAccommodationEntityToDTO implements Converter<Accommodation,
       return new AccommodationDTO(
               source.getId(),
               authenticationUtilities.getAuthenticationDataDTOById(source.getAuthenticationId()),
+              source.getAccommodationName(),
               addressService.getById(source.getAddressId()),
               source.getEmailAddress(),
               source.getPhoneNumber(),
