@@ -24,6 +24,8 @@ public class AccommodationDTO {
 
   private AuthenticationDataDTO authenticationData;
 
+  private String accommodationName;
+
   private AddressDTO address;
 
   private String emailAddress;

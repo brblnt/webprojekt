@@ -19,6 +19,7 @@ public class AccommodationUtilities implements UtilitiesForService<Accommodation
     return new AccommodationDTO(
             oldDTO.getId(),
             checkNull(oldDTO.getAuthenticationData(), newDTO.getAuthenticationData()),
+            checkNull(oldDTO.getAccommodationName(), newDTO.getAccommodationName()),
             checkNull(oldDTO.getAddress(), newDTO.getAddress()),
             checkNull(oldDTO.getEmailAddress(), newDTO.getEmailAddress()),
             checkNull(oldDTO.getPhoneNumber(), newDTO.getPhoneNumber()),
