@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
 
@@ -34,18 +35,21 @@ public class HotelBookingAuthenticationService {
 
     private final RegistrationValidator registrationValidator;
 
+    private final PasswordEncoder passwordEncoder;
+
     public ResponseEntity<AuthenticationDataDTO> register(final RegistrationDTO registrationDTO) throws RegistrationDataNotValidException {
         final List<RegistrationValidationError> validationErrors = registrationValidator.validate(registrationDTO);
         if (validationErrors.isEmpty()) {
             throw new RegistrationDataNotValidException(validationErrors);
         }
+        registrationDTO.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
         final AuthenticationDataDTO authenticationDataDTO = authenticationService.toAuthenticationDataDTO(registrationDTO);
         return ResponseEntity.ok().body(authenticationService.create(authenticationDataDTO));
     }
 
     public ResponseEntity<AuthenticationDataDTO> login(final String userName, final String password) {
         final AuthenticationDataDTO authData = authenticationService.getAuthenticationDataDTOByUserName(userName);
-        if (!password.equals(authData.getPassword())) {
+        if (!passwordEncoder.matches(password, authData.getPassword())) {
             return ResponseEntity.status(401).build();
         }
         saveUser(authData);
