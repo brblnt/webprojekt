@@ -25,6 +25,9 @@ public class Accommodation{
   @Column(name = "authentication_id", nullable = false)
   private Long authenticationId;
 
+  @Column(name = "accommodation_name", nullable = false)
+  private String accommodationName;
+
   @Column(name = "address_id", nullable = false)
   private Long addressId;
 

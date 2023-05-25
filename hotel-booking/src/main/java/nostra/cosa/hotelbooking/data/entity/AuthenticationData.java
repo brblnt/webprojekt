@@ -2,6 +2,10 @@ package nostra.cosa.hotelbooking.data.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import nostra.cosa.hotelbooking.auth.dto.enums.Role;
+import nostra.cosa.hotelbooking.auth.entity.Permission;
+
+import java.util.List;
 
 /**
  * Authentication data layer representation.
@@ -24,7 +28,7 @@ public class AuthenticationData {
   private String password;
 
   @Column(name = "role", nullable = false)
-  private String role;
+  private Role role;
 
   @Column(name = "img_path", nullable = false)
   private String imgPath;
@@ -43,5 +47,9 @@ public class AuthenticationData {
 
   @Column(name = "account_enabled", nullable = false)
   private Boolean accountEnabled;
+
+  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+  @JoinColumn(name = "authentication_id")
+  private List<Permission> permissions;
 
 }

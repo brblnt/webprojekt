@@ -25,6 +25,7 @@ public class ConvertAccommodationDTOToEntity implements Converter<AccommodationD
     return new Accommodation(
             source.getId(),
             source.getAuthenticationData().getId(),
+            source.getAccommodationName(),
             source.getAddress().getAddressId(),
             source.getEmailAddress(),
             source.getPhoneNumber(),

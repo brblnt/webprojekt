@@ -7,7 +7,6 @@ import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 /**
  * Service interface with generic parameter.
  *
- * TODO: interface name?.
  */
 public interface BookingService<DTO> {
 

@@ -43,10 +43,5 @@ public class RoomUtilities {
     return roomIdList;
   }
 
-  public RoomDTO getRoomById(Long roomId) throws NotFoundException {
-    return repository.findById(roomId)
-            .map(convertRoomEntityToDTO::convert)
-            .orElseThrow(() -> new NotFoundException("There is no Room with ID:" + roomId));
-  }
 
 }

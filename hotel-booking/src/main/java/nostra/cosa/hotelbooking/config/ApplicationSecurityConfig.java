@@ -25,7 +25,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ApplicationSecurityConfig {
 
-    private static final String[] URL_WHITELIST = {"/user/login", "/user/register"};
+    private static final String[] URL_WHITELIST = {"/user/login", "/user/register", "hotel-booking/room", "hotel-booking/accommodation"};
 
     private static final String[] ALLOWED_METHODS = {"GET", "POST", "DELETE", "PUT", "PATCH"};
 
@@ -38,9 +38,10 @@ public class ApplicationSecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
                 .requestMatchers(URL_WHITELIST).permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().authenticated()  //TODO
                 .and().csrf().disable()
-                //.rememberMe().and() TODO: ez most hibát dob, mert null a userDetailsService. Majd később megcsinálom.
+                .headers().frameOptions().disable()
+                .and()
                 .cors().configurationSource(request -> setCorsConfiguration())
                 .and().authenticationProvider(authProvider);
         return http.build();
