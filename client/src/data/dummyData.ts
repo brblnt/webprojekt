@@ -10,7 +10,7 @@ export const accommodationList: Accommodation[] = [
     id: 1,
     authenticationData: {
       id: 1,
-      username: "Riviera Hotel and Casino",
+      userName: "Riviera Hotel and Casino",
       role: Role.ACCOMMODATION,
       registrationDate: "December 7, 2001",
       accountNonExpired: false,
@@ -63,7 +63,7 @@ export const accommodationList: Accommodation[] = [
     id: 2,
     authenticationData: {
       id: 1,
-      username: "Riviera Hotel and Casino",
+      userName: "Riviera Hotel and Casino",
       role: Role.ACCOMMODATION,
       registrationDate: "December 7, 2001",
       accountNonExpired: false,

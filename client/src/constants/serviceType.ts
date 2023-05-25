@@ -1,5 +1,7 @@
+import { ServiceType } from "../types/enums/ServiceType";
+
 export const serviceTypeOptions = [
-  { value: "teljes_panzio", text: "Teljes Panzió" },
-  { value: "fel_panzio", text: "Fél Panzió" },
-  { value: "nincs_ellatas", text: "Nincs ellátás" },
+  { value: ServiceType.TELJES_PANZIO, text: "Teljes Panzió" },
+  { value: ServiceType.FEL_PANZIO, text: "Fél Panzió" },
+  { value: ServiceType.NINCS_ELLATAS, text: "Nincs ellátás" },
 ];

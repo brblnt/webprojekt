@@ -285,9 +285,9 @@ const NAV_ITEMS: Array<NavItem> = [
         href: "/accommodation",
       },
       {
-        label: "Search Accommodation",
-        subLabel: "Find your ideal accommodation",
-        href: "/accommodation/search",
+        label: "Post Accommodation",
+        subLabel: "Post your accommodation",
+        href: "/accommodation/post",
       },
     ],
   },
