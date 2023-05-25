@@ -1,5 +1,22 @@
 import axios from 'axios'
 
+// Register user
+const register = async (userData: any) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const response = await axios.post('/user/register', JSON.stringify(userData), config);
+
+  if (response.data) {
+    localStorage.setItem('user', JSON.stringify(response.data));
+  }
+
+  return response.data;
+};
+
 //Login user
 const login = async (userData: any) => {
     try {
@@ -27,7 +44,8 @@ const logout = () => {
 
 const authService = {
     login,
-    logout
+    logout,
+    register
 }
 
 export default authService

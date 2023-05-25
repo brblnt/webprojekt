@@ -1,6 +1,6 @@
 import * as React from "react";
 import { ChakraProvider, theme } from "@chakra-ui/react";
-import { HomePage } from "./pages/Home";
+import { HomePage } from "./pages/Home/HomePage";
 import NavBar from "./components/NavBar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AccommodationPage } from "./pages/Accommodation";
