@@ -8,6 +8,7 @@ import { LoginPage } from "./pages/Auth/LoginPage";
 import { RegisterPage } from "./pages/Auth/RegisterPage";
 import { AccommodationDetail } from "./pages/Accommodation/AccommodationDetail";
 import { AccommodationCreatePage } from "./pages/Accommodation/AccommodationCreatePage";
+import { ProfilePage } from "./pages/Profile/ProfilePage";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -20,6 +21,7 @@ export const App = () => (
         <Route path={`/accommodation/post`} element={<AccommodationCreatePage />} />
         <Route path={`/login`} element={<LoginPage />} />
         <Route path={`/register`} element={<RegisterPage />} />
+        <Route path={`/profile`} element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   </ChakraProvider>

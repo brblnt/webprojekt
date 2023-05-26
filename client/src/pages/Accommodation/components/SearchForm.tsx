@@ -114,7 +114,6 @@ export const SearchForm: FC = () => {
                 </option>
               ))}
             </Select>
-            {/* TODO: Make utils folder and make a file that collects all cities from accommodation data */}
             <Select
               placeholder="Select country"
               id="country"
