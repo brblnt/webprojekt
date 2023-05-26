@@ -23,6 +23,8 @@ import {
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { MdLocalShipping } from "react-icons/md";
 import { getAccommodationById } from "../../services/apiRequests";
+import { Link } from "react-router-dom";
+import { Room } from "../../types/Room";
 
 export const AccommodationDetail = () => {
   const { accommodationId } = useParams();
@@ -38,15 +40,14 @@ export const AccommodationDetail = () => {
     loadAccommodation(Number(accommodationId));
   }, [accommodationId]);
 
+  const activeRoomCount = accommodation?.rooms.filter((room: Room) => room.active === true)?.length ?? 0;
+
+
   return (
     <div>
       {accommodation && (
         <Container maxW={"7xl"}>
-          <SimpleGrid
-            columns={{ base: 1, lg: 2 }}
-            spacing={8}
-            py={5}
-          >
+          <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8} py={5}>
             <Flex direction={"column"} gap={3}>
               <Image
                 rounded={"md"}
@@ -96,7 +97,8 @@ export const AccommodationDetail = () => {
                 divider={<StackDivider borderColor={"gray.200"} />}
               >
                 <Text fontSize={"lg"}>
-                  Arra gondoltam lehetne valami desc string is. Meg nem tudom imgPath Array tobb kepnek???
+                  Arra gondoltam lehetne valami desc string is. Meg nem tudom
+                  imgPath Array tobb kepnek???
                 </Text>
                 <Box>
                   <Text
@@ -152,8 +154,39 @@ export const AccommodationDetail = () => {
                     textTransform={"uppercase"}
                     mb={"4"}
                   >
-                    Rooms
+                    <Link to={`rooms`}>
+                      <Text
+                        _hover={{
+                          color: "pink.400",
+                        }}
+                      >
+                        Rooms
+                      </Text>
+                    </Link>
                   </Text>
+                  <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} marginBottom={3}>
+                    <List spacing={2}>
+                      <ListItem>Available</ListItem>
+                    </List>
+                    <List spacing={2}>
+                      <ListItem>{activeRoomCount}</ListItem>
+                    </List>
+                  </SimpleGrid>
+                  {accommodation.rooms.map((room) => {
+                    return (
+                      <div>
+                        <Link to={`${room.id}`}>
+                          <Text
+                            _hover={{
+                              color: "pink.300",
+                            }}
+                          >
+                            {room.other}
+                          </Text>
+                        </Link>
+                      </div>
+                    );
+                  })}
                 </Box>
               </Stack>
             </Stack>

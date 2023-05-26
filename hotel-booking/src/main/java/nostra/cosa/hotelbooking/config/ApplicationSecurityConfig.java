@@ -38,7 +38,7 @@ public class ApplicationSecurityConfig {
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
                 .requestMatchers(URL_WHITELIST).permitAll()
-                .anyRequest().permitAll()  //TODO
+                .anyRequest().authenticated()  //TODO
                 .and().csrf().disable()
                 .headers().frameOptions().disable()
                 .and()

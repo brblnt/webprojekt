@@ -131,7 +131,7 @@ export const SearchForm: FC = () => {
               placeholder="Select city"
               id="city"
               onChange={cityChange}
-              value={city} // Use the city state as the value prop
+              value={city}
               focusBorderColor="pink.300"
             >
               {country &&
