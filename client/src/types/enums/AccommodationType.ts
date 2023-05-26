@@ -1,8 +1,8 @@
 export enum AccommodationType {
-  SZALLODA = "Szállóda",
-  PANZIO = "Panzió",
-  KEMPING = "Kemping",
-  UDOLOHAZ = "Üdülőház",
-  EGYEB_SZALLASHELY = "Egyéb szálláshely",
-  MAGANSZALLASHELY = "Magánszálláshely"
+  SZALLODA = "SZALLODA",
+  PANZIO = "PANZIO",
+  KEMPING = "KEMPING",
+  UDOLOHAZ = "UDOLOHAZ",
+  EGYEB_SZALLASHELY = "EGYEB_SZALLASHELY",
+  MAGANSZALLASHELY = "MAGANSZALLASHELY"
 }

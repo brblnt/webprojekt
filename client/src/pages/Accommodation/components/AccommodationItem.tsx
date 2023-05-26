@@ -35,8 +35,8 @@ export const AccommodationItem: FC<AccommodationItemProps> = ({
           w={{ base: "100%", md: "45rem" }}
           h="auto"
           objectFit="cover"
-          src={`https://www.rivierahotel.com/wp-content/uploads/2017/10/about-the-riv.jpg`}
-          alt="product image"
+          src={`https://www.fairmont.com/assets/0/104/3225/3230/3231/28b9e2d3-55ca-4007-9c8a-391d34d0bce0.jpeg`}
+          alt={`${accommodation.accommodationName} Picture`}
         />
       </Flex>
       <Stack
@@ -54,7 +54,7 @@ export const AccommodationItem: FC<AccommodationItemProps> = ({
                 color: "pink.300",
               }}
             >
-              Rakjatok mar egy name,image stringet koszi puszi
+              {accommodation.accommodationName}
             </chakra.h3>
           </Link>
 

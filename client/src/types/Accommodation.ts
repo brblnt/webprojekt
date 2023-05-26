@@ -7,6 +7,7 @@ import { ServiceType } from "./enums/ServiceType";
 export type Accommodation = {
   id: number;
   authenticationData: AuthenticationData;
+  accommodationName: string;
   address: Address;
   emailAddress: string;
   phoneNumber: string;
