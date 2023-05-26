@@ -1,15 +1,29 @@
-import { FC } from "react";
+import { FC, useState, useEffect } from "react";
 import { Container, VStack } from "@chakra-ui/react";
-import { accommodationList } from "../../../data/dummyData";
 import { SearchQuery } from "../../../types/SearchQuery";
 import { AccommodationItem } from "./AccommodationItem";
+import { getAllAccommodations } from "../../../services/apiRequests";
+import { Accommodation } from "../../../types/Accommodation";
 
 export interface AccommodationItemProps {
   query: SearchQuery;
 }
 
 export const AccommodationList: FC<AccommodationItemProps> = ({ query }) => {
-  const filteredAccommodations = accommodationList.filter((accommodation) => {
+
+  const [accommodation, setAccommodation] = useState<Accommodation[]>(
+    []
+  );
+
+  useEffect(() => {
+    const loadAccommodation = async () => {
+      const accommodation = await getAllAccommodations();
+      setAccommodation(accommodation);
+    };
+    loadAccommodation();
+  }, []);
+
+  const filteredAccommodations = accommodation.filter((accommodation) => {
     if (query.country && accommodation.address.country !== query.country) {
       return false;
     }
@@ -24,17 +38,14 @@ export const AccommodationList: FC<AccommodationItemProps> = ({ query }) => {
     ) {
       return false;
     }
-    
-    if (
-      query.serviceType &&
-      accommodation.serviceTypes !== query.serviceType
-    ) {
-      return false;
-    }
-    
+
+    // if (query.serviceType && accommodation.serviceTypes !== query.serviceType) {
+    //   return false;
+    // }
 
     return true;
   });
+
   return (
     <div>
       {filteredAccommodations.map((accommodation) => {
@@ -51,7 +62,6 @@ export const AccommodationList: FC<AccommodationItemProps> = ({ query }) => {
           </Container>
         );
       })}
-
     </div>
   );
 };

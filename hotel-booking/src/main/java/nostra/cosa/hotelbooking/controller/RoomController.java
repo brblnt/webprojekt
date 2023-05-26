@@ -35,7 +35,7 @@ public class RoomController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(CREATE_PERMISSION_ADMIN_ACCOMMODATION)
+//    @PreAuthorize(CREATE_PERMISSION_ADMIN_ACCOMMODATION)
     @PostMapping
     public ResponseEntity<RoomDTO> create(final @RequestBody RoomDTO roomDTO) {
         final RoomDTO result = roomService.create(roomDTO);

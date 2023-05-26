@@ -1,13 +1,14 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Input, Stack, Center, Flex, Select } from "@chakra-ui/react";
 import { sortByOptions } from "../../../constants/sortBy";
 import { accommodationTypeOptions } from "../../../constants/accommodationType";
 import { serviceTypeOptions } from "../../../constants/serviceType";
-import { accommodationList } from "../../../data/dummyData";
 import { AccommodationList } from "./AccommodationList";
 import { SearchQuery } from "../../../types/SearchQuery";
 import { AccommodationType } from "../../../types/enums/AccommodationType";
 import { ServiceType } from "../../../types/enums/ServiceType";
+import { getAllAccommodations } from "../../../services/apiRequests";
+import { Accommodation } from "../../../types/Accommodation";
 
 export const SearchForm: FC = () => {
   const [search, setSearch] = useState("");
@@ -15,8 +16,22 @@ export const SearchForm: FC = () => {
   const [sortBy, setSortBy] = useState("default");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
-  const [accommodationType, setAccommodationType] = useState(AccommodationType.SZALLODA);
+  const [accommodationType, setAccommodationType] = useState(
+    AccommodationType.SZALLODA
+  );
   const [serviceType, setServiceType] = useState(ServiceType.TELJES_PANZIO);
+
+  const [accommodation, setAccommodation] = useState<Accommodation[] | null>(
+    null
+  );
+
+  useEffect(() => {
+    const loadAccommodation = async () => {
+      const accommodation = await getAllAccommodations();
+      setAccommodation(accommodation);
+    };
+    loadAccommodation();
+  }, []);
 
   const query: SearchQuery = {
     search,
@@ -52,10 +67,19 @@ export const SearchForm: FC = () => {
     setSearch(e.target.value);
   };
 
-  const countries = accommodationList.map((item) => item.address.country);
-  const cities = accommodationList
-    .filter((item) => item.address.country === country)
-    .map((item) => item.address.city.cityName);
+  const countries = accommodation
+    ? Array.from(
+        new Set(accommodation.map((item: any) => item.address.country))
+      )
+    : [];
+
+  const cities = Array.from(
+    new Set(
+      accommodation
+        ?.filter((item: any) => item.address.country === country)
+        .map((item: any) => item.address.city.cityName)
+    )
+  );
 
   return (
     <div>
@@ -82,13 +106,10 @@ export const SearchForm: FC = () => {
               id="sortBy"
               onChange={sortByChange}
               focusBorderColor="pink.300"
+              value={sortBy}
             >
               {sortByOptions.map((option) => (
-                <option
-                  key={option.value}
-                  value={option.value}
-                  selected={option.value === sortBy}
-                >
+                <option key={option.value} value={option.value}>
                   {option.text}
                 </option>
               ))}
@@ -113,38 +134,34 @@ export const SearchForm: FC = () => {
               value={city} // Use the city state as the value prop
               focusBorderColor="pink.300"
             >
-              {country && cities.map((city, index) => (
-                <option key={index} value={city}>
-                  {city}
-                </option>
-              ))}
+              {country &&
+                cities.map((city, index) => (
+                  <option key={index} value={city}>
+                    {city}
+                  </option>
+                ))}
             </Select>
             <Select
               id="accommodationType"
               onChange={accommodationTypeChange}
               focusBorderColor="pink.300"
+              value={accommodationType}
             >
               {accommodationTypeOptions.map((option) => (
-                <option
-                  key={option.value}
-                  value={option.value}
-                  selected={option.value === accommodationType}
-                >
+                <option key={option.value} value={option.value}>
                   {option.text}
                 </option>
               ))}
             </Select>
+
             <Select
               id="serviceType"
               onChange={serviceTypeChange}
               focusBorderColor="pink.300"
+              value={serviceType}
             >
               {serviceTypeOptions.map((option) => (
-                <option
-                  key={option.value}
-                  value={option.value}
-                  selected={option.value === serviceType}
-                >
+                <option key={option.value} value={option.value}>
                   {option.text}
                 </option>
               ))}
