@@ -21,9 +21,20 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../features/auth/authSlice";
 
 export default function NavBar() {
   const { isOpen, onToggle } = useDisclosure();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state: any) => state.auth);
+
+  const onLogout = () => {
+    dispatch(logout() as any);
+    navigate("/login");
+  };
 
   return (
     <Box>
@@ -64,7 +75,7 @@ export default function NavBar() {
               fontFamily={"heading"}
               color={useColorModeValue("gray.800", "white")}
               _hover={{
-                color: "pink.300"
+                color: "pink.300",
               }}
             >
               Cosa Nostra
@@ -82,29 +93,43 @@ export default function NavBar() {
           direction={"row"}
           spacing={6}
         >
-          <Button
-            as={"a"}
-            fontSize={"sm"}
-            fontWeight={400}
-            variant={"link"}
-            href={"/login"}
-          >
-            Sign In
-          </Button>
-          <Button
-            as={"a"}
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"pink.400"}
-            href={"/register"}
-            _hover={{
-              bg: "pink.300",
-            }}
-          >
-            Sign Up
-          </Button>
+          {user ? (
+            <Button
+              as={"a"}
+              fontSize={"sm"}
+              fontWeight={400}
+              variant={"link"}
+              onClick={onLogout}
+            >
+              Logout
+            </Button>
+          ) : (
+            <>
+              <Button
+                as={"a"}
+                fontSize={"sm"}
+                fontWeight={400}
+                variant={"link"}
+                href={"/login"}
+              >
+                Sign In
+              </Button>
+              <Button
+                as={"a"}
+                display={{ base: "none", md: "inline-flex" }}
+                fontSize={"sm"}
+                fontWeight={600}
+                color={"white"}
+                bg={"pink.400"}
+                href={"/register"}
+                _hover={{
+                  bg: "pink.300",
+                }}
+              >
+                Sign Up
+              </Button>
+            </>
+          )}
         </Stack>
       </Flex>
 
@@ -114,6 +139,7 @@ export default function NavBar() {
     </Box>
   );
 }
+
 
 const DesktopNav = () => {
   const linkColor = useColorModeValue("gray.600", "gray.200");
@@ -267,6 +293,8 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
     </Stack>
   );
 };
+
+
 
 interface NavItem {
   label: string;
