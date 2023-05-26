@@ -24,8 +24,8 @@ export const LoginPage = () => {
       toast.error(message)
     }
 
-    if (isSuccess) {
-      navigate('/')
+    if (isSuccess && user) {
+      navigate('/');
     }
 
   }, [user, isError, isSuccess, message, navigate, dispatch])
