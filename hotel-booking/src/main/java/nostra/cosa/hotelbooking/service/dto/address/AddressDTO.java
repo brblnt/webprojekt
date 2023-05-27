@@ -19,11 +19,9 @@ public class AddressDTO {
 
   private CityDTO city;
 
-  private String address;
+  private String addressName;
 
   private String other;
 
   //AddressId-t generálja magától a Accommodationban
-
-  //Address -> addressName az Address.java
 }
