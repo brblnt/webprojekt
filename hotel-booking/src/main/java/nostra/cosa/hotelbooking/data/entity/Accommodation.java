@@ -29,7 +29,6 @@ public class Accommodation{
   private String accommodationName;
 
   @Column(name = "address_id", nullable = false)
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long addressId;
 
   @Column(name = "email_address", nullable = false)
