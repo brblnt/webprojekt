@@ -22,6 +22,4 @@ public class AddressDTO {
   private String addressName;
 
   private String other;
-
-  //AddressId-t generálja magától a Accommodationban
 }
