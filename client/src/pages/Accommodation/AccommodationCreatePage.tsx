@@ -77,7 +77,7 @@ export const AccommodationCreatePage = () => {
       },
       accommodationName,
       address: {
-        addressId: "1",
+        addressId: "2",
         country,
         city: {
           postalCode,

@@ -92,10 +92,12 @@ export const authSlice: any = createSlice({
         state.isLoading = true
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isSuccess = true
-        state.user = action.payload
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
+        localStorage.setItem('user', JSON.stringify(action.payload));
       })
+      
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
@@ -104,6 +106,7 @@ export const authSlice: any = createSlice({
       })
       .addCase(logout.fulfilled, (state) => {
         state.user = null
+        localStorage.removeItem('user');
       })
   },
 })

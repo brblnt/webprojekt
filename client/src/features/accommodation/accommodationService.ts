@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import { toast } from 'react-toastify';
 // Register user
 const create = async (accommodationData: any) => {
   const config = {
@@ -14,7 +14,7 @@ const create = async (accommodationData: any) => {
   if (response.data) {
     localStorage.setItem('user', JSON.stringify(response.data));
   }
-
+  toast.success("Accommodation Created")
   return response.data;
 };
 
