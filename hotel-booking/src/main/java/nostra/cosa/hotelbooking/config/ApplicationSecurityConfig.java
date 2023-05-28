@@ -37,7 +37,7 @@ public class ApplicationSecurityConfig {
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
-                .requestMatchers(URL_WHITELIST).permitAll()
+                .requestMatchers(URL_WHITELIST).authenticated()
                 .anyRequest().permitAll()  //TODO
                 .and().csrf().disable()
                 .headers().frameOptions().disable()
