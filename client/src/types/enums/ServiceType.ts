@@ -1,5 +1,5 @@
 export enum ServiceType {
-  FEL_PANZIO = "Fél Panzió",
-  TELJES_PANZIO = 'Teljes Panzió',
-  NINCS_ELLATAS = 'Nincs ellátás',
+  FEL_PANZIO = "FEL_PANZIO",
+  TELJES_PANZIO = 'TELJES_PANZIO',
+  NINCS_ELLATAS = 'NINCS_ELLATAS',
 }
