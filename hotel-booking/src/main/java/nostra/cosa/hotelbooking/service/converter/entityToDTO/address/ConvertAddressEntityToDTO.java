@@ -24,7 +24,7 @@ public class ConvertAddressEntityToDTO implements Converter<Address, AddressDTO>
             source.getCountry(),
             cityUtilities.getActualCity(source.getPostalCode()),
             source.getAddress(),
-            source.getOther()
+            source.getAddressDetail()
     );
   }
 

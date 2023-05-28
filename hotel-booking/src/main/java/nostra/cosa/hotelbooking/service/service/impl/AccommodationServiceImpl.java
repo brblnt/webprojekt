@@ -54,7 +54,7 @@ public class AccommodationServiceImpl implements BookingService<AccommodationDTO
 
   @Override
   public AccommodationDTO create(AccommodationDTO newAccommodation) {
-    addressService.create(newAccommodation.getAddress());
+    newAccommodation.setAddress(addressService.create(newAccommodation.getAddress()));
     return convertAccommodationEntityToDTO.convert(
             accommodationRepository.save(convertAccommodationDTOToEntity.convert(newAccommodation)));
   }

@@ -21,6 +21,6 @@ public class AddressDTO {
 
   private String address;
 
-  private String other;
+  private String addressDetail;
 
 }

@@ -42,6 +42,6 @@ public class Room {
   @Column(name = "price_of_a_day", nullable = false)
   private Double priceOfADay;
 
-  @Column(name = "other", nullable = false)
-  private String other;
+  @Column(name = "room_detail", nullable = false)
+  private String roomDetail;
 }

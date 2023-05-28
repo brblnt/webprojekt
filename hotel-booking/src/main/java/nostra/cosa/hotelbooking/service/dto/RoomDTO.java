@@ -33,6 +33,6 @@ public class RoomDTO {
 
   private Double priceOfADay;
 
-  private String other;
+  private String roomDetail;
 
 }
