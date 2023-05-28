@@ -8,12 +8,10 @@ import {
   Button,
   VStack,
   Checkbox,
-  Link,
   Center,
   Heading,
   Select,
 } from "@chakra-ui/react";
-import { BiLockAlt } from "react-icons/bi";
 import { everyCountry } from "../../constants/everyCountry";
 import { accommodationTypeOptions } from "../../constants/accommodationType";
 
