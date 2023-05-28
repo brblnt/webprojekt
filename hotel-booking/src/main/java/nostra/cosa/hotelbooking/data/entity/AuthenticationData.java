@@ -52,4 +52,7 @@ public class AuthenticationData {
   @JoinColumn(name = "authentication_id")
   private List<Permission> permissions;
 
+  @Column(name = "token", nullable = false)
+  private String token;
+
 }

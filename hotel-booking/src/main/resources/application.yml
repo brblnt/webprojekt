@@ -10,5 +10,5 @@ server:
     port : 3010
 
 authentication:
-    origin:
-        url: http://localhost:3000
+    token:
+        name: AuthToken

@@ -37,7 +37,8 @@ public class DatabasePopulatorSampleUsers  implements DatabasePopulator {
             true,
             true,
             true,
-            permissionDTO);
+            permissionDTO,
+            "AdminToken");
     authenticationRepository.save(converterAuthDTOToEntity.convert(sampleAdmin));
   }
 }
