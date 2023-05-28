@@ -45,6 +45,21 @@ public class BookingServiceImpl implements BookingService<BookingDTO> {
             .orElseThrow(() -> new NotFoundException("There is no Booking with ID:" + id));
   }
 
+  public List<BookingDTO> getAllByUserId(Long id) throws NotFoundException  {
+    log.info("Get all BookingDTOs by user id: {}", id);
+    return bookingRepository.findAllByUserID(id).stream()
+            .map(convertBookingEntityToDTO::convert)
+            .toList();
+  }
+
+  public List<BookingDTO> getAllByAccommodationId(Long id) throws NotFoundException  {
+    log.info("Get all BookingDTOs by accommodation id: {}", id);
+    return bookingRepository.findAllByAccommodationID(id).stream()
+            .map(convertBookingEntityToDTO::convert)
+            .toList();
+  }
+
+
   @Override
   public BookingDTO update(BookingDTO newBooking) throws NotFoundException {
     return create(
