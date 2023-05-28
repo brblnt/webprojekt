@@ -56,6 +56,10 @@ export const AccommodationList: FC<AccommodationItemProps> = ({ query }) => {
   }, [query.sortBy]);
 
   const filteredAccommodations = accommodation?.filter((accommodation) => {
+    if (query.search && !accommodation.accommodationName.toLowerCase().includes(query.search.toLowerCase())) {
+      return false;
+    }
+    
     if (query.country && accommodation.address.country !== query.country) {
       return false;
     }

@@ -25,7 +25,7 @@ export const App = () => (
         <Route path={`/accommodation/:accommodationId/room/post`} element={<RoomCreatePage />} />
         <Route path={`/login`} element={<LoginPage />} />
         <Route path={`/register`} element={<RegisterPage />} />
-        <Route path={`/profile`} element={<ProfilePage />} />
+        <Route path={`/profile/:userName`} element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   </ChakraProvider>
