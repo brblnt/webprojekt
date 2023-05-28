@@ -99,7 +99,7 @@ public class AuthenticationServiceImpl implements BookingService<AuthenticationD
   }
 
   public Boolean existsByUserName(String userName) {
-    return false;
+    return authenticationRepository.findByUserName(userName) != null;
   }
 }
 

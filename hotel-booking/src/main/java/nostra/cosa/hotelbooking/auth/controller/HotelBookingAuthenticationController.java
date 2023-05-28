@@ -3,9 +3,10 @@ package nostra.cosa.hotelbooking.auth.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import nostra.cosa.hotelbooking.auth.dto.RegistrationDTO;
+import nostra.cosa.hotelbooking.auth.exception.InvalidLoginDetailsException;
 import nostra.cosa.hotelbooking.auth.service.HotelBookingAuthenticationService;
 import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
-import nostra.cosa.hotelbooking.auth.validation.RegistrationDataNotValidException;
+import nostra.cosa.hotelbooking.auth.exception.RegistrationDataNotValidException;
 import nostra.cosa.hotelbooking.controller.HotelBookingController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class HotelBookingAuthenticationController extends HotelBookingController
     private final HotelBookingAuthenticationService hotelBookingAuthenticationService;
 
     @PostMapping(value = "/login")
-    public ResponseEntity<AuthenticationDataDTO> login(HttpServletRequest request, @RequestParam("userName") String userName, @RequestParam("password") String password) {
+    public ResponseEntity<AuthenticationDataDTO> login(HttpServletRequest request, @RequestParam("userName") String userName, @RequestParam("password") String password) throws InvalidLoginDetailsException {
         if (userName == null || password == null) {
             return ResponseEntity.badRequest().build();
         }

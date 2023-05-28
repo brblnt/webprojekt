@@ -16,11 +16,11 @@ public class PermissionConstants {
     );
 
     public static final List<String> APPLICATION_USER_PERMISSIONS = List.of(
-            "USER_GET_ALL",
-            "USER_GET_BY_ID",
-            "USER_CREATE",
-            "USER_UPDATE",
-            "USER_DELETE"
+            "GET_ALL",
+            "GET_BY_ID",
+            "CREATE",
+            "UPDATE",
+            "DELETE"
     );
 
     public static final List<String> ACCOMMODATION_PERMISSIONS = List.of(

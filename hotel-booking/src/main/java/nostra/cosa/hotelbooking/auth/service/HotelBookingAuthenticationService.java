@@ -5,9 +5,10 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
 import nostra.cosa.hotelbooking.auth.dto.AuthorizationDTO;
+import nostra.cosa.hotelbooking.auth.exception.InvalidLoginDetailsException;
 import nostra.cosa.hotelbooking.service.service.impl.AuthenticationServiceImpl;
 import nostra.cosa.hotelbooking.auth.dto.RegistrationDTO;
-import nostra.cosa.hotelbooking.auth.validation.RegistrationDataNotValidException;
+import nostra.cosa.hotelbooking.auth.exception.RegistrationDataNotValidException;
 import nostra.cosa.hotelbooking.auth.validation.RegistrationValidationError;
 import nostra.cosa.hotelbooking.auth.validation.RegistrationValidator;
 import org.springframework.context.annotation.Bean;
@@ -53,25 +54,24 @@ public class HotelBookingAuthenticationService {
 
     public ResponseEntity<AuthenticationDataDTO> register(final RegistrationDTO registrationDTO) throws RegistrationDataNotValidException {
         final List<RegistrationValidationError> validationErrors = registrationValidator.validate(registrationDTO);
-        if (validationErrors.isEmpty()) {
+        if (!validationErrors.isEmpty()) {
             throw new RegistrationDataNotValidException(validationErrors);
         }
         registrationDTO.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
-        final String token = generateToken();
-        final AuthenticationDataDTO authenticationDataDTO = authenticationService.toAuthenticationDataDTO(registrationDTO, token);
+        final AuthenticationDataDTO authenticationDataDTO = authenticationService.toAuthenticationDataDTO(registrationDTO, generateToken());
         return ResponseEntity.ok().body(authenticationService.create(authenticationDataDTO));
     }
 
-    public ResponseEntity<AuthenticationDataDTO> login(final String userName, final String password) {
+    public ResponseEntity<AuthenticationDataDTO> login(final String userName, final String password) throws  InvalidLoginDetailsException{
         final AuthenticationDataDTO authData;
         try {
             authData = authenticationService.getAuthenticationDataDTOByUserName(userName);
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(401).build();
+            throw new InvalidLoginDetailsException();
         }
 
         if (!passwordEncoder.matches(password, authData.getPassword())) {
-            return ResponseEntity.status(401).build();
+            throw new InvalidLoginDetailsException();
         }
         saveUser(authData);
         return ResponseEntity.ok().body(authData);
