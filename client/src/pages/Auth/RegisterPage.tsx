@@ -7,7 +7,6 @@ import {
   Heading,
   VStack,
   Center,
-  Checkbox,
   Link
 } from '@chakra-ui/react';
 import { Select } from '@chakra-ui/react';
@@ -15,7 +14,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { register, reset } from '../../features/auth/authSlice';
+import { register } from '../../features/auth/authSlice';
 
 export const RegisterPage = () => {
   const [formData, setFormData] = useState({

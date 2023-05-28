@@ -15,8 +15,6 @@ export const AccommodationList: FC<AccommodationItemProps> = ({ query }) => {
     null
   );
   
-
-  // TODO: SEARCH!!!
   useEffect(() => {
     const loadAccommodation = async () => {
       const accommodation = await getAllAccommodations();

@@ -1,27 +1,19 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { accommodationList } from "../../data/dummyData";
 import { Accommodation } from "../../types/Accommodation";
 import {
   Box,
-  chakra,
   Container,
   Stack,
   Text,
   Image,
   Flex,
-  VStack,
-  Button,
   Heading,
   SimpleGrid,
   StackDivider,
-  useColorModeValue,
-  VisuallyHidden,
   List,
   ListItem,
 } from "@chakra-ui/react";
-import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
-import { MdLocalShipping } from "react-icons/md";
 import { getAccommodationById } from "../../services/apiRequests";
 import { Link } from "react-router-dom";
 import { Room } from "../../types/Room";
