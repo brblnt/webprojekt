@@ -88,6 +88,7 @@ public class HotelBookingAuthenticationService {
         try {
             authenticationDataDTO = authenticationService.getAuthenticationDataByToken(token);
         } catch (IllegalArgumentException e) {
+            log.warn("Invalid token: {}", token);
             return null;
         }
         return userDetailsManager.loadUserByUsername(authenticationDataDTO.getUserName());

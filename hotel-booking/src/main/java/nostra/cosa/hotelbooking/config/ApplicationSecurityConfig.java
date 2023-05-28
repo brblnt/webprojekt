@@ -1,7 +1,6 @@
 package nostra.cosa.hotelbooking.config;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.auth.filter.TokenHeaderFilter;
 import nostra.cosa.hotelbooking.auth.service.HotelBookingAuthenticationService;
 import nostra.cosa.hotelbooking.auth.service.HotelBookingAuthorizationService;
@@ -27,7 +26,6 @@ import org.springframework.security.web.authentication.Http403ForbiddenEntryPoin
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
-@Slf4j
 public class ApplicationSecurityConfig {
 
     private static final String[] URL_WHITELIST = {"/user/login", "/user/register", "hotel-booking/room", "hotel-booking/accommodation"};
