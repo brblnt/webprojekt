@@ -8,19 +8,26 @@ export const HomePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state: any) => state.auth
+  const { user, isLoading, isError, isSuccess, message } = useSelector( 
+    (state: any) => {
+      console.log(state); // Log the Redux state
+      return state.auth;
+    }
   );
 
   useEffect(() => {
-    if (isError) {
+    if (isError) { 
       toast.error(message);
     }
 
     if (!user) {
       navigate('/login');
       dispatch(logout() as any);
+    } else {
+      console.log(user.userName)
     }
+
+
   }, [user, navigate, isError, message, dispatch]);
 
   return (
