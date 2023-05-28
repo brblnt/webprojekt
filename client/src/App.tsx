@@ -12,6 +12,7 @@ import { ProfilePage } from "./pages/Profile/ProfilePage";
 import { RoomPage } from "./pages/Room/RoomPage";
 import { RoomCreatePage } from "./pages/Room/RoomCreatePage";
 import { BookingCreatePage } from "./pages/Booking/BookingCreatePage";
+import { Settings } from "./pages/Profile/Settings";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -28,7 +29,7 @@ export const App = () => (
         <Route path={`/login`} element={<LoginPage />} />
         <Route path={`/register`} element={<RegisterPage />} />
         <Route path={`/profile/:userName`} element={<ProfilePage />} />
-
+        <Route path={`/profile/:userName/settings`} element={<Settings />} />
       </Routes>
     </BrowserRouter>
   </ChakraProvider>
