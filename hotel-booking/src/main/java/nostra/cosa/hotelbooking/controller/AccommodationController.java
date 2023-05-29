@@ -28,6 +28,14 @@ public class AccommodationController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
+    @PreAuthorize(GET_ALL_PERMISSION_ADMIN_APPLICATION_USER)
+    @GetMapping("/{id}")
+    public ResponseEntity<List<AccommodationDTO>> getAllByAuthenticationId(final @PathVariable("id") Long id) {
+        final List<AccommodationDTO> result = accommodationService.getAllByAuthenticationId(id);
+
+        return ResponseEntity.ok().body(result);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<AccommodationDTO> getById(final @PathVariable("id") Long id) throws NotFoundException {
         final AccommodationDTO result = accommodationService.getById(id);

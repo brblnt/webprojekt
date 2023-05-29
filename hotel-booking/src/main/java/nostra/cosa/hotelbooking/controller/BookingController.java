@@ -38,6 +38,22 @@ public class BookingController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
+    @PreAuthorize(GET_ALL_PERMISSION_ALL)
+    @GetMapping("/{id}")
+    public ResponseEntity<List<BookingDTO>> getAllByUserId(final @PathVariable("id") Long id) {
+        final List<BookingDTO> result = bookingService.getAllByUserId(id);
+
+        return ResponseEntity.ok().body(result);
+    }
+
+    @PreAuthorize(GET_ALL_PERMISSION_ALL)
+    @GetMapping("/{id}")
+    public ResponseEntity<List<BookingDTO>> getAllByAccommodationId(final @PathVariable("id") Long id) {
+        final List<BookingDTO> result = bookingService.getAllByAccommodationId(id);
+
+        return ResponseEntity.ok().body(result);
+    }
+
     @PreAuthorize(CREATE_PERMISSION_ALL)
     @PostMapping
     public ResponseEntity<BookingDTO> create(final @RequestBody BookingDTO bookingDTO) {
