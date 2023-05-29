@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-  List<Booking> findAllByUserID(Long userId);
+  List<Booking> findAllByUserId(Long userId);
 
-  List<Booking> findAllByAccommodationID(Long accommodationId);
+  List<Booking> findAllByAccommodationId(Long accommodationId);
 
 }

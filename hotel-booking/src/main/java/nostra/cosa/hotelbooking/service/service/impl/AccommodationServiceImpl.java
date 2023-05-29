@@ -46,7 +46,7 @@ public class AccommodationServiceImpl implements BookingService<AccommodationDTO
 
   public List<AccommodationDTO> getAllByAuthenticationId(Long id) throws NotFoundException {
     log.info("Get AccommodationDTOs by auth id : {}", id);
-    return accommodationRepository.findAllByAuthID(id).stream()
+    return accommodationRepository.findAllByAuthenticationId(id).stream()
             .map(convertAccommodationEntityToDTO::convert)
             .toList();
   }
