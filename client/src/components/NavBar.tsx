@@ -97,13 +97,23 @@ const AdminNav = () => {
         </Text>
       </Link>
       <Text>/</Text>
-      <Link to={`/accommodation/post`} style={{ marginLeft: "1rem" }}>
+      <Link to={`/accommodation/post`} style={{ marginLeft: "1rem", marginRight: "1rem" }}>
         <Text
           _hover={{
             color: "pink.300",
           }}
         >
           Post Accommodation
+        </Text>
+      </Link>
+      <Text>/</Text>
+      <Link to={`/dashboard`} style={{ marginLeft: "1rem" }}>
+        <Text
+          _hover={{
+            color: "pink.300",
+          }}
+        >
+          Dashboard
         </Text>
       </Link>
     </Flex>

@@ -7,7 +7,6 @@ import {
   Stack,
   Button,
   VStack,
-  Checkbox,
   Center,
   Heading,
   Select,
@@ -15,9 +14,9 @@ import {
 import { everyCountry } from "../../constants/everyCountry";
 import { accommodationTypeOptions } from "../../constants/accommodationType";
 import { serviceTypeOptions } from "../../constants/serviceType";
-import { Accommodation } from "../../types/Accommodation";
 import { create } from '../../features/accommodation/accommodationSlice'
 import { useDispatch, useSelector } from "react-redux";
+
 
 export const AccommodationCreatePage = () => {
 

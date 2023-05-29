@@ -13,6 +13,7 @@ import { RoomPage } from "./pages/Room/RoomPage";
 import { RoomCreatePage } from "./pages/Room/RoomCreatePage";
 import { BookingCreatePage } from "./pages/Booking/BookingCreatePage";
 import { Settings } from "./pages/Profile/Settings";
+import { Dashboard } from "./pages/Dashboard/Dashboard";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -30,6 +31,7 @@ export const App = () => (
         <Route path={`/register`} element={<RegisterPage />} />
         <Route path={`/profile/:userName`} element={<ProfilePage />} />
         <Route path={`/profile/:userName/settings`} element={<Settings />} />
+        <Route path={`/dashboard`} element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   </ChakraProvider>
