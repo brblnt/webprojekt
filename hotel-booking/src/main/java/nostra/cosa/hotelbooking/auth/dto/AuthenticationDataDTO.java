@@ -34,4 +34,6 @@ public class AuthenticationDataDTO {
   private Boolean accountEnabled;
 
   private PermissionDTO permissionDTO;
+
+  private String token;
 }

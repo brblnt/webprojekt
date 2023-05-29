@@ -10,6 +10,7 @@ import nostra.cosa.hotelbooking.data.entity.AuthenticationData;
 import nostra.cosa.hotelbooking.data.populator.DatabasePopulator;
 import nostra.cosa.hotelbooking.data.repository.AuthenticationRepository;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,6 +20,8 @@ public class DatabasePopulatorSampleUsers  implements DatabasePopulator {
   private final AuthenticationRepository authenticationRepository;
   private final Converter<AuthenticationDataDTO, AuthenticationData> converterAuthDTOToEntity;
 
+  private final PasswordEncoder passwordEncoder;
+
   @Override
   public void populateDatabase() {
     PermissionDTO permissionDTO = new PermissionDTO();
@@ -26,7 +29,7 @@ public class DatabasePopulatorSampleUsers  implements DatabasePopulator {
     AuthenticationDataDTO sampleAdmin = new AuthenticationDataDTO(
             1L,
             "admin",
-            "password",
+            passwordEncoder.encode("password"),
             Role.ADMIN,
             "img-url",
             "2023.05.9",
@@ -34,7 +37,8 @@ public class DatabasePopulatorSampleUsers  implements DatabasePopulator {
             true,
             true,
             true,
-            permissionDTO);
+            permissionDTO,
+            "AdminToken");
     authenticationRepository.save(converterAuthDTOToEntity.convert(sampleAdmin));
   }
 }

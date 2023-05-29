@@ -1,18 +1,45 @@
+import React, { useCallback, useEffect } from 'react';
 import {
   Container,
-  FormControl,
-  Input,
-  Stack,
-  Button,
   Heading,
-  VStack,
+  Stack,
   Center,
-  Checkbox,
-  Link
 } from '@chakra-ui/react';
-import { BiLockAlt } from 'react-icons/bi';
+import { LoginForm } from '../../components/auth/login/LoginForm';
+import { useNavigate } from 'react-router-dom';
+import { login } from '../../features/auth/authSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 export const LoginPage = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state: any) => state.auth
+  )
+
+  useEffect(() => {
+    if (isError) {
+      console.log(message)
+    }
+
+    if (isSuccess && user) {
+      navigate('/');
+    }
+
+  }, [user, isError, isSuccess, message, navigate, dispatch])
+
+  type UserData = {
+    email: string;
+    password: string;
+  };
+
+  const submitLogin = useCallback((userData: UserData) => {
+    dispatch(login(userData) as any);
+  }, [dispatch]);
+  
+
   return (
     <Container maxW="7xl" p={{ base: 5, md: 10 }}>
       <Center>
@@ -20,48 +47,12 @@ export const LoginPage = () => {
           <Stack align="center">
             <Heading fontSize="3xl">Sign in to your account</Heading>
           </Stack>
-          <VStack as="form" spacing={8} w={{ base: 'sm', sm: 'lg' }} p={{ base: 5, sm: 6 }}>
-            <VStack spacing={0} w="100%">
-              <FormControl id="email">
-                <Input
-                  type="email"
-                  placeholder="Email Address"
-                  rounded="md"
-                  borderBottomLeftRadius="0"
-                  borderBottomRightRadius="0"
-                />
-              </FormControl>
-              <FormControl id="password" position="relative" bottom="1px">
-                <Input
-                  type="password"
-                  placeholder="Password"
-                  rounded="md"
-                  borderTopLeftRadius="0"
-                  borderTopRightRadius="0"
-                />
-              </FormControl>
-            </VStack>
-            <VStack w="100%">
-              <Stack direction="row" justify="space-between" w="100%">
-                <Checkbox colorScheme="pink" size="md">
-                  Remember me
-                </Checkbox>
-                <Link fontSize={{ base: 'md', sm: 'md' }}>Forgot password?</Link>
-              </Stack>
-              <Button
-                leftIcon={<BiLockAlt />}
-                bg="pink.400"
-                color="white"
-                _hover={{
-                  bg: 'pink.300'
-                }}
-                rounded="md"
-                w="100%"
-              >
-                Sign in
-              </Button>
-            </VStack>
-          </VStack>
+          <section>
+            <LoginForm onSubmit={submitLogin} formData={{
+              userName: '',
+              password: ''
+            }} />
+          </section>
         </Stack>
       </Center>
     </Container>

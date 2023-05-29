@@ -1,294 +1,146 @@
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../features/auth/authSlice";
 import {
   Box,
   Flex,
   Text,
-  IconButton,
   Button,
   Stack,
-  Collapse,
-  Icon,
-  Link,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  useColorModeValue,
-  useBreakpointValue,
-  useDisclosure,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Avatar,
 } from "@chakra-ui/react";
-import {
-  HamburgerIcon,
-  CloseIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-} from "@chakra-ui/icons";
+import { AuthenticationData } from "../types/AuthenticationData";
+import { Role } from "../types/enums/Role";
+function NavBar() {
 
-export default function NavBar() {
-  const { isOpen, onToggle } = useDisclosure();
+  const { user } = useSelector((state: { auth: { user: any } }) => state.auth);
+
 
   return (
     <Box>
       <Flex
-        bg={useColorModeValue("white", "gray.800")}
-        color={useColorModeValue("gray.600", "white")}
+        bg={"gray.800"}
+        color={"white"}
         minH={"60px"}
         py={{ base: 2 }}
         px={{ base: 4 }}
         borderBottom={1}
         borderStyle={"solid"}
-        borderColor={useColorModeValue("gray.200", "gray.900")}
+        borderColor={"gray.900"}
         align={"center"}
       >
-        <Flex
-          flex={{ base: 1, md: "auto" }}
-          ml={{ base: -2 }}
-          display={{ base: "flex", md: "none" }}
-        >
-          <IconButton
-            onClick={onToggle}
-            icon={
-              isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
-            }
-            variant={"ghost"}
-            aria-label={"Toggle Navigation"}
-          />
-        </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Link
-            href="/"
-            _hover={{
-              textDecoration: "none",
-            }}
-          >
-            <Text
-              textAlign={useBreakpointValue({ base: "center", md: "left" })}
-              fontFamily={"heading"}
-              color={useColorModeValue("gray.800", "white")}
-              _hover={{
-                color: "pink.300"
-              }}
-            >
-              Cosa Nostra
-            </Text>
-          </Link>
+          <Text fontFamily={"heading"} color={"white"}>
+            <Link to="/">
+              <Text
+                _hover={{
+                  color: "pink.300",
+                }}
+              >
+                Cosa Nostra
+              </Text>
+            </Link>
+          </Text>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
-            <DesktopNav />
+            {user && user.authenticationData.role === Role.ADMIN && <AdminNav />}
+            {user && user.authenticationData.role === Role.ACCOMMODATION && <AccommodationNav />}
+            {user && user.authenticationData.role === Role.APPLICATION_USER && <UserNav />}
+
           </Flex>
         </Flex>
-
-        <Stack
-          flex={{ base: 1, md: 0 }}
-          justify={"flex-end"}
-          direction={"row"}
-          spacing={6}
-        >
-          <Button
-            as={"a"}
-            fontSize={"sm"}
-            fontWeight={400}
-            variant={"link"}
-            href={"/login"}
-          >
-            Sign In
-          </Button>
-          <Button
-            as={"a"}
-            display={{ base: "none", md: "inline-flex" }}
-            fontSize={"sm"}
-            fontWeight={600}
-            color={"white"}
-            bg={"pink.400"}
-            href={"/register"}
-            _hover={{
-              bg: "pink.300",
-            }}
-          >
-            Sign Up
-          </Button>
-        </Stack>
+        {user && <UserLoggedIn />}
       </Flex>
-
-      <Collapse in={isOpen} animateOpacity>
-        <MobileNav />
-      </Collapse>
     </Box>
   );
 }
 
-const DesktopNav = () => {
-  const linkColor = useColorModeValue("gray.600", "gray.200");
-  const linkHoverColor = useColorModeValue("gray.800", "white");
-  const popoverContentBgColor = useColorModeValue("white", "gray.800");
-
+const UserNav = () => {
   return (
-    <Stack direction={"row"} spacing={4}>
-      {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
-          <Popover trigger={"hover"} placement={"bottom-start"}>
-            <PopoverTrigger>
-              <Link
-                p={2}
-                href={navItem.href ?? "#"}
-                fontSize={"sm"}
-                fontWeight={500}
-                color={linkColor}
-                _hover={{
-                  textDecoration: "none",
-                  color: linkHoverColor,
-                }}
-              >
-                {navItem.label}
-              </Link>
-            </PopoverTrigger>
-
-            {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow={"xl"}
-                bg={popoverContentBgColor}
-                p={4}
-                rounded={"xl"}
-                minW={"sm"}
-              >
-                <Stack>
-                  {navItem.children.map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
-                  ))}
-                </Stack>
-              </PopoverContent>
-            )}
-          </Popover>
-        </Box>
-      ))}
-    </Stack>
-  );
-};
-
-const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
-  return (
-    <Link
-      href={href}
-      role={"group"}
-      display={"block"}
-      p={2}
-      rounded={"md"}
-      _hover={{ bg: useColorModeValue("pink.50", "gray.900") }}
-    >
-      <Stack direction={"row"} align={"center"}>
-        <Box>
-          <Text
-            transition={"all .3s ease"}
-            _groupHover={{ color: "pink.400" }}
-            fontWeight={500}
-          >
-            {label}
-          </Text>
-          <Text fontSize={"sm"}>{subLabel}</Text>
-        </Box>
-        <Flex
-          transition={"all .3s ease"}
-          transform={"translateX(-10px)"}
-          opacity={0}
-          _groupHover={{ opacity: "100%", transform: "translateX(0)" }}
-          justify={"flex-end"}
-          align={"center"}
-          flex={1}
-        >
-          <Icon color={"pink.400"} w={5} h={5} as={ChevronRightIcon} />
-        </Flex>
-      </Stack>
+    <Link to={`/accommodation`}>
+      <Text
+        _hover={{
+          color: "pink.300",
+        }}
+      >
+        Discover Accommodation
+      </Text>
     </Link>
   );
 };
 
-const MobileNav = () => {
+const AccommodationNav = () => {
   return (
-    <Stack
-      bg={useColorModeValue("white", "gray.800")}
-      p={4}
-      display={{ md: "none" }}
-    >
-      {NAV_ITEMS.map((navItem) => (
-        <MobileNavItem key={navItem.label} {...navItem} />
-      ))}
-    </Stack>
-  );
-};
-
-const MobileNavItem = ({ label, children, href }: NavItem) => {
-  const { isOpen, onToggle } = useDisclosure();
-
-  return (
-    <Stack spacing={4} onClick={children && onToggle}>
-      <Flex
-        py={2}
-        as={Link}
-        href={href ?? "#"}
-        justify={"space-between"}
-        align={"center"}
+    <Link to={`/accommodation/post`}>
+      <Text
         _hover={{
-          textDecoration: "none",
+          color: "pink.300",
         }}
       >
-        <Text
-          fontWeight={600}
-          color={useColorModeValue("gray.600", "gray.200")}
-        >
-          {label}
-        </Text>
-        {children && (
-          <Icon
-            as={ChevronDownIcon}
-            transition={"all .25s ease-in-out"}
-            transform={isOpen ? "rotate(180deg)" : ""}
-            w={6}
-            h={6}
-          />
-        )}
-      </Flex>
-
-      <Collapse in={isOpen} animateOpacity style={{ marginTop: "0!important" }}>
-        <Stack
-          mt={2}
-          pl={4}
-          borderLeft={1}
-          borderStyle={"solid"}
-          borderColor={useColorModeValue("gray.200", "gray.700")}
-          align={"start"}
-        >
-          {children &&
-            children.map((child) => (
-              <Link key={child.label} py={2} href={child.href}>
-                {child.label}
-              </Link>
-            ))}
-        </Stack>
-      </Collapse>
-    </Stack>
+        Post Accommodation
+      </Text>
+    </Link>
   );
 };
 
-interface NavItem {
-  label: string;
-  subLabel?: string;
-  children?: Array<NavItem>;
-  href?: string;
-}
+const AdminNav = () => {
+  return (
+    <Flex>
+      <Link to={`/accommodation`} style={{ marginRight: "1rem" }}>
+        <Text
+          _hover={{
+            color: "pink.300",
+          }}
+        >
+          Discover Accommodation
+        </Text>
+      </Link>
+      <Text>/</Text>
+      <Link to={`/accommodation/post`} style={{ marginLeft: "1rem" }}>
+        <Text
+          _hover={{
+            color: "pink.300",
+          }}
+        >
+          Post Accommodation
+        </Text>
+      </Link>
+    </Flex>
+  );
+};
 
-const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: "Accommodation",
-    children: [
-      {
-        label: "Discover Accommodation",
-        subLabel: "Discover unique places to stay",
-        href: "/accommodation",
-      },
-      {
-        label: "Search Accommodation",
-        subLabel: "Find your ideal accommodation",
-        href: "/accommodation/search",
-      },
-    ],
-  },
-];
+const UserLoggedIn = () => {
+  const { user } = useSelector((state: any) => state.auth);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const onLogout = () => {
+    dispatch(logout() as any);
+    navigate("/login");
+  };
+  return (
+    <Menu colorScheme="pink">
+      <MenuButton>
+        <Avatar></Avatar>
+      </MenuButton>
+      <MenuList>
+        <MenuItem as='a' href={`/profile/${user.authenticationData.userName}`}>
+          Profile
+        </MenuItem>
+        <MenuItem as='a' href={`/profile/${user.authenticationData.userName}/settings`}>
+          Settings
+        </MenuItem>
+        <MenuItem onClick={onLogout}>
+          Logout
+        </MenuItem>
+      </MenuList>
+    </Menu>
+  );
+};
+
+export default NavBar;

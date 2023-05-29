@@ -23,8 +23,8 @@ public class Address {
   @Column(name = "postal_code", nullable = false)
   private String postalCode;
 
-  @Column(name = "address", nullable = false)
-  private String address;
+  @Column(name = "addressName", nullable = false)
+  private String addressName;
 
   @Column(name = "address_detail", nullable = false)
   private String addressDetail;

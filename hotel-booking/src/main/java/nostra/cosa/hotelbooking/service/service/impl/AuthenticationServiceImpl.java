@@ -47,7 +47,12 @@ public class AuthenticationServiceImpl implements BookingService<AuthenticationD
   }
 
   public AuthenticationDataDTO getAuthenticationDataDTOByUserName(String userName) {
-    return convertAuthenticationEntityToDTO.convert(authenticationRepository.getByUserName(userName));
+    return convertAuthenticationEntityToDTO.convert(authenticationRepository.findByUserName(userName));
+  }
+
+
+  public AuthenticationDataDTO getAuthenticationDataByToken(String token) {
+      return convertAuthenticationEntityToDTO.convert(authenticationRepository.findByToken(token));
   }
 
   @Override
@@ -61,11 +66,11 @@ public class AuthenticationServiceImpl implements BookingService<AuthenticationD
             authenticationRepository.save(convertAuthenticationDTOToEntity.convert(create)));
   }
 
-  public AuthenticationDataDTO toAuthenticationDataDTO(final RegistrationDTO registrationDTO) {
+  public AuthenticationDataDTO toAuthenticationDataDTO(final RegistrationDTO registrationDTO, final String token) {
     final Role role = Role.valueOf(registrationDTO.getRole());
     return new AuthenticationDataDTO(null, registrationDTO.getUserName(),
             registrationDTO.getPassword(), role, "", LocalDateTime.now().toString(),
-            true, true, true, true, getPermissionsByRole(role));
+            true, true, true, true, getPermissionsByRole(role), token);
   }
 
   public PermissionDTO getPermissionsByRole(final Role role) {
@@ -94,7 +99,7 @@ public class AuthenticationServiceImpl implements BookingService<AuthenticationD
   }
 
   public Boolean existsByUserName(String userName) {
-    return false;
+    return authenticationRepository.findByUserName(userName) != null;
   }
 }
 

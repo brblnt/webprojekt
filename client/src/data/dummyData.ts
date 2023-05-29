@@ -4,13 +4,12 @@ import { Role } from "../types/enums/Role";
 import { RoomType } from "../types/enums/RoomType";
 import { ServiceType } from "../types/enums/ServiceType";
 
-
 export const accommodationList: Accommodation[] = [
   {
     id: 1,
     authenticationData: {
       id: 1,
-      username: "Riviera Hotel and Casino",
+      userName: "Riviera Hotel and Casino",
       role: Role.ACCOMMODATION,
       registrationDate: "December 7, 2001",
       accountNonExpired: false,
@@ -31,6 +30,62 @@ export const accommodationList: Accommodation[] = [
     emailAddress: "rivierahotel@gmail.com",
     phoneNumber: "(702) 734-5110",
     accommodationType: AccommodationType.SZALLODA,
+    serviceTypes: ServiceType.TELJES_PANZIO,
+    accommodationName: "22",
+    rooms: [
+      {
+        id: 1,
+        roomType: RoomType.LAKOSZTALY,
+        numberOfRooms: 2,
+        numberOfSingleBeds: 1,
+        numberOfDoubleBeds: 0,
+        hasOwnKitchen: true,
+        hasOwnBathroom: true,
+        active: true,
+        priceOfADay: 100,
+        other: "",
+        
+      },
+      {
+        id: 2,
+        roomType: RoomType.LAKOSZTALY,
+        numberOfRooms: 2,
+        numberOfSingleBeds: 1,
+        numberOfDoubleBeds: 0,
+        hasOwnKitchen: true,
+        hasOwnBathroom: true,
+        active: true,
+        priceOfADay: 200,
+        other: "",
+      },
+    ],
+  },
+  {
+    id: 2,
+    authenticationData: {
+      id: 1,
+      userName: "Riviera Hotel and Casino",
+      role: Role.ACCOMMODATION,
+      registrationDate: "December 7, 2001",
+      accountNonExpired: false,
+      accountNonLocked: false,
+      accountCredentialsNonExpired: false,
+      accountEnabled: false,
+    },
+    address: {
+      addressId: 1,
+      country: "USA",
+      city: {
+        postalCode: "89109",
+        cityName: "Las Vegas",
+      },
+      address: "2901 South Las Vegas Boulevard",
+      other: "Ocean 11",
+    },
+    emailAddress: "rivierahotel@gmail.com",
+    phoneNumber: "(702) 734-5110",
+    accommodationType: AccommodationType.SZALLODA,
+    accommodationName: "sdff",
     serviceTypes: ServiceType.TELJES_PANZIO,
     rooms: [
       {
@@ -54,16 +109,17 @@ export const accommodationList: Accommodation[] = [
         hasOwnKitchen: true,
         hasOwnBathroom: true,
         active: true,
-        priceOfADay: 200,
+        priceOfADay: 300,
         other: "",
       },
     ],
   },
   {
-    id: 2,
+    id: 3,
+
     authenticationData: {
       id: 1,
-      username: "Riviera Hotel and Casino",
+      userName: "Riviera Hotel and Casino",
       role: Role.ACCOMMODATION,
       registrationDate: "December 7, 2001",
       accountNonExpired: false,
@@ -84,6 +140,7 @@ export const accommodationList: Accommodation[] = [
     emailAddress: "taktageci@gmail.com",
     phoneNumber: "+36 70 942 5408",
     accommodationType: AccommodationType.MAGANSZALLASHELY,
+    accommodationName: "Asd",
     serviceTypes: ServiceType.NINCS_ELLATAS,
     rooms: [
       {
