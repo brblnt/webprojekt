@@ -28,7 +28,7 @@ public class AccommodationController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(GET_ALL_PERMISSION_ADMIN_APPLICATION_USER)
+    @PreAuthorize(GET_ALL_PERMISSION_ADMIN_ACCOMMODATION)
     @GetMapping("/{id}")
     public ResponseEntity<List<AccommodationDTO>> getAllByAuthenticationId(final @PathVariable("id") Long id) {
         final List<AccommodationDTO> result = accommodationService.getAllByAuthenticationId(id);
