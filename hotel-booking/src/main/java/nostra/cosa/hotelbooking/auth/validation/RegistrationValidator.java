@@ -52,7 +52,7 @@ public class RegistrationValidator {
         final String role = registrationDTO.getRole();
         if (role == null || role.isEmpty()) {
             validationErrors.add(new RegistrationValidationError(FIELD_NAME_ROLE, null, ROLE_NULL));
-        } else if (isValidRole(role)){
+        } else if (!isValidRole(role)){
             validationErrors.add(new RegistrationValidationError(FIELD_NAME_ROLE, role, ROLE_UNDEFINED));
         }
     }
