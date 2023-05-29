@@ -145,6 +145,7 @@ export const SearchForm: FC = () => {
               onChange={accommodationTypeChange}
               focusBorderColor="pink.300"
               value={accommodationType}
+              placeholder={`ASD`}
             >
               {accommodationTypeOptions.map((option) => (
                 <option key={option.value} value={option.value}>
