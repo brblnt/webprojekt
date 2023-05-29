@@ -50,14 +50,15 @@ export const AccommodationCreatePage = () => {
     accommodationType: "",
     serviceType: [],
     rooms: [],
-    /*roomType: [],
+    roomType: [],
     numberOfRooms: "",
     numberOfSingleBeds: "",
     numberOfDoubleBeds: "",
-    hasOwnKitchen: "",
-    hasOwnBathroom: "",
+    hasOwnKitchen: false,
+    hasOwnBathroom: false,
     active: "true",
-    priceOfADay: "",*/
+    priceOfADay: "",
+    roomDetail: ""
   });
 
   const { accommodationName,
@@ -70,26 +71,37 @@ export const AccommodationCreatePage = () => {
     other,
     accommodationType,
     serviceType,
-    rooms
-    /*roomType,
+    rooms,
+    roomType,
     numberOfRooms,
     numberOfSingleBeds,
     numberOfDoubleBeds,
     hasOwnKitchen,
     hasOwnBathroom,
     active,
-    priceOfADay*/
+    priceOfADay,
+    roomDetail
   } = formData;
 
   const onChange = useCallback((e: any) => {
     if (e.target) {
-      const { name, value } = e.target;
-      //console.log(`Value of ${name}:`, value); // Add this line to log the value
-      setFormData((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
+      if (e.target && e.target.type === "checkbox") {
+        const { name, checked } = e.target;
+        console.log(`Value of ${name}:`, checked); // Add this line to log the value
+        setFormData((prevState) => ({
+          ...prevState,
+          [name]: checked,
+        }));
+      } else {
+        const { name, value } = e.target;
+        console.log(`Value of ${name}:`, value); // Add this line to log the value
+        setFormData((prevState) => ({
+          ...prevState,
+          [name]: value,
+        }));
+      }
     }
+    
   }, []);
   
   const onSubmit = (e: any) => {
@@ -98,19 +110,10 @@ export const AccommodationCreatePage = () => {
       id: "",
       authenticationData: {
         id: user.authenticationData.id,
-        userName: user.authenticationData.userName,
-        password: user.authenticationData.password,
-        role: user.authenticationDatarole,
-        imgPath: "",
-        registrationDate: user.authenticationData.registrationDate,
-        accountNonExpired: user.authenticationData.accountNonExpired,
-        accountNonLocked: user.authenticationData.accountNonLocked,
-        accountCredentialsNonExpired: user.authenticationData.accountCredentialsNonExpired,
-        accountEnabled: user.authenticationData.accountEnabled
       },
       accommodationName,
       address: {
-        addressId: "",
+        addressId: "2",
         country,
         city: {
           postalCode,
@@ -123,10 +126,10 @@ export const AccommodationCreatePage = () => {
       phoneNumber,
       accommodationType,
       serviceTypes: [serviceType],
-      rooms /*[
+      rooms: [
         {
-          id: "",
-          roomType,
+          roomId: "2",
+          roomType: "LAKOSZTALY",
           numberOfRooms,
           numberOfSingleBeds,
           numberOfDoubleBeds,
@@ -134,9 +137,9 @@ export const AccommodationCreatePage = () => {
           hasOwnBathroom,
           active,
           priceOfADay,
-          other,
+          roomDetail,
         }
-      ],*/
+      ],
     };
     dispatch(create(accommodationData) as any);
   };
@@ -323,7 +326,97 @@ export const AccommodationCreatePage = () => {
                     </Center>
                   </FormControl>
                 </VStack>
-            
+                <Stack spacing={4}>
+              <VStack
+                as="form"
+                spacing={8}
+                w={{ base: "sm", sm: "lg" }}
+                p={{ base: 5, sm: 6 }}
+              >
+                <VStack spacing={0} w="100%">
+                  <FormControl id="roomNum" marginBottom={3}>
+                  <Center>
+                  <Text>Number of Rooms</Text>
+                </Center>
+                <NumberInput defaultValue={1} min={1} onChange={(_, valueAsNumber) => onChange({ target: { name: "numberOfRooms", value: valueAsNumber } })}>
+                  <NumberInputField/>
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
+                  </FormControl>
+                  <FormControl id="singleBedNum" marginBottom={3}>
+                    <Center>
+                      <Text>Number of Single Beds</Text>
+                    </Center>
+                    <NumberInput defaultValue={0} min={0} onChange={(_, valueAsNumber) => onChange({ target: { name: "numberOfSingleBeds", value: valueAsNumber } })}>
+                    <NumberInputField/>
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormControl>
+                  <FormControl id="accommodationName" marginBottom={3}>
+                    <Center>
+                      <Text>Number of Double Beds</Text>
+                    </Center>
+                    <NumberInput defaultValue={0} min={0} onChange={(_, valueAsNumber) => onChange({ target: { name: "numberOfDoubleBeds", value: valueAsNumber } })}>
+                      <NumberInputField/>
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormControl>
+                  <Center marginTop={3}>
+                    <Stack spacing={5} direction="row" my={3}>
+                      <Checkbox
+                        colorScheme="pink"
+                        isChecked={hasOwnKitchen} // bind to the hasOwnKitchen value in formData
+                        name="hasOwnKitchen" // set the name to match the corresponding key in formData
+                        onChange={onChange}
+                      >
+                        Has Own Kitchen
+                      </Checkbox>
+                      <Checkbox
+                        colorScheme="pink"
+                        isChecked={hasOwnBathroom} // bind to the hasOwnBathroom value in formData
+                        name="hasOwnBathroom" // set the name to match the corresponding key in formData
+                        onChange={onChange}
+                      >
+                        Has Own Bathroom
+                      </Checkbox>
+                    </Stack>
+                  </Center>
+                  <FormControl id="priceOfDay" marginBottom={3}>
+                    <Center>
+                      <Text>Price Of Day</Text>
+                    </Center>
+                    <NumberInput defaultValue={0} min={0} marginBottom={3} onChange={(_, valueAsNumber) => onChange({ target: { name: "priceOfADay", value: valueAsNumber } })}>
+                      <NumberInputField/>
+                      <NumberInputStepper>
+                        <NumberIncrementStepper />
+                        <NumberDecrementStepper />
+                      </NumberInputStepper>
+                    </NumberInput>
+                  </FormControl>
+                  <FormControl id="roomDetail">
+                    <Input
+                      type="text"
+                      placeholder="Other detail about the room"
+                      value={roomDetail}
+                      rounded="md"
+                      borderTopLeftRadius="0"
+                      borderTopRightRadius="0"
+                      name="roomDetail"
+                      onChange={onChange}
+                    />
+                  </FormControl>
+                </VStack>
+              </VStack>
+            </Stack>
                 <VStack w="100%">
                 <Button
                   bg="pink.400"
