@@ -19,14 +19,24 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button
+  Button,
 } from "@chakra-ui/react";
 import { getAllRooms } from "../../../services/apiRequests";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { Room } from "../../../types/Room";
 import { RoomEditForm } from "./RoomEditForm";
+import { useDispatch } from "react-redux";
+import { remove, update } from "../../../features/room/roomSlice";
 
-export const RoomTableRow = ({ room }: { room: Room }) => {
+export const RoomTableRow = ({
+  room,
+  onDelete,
+  onUpdate,
+}: {
+  room: Room;
+  onDelete: () => void;
+  onUpdate: (updatedRoom: Room) => void;
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleEdit = () => {
@@ -35,6 +45,14 @@ export const RoomTableRow = ({ room }: { room: Room }) => {
 
   const formatBooleanValue = (value: boolean) => {
     return value ? "True" : "False";
+  };
+
+  const dispatch = useDispatch();
+
+  const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const roomId = room.id.toString();
+    await dispatch(remove(roomId) as any);
+    onDelete();
   };
 
   return (
@@ -49,9 +67,9 @@ export const RoomTableRow = ({ room }: { room: Room }) => {
         <Td>{formatBooleanValue(room.hasOwnBathroom)}</Td>
         <Td>{formatBooleanValue(room.active)}</Td>
         <Td>{room.priceOfADay}</Td>
-        <Td>{room.other}</Td>
+        <Td>{room.roomDetail}</Td>
         <Td>
-          <Button colorScheme={"red"}>
+          <Button colorScheme={"red"} onClick={handleDelete}>
             <DeleteIcon />
           </Button>
         </Td>
@@ -68,14 +86,8 @@ export const RoomTableRow = ({ room }: { room: Room }) => {
           <ModalHeader>Update Room</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <RoomEditForm room={room} />
+            <RoomEditForm room={room} onUpdate={onUpdate} />
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="pink" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Update Data</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
@@ -85,11 +97,18 @@ export const RoomTableRow = ({ room }: { room: Room }) => {
 export const RoomTable = () => {
   const [rooms, setRooms] = useState<Room[] | null>(null);
 
+  const loadRooms = async () => {
+    const rooms = await getAllRooms();
+    setRooms(rooms);
+  };
+  const dispatch = useDispatch();
+
+  const handleUpdate = async (updatedRoom: Room) => {
+    await dispatch(update(updatedRoom) as any);
+    loadRooms();
+  };
+
   useEffect(() => {
-    const loadRooms = async () => {
-      const rooms = await getAllRooms();
-      setRooms(rooms);
-    };
     loadRooms();
   }, []);
 
@@ -123,7 +142,14 @@ export const RoomTable = () => {
           </Thead>
           <Tbody>
             {rooms?.map((room) => {
-              return <RoomTableRow key={room.id} room={room} />;
+              return (
+                <RoomTableRow
+                  key={room.id}
+                  room={room}
+                  onDelete={() => loadRooms()}
+                  onUpdate={handleUpdate}
+                />
+              );
             })}
           </Tbody>
           <Tfoot>

@@ -180,7 +180,7 @@ export const AccommodationDetail = () => {
                               color: "pink.300",
                             }}
                           >
-                            {room.other}
+                            {room.roomDetail}
                           </Text>
                         </Link>
                       </div>

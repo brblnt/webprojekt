@@ -9,14 +9,17 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  Button,
+  Center
 } from "@chakra-ui/react";
 import { Room } from "../../../types/Room";
 
 export interface RoomEditFormProps {
   room: Room;
+  onUpdate: (updatedRoom: Room) => void;
 }
 
-export const RoomEditForm: FC<RoomEditFormProps> = ({ room }) => {
+export const RoomEditForm: FC<RoomEditFormProps> = ({ room, onUpdate }) => {
   const [roomType, setRoomType] = useState(room.roomType);
   const [roomsNum, setRoomsNum] = useState(room.numberOfRooms);
   const [singleBedNum, setSingleBedNum] = useState(room.numberOfSingleBeds);
@@ -25,7 +28,9 @@ export const RoomEditForm: FC<RoomEditFormProps> = ({ room }) => {
   const [hasBathroom, setHasBathroom] = useState(room.hasOwnBathroom);
   const [active, setActive] = useState(room.active);
   const [price, setPrice] = useState(room.priceOfADay);
-  const [other, setOther] = useState(room.other);
+  const [other, setOther] = useState(room.roomDetail);
+  const [roomNumber, setRoomNumber] = useState(room.roomNumber);
+
 
   const roomTypeChange = (e: any) => {
     setRoomType(e.target.value);
@@ -61,6 +66,28 @@ export const RoomEditForm: FC<RoomEditFormProps> = ({ room }) => {
 
   const otherChange = (e: any) => {
     setOther(e.target.value);
+  };
+
+  const roomNumberChange = (value: string) => {
+    setRoomNumber(Number(value));
+  };
+
+  const handleUpdate = () => {
+    const updatedRoom: Room = {
+      ...room,
+      roomType: roomType,
+      numberOfRooms: roomsNum,
+      numberOfSingleBeds: singleBedNum,
+      numberOfDoubleBeds: doubleBedNum,
+      hasOwnKitchen: hasKitchen,
+      hasOwnBathroom: hasBathroom,
+      active: active,
+      priceOfADay: price,
+      roomDetail: other,
+      roomNumber: roomNumber,
+    };
+
+    onUpdate(updatedRoom);
   };
 
   return (
@@ -167,10 +194,33 @@ export const RoomEditForm: FC<RoomEditFormProps> = ({ room }) => {
 
       <FormControl id="other">
         <FormLabel mb={0} mt={3}>
-          Phone Number
+          Room Detail
         </FormLabel>
         <Input type="text" rounded="md" value={other} onChange={otherChange} />
       </FormControl>
+
+      <FormControl id="roomNumber">
+        <FormLabel mb={0} mt={3}>
+          Room Number
+        </FormLabel>
+        <NumberInput
+          min={0}
+          rounded="md"
+          value={roomNumber}
+          onChange={roomNumberChange}
+        >
+          <NumberInputField />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+      </FormControl>
+      <Center>
+        <Button variant="solid" onClick={handleUpdate} colorScheme={"pink"} mt={3}>
+          Update Data
+        </Button>
+      </Center>
     </>
   );
 };

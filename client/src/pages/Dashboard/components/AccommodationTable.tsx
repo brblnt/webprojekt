@@ -26,15 +26,16 @@ import { Accommodation } from "../../../types/Accommodation";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { AccommodationEditForm } from "./AccommodationEditForm";
 import { useDispatch } from "react-redux";
-import { remove } from "../../../features/accommodation/accommodationSlice";
+import { remove, update } from "../../../features/accommodation/accommodationSlice";
 
 export const AccommodationTableRow = ({
   accommodation,
   onDelete,
+  onUpdate,
 }: {
   accommodation: Accommodation;
   onDelete: () => void;
-
+  onUpdate: (updatedAccommodation: Accommodation) => void;
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -82,14 +83,8 @@ export const AccommodationTableRow = ({
           <ModalHeader>Update Accommodation</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <AccommodationEditForm accommodation={accommodation} />
+            <AccommodationEditForm accommodation={accommodation} onUpdate={onUpdate} />
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="pink" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Update Data</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
@@ -100,20 +95,20 @@ export const AccommodationTable = () => {
   const [accommodations, setAccommodations] = useState<Accommodation[] | null>(
     null
   );
+  const dispatch = useDispatch();
 
-  const updateAccommodations = (deletedAccommodationId: number) => {
-    setAccommodations((prevAccommodations) =>
-      prevAccommodations!.filter(
-        (accommodation) => accommodation.id !== deletedAccommodationId
-      )
-    );
+
+  const loadAccommodation = async () => {
+    const accommodations = await getAllAccommodations();
+    setAccommodations(accommodations);
+  };
+
+  const handleUpdate = async (updatedAccommodation: Accommodation) => {
+    await dispatch(update(updatedAccommodation) as any);
+    loadAccommodation();
   };
 
   useEffect(() => {
-    const loadAccommodation = async () => {
-      const accommodations = await getAllAccommodations();
-      setAccommodations(accommodations);
-    };
     loadAccommodation();
   }, []);
 
@@ -152,8 +147,9 @@ export const AccommodationTable = () => {
                 <AccommodationTableRow
                   key={accommodation.id}
                   accommodation={accommodation}
-                  onDelete={() => updateAccommodations(accommodation.id)}
-                  />
+                  onDelete={() => loadAccommodation()}
+                  onUpdate={handleUpdate}
+                />
               );
             })}
           </Tbody>

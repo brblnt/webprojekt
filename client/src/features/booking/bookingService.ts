@@ -14,8 +14,22 @@ const remove = async (bookingId: string) => {
   }
 };
 
+// Update booking by ID
+const update = async (booking: any) => {
+  try {
+    const response = await axios.put(`/hotel-booking/booking/${booking.id}`, booking);
+    toast.success('Booking Updated!');
+    return response.data;
+  } catch (error: any) {
+    const message = error.response?.data?.message || error.message || error.toString();
+    toast.error('Error during booking update!');
+    throw new Error(message);
+  }
+};
+
 const bookingService = {
-    remove
+    remove,
+    update
 }
 
 export default bookingService

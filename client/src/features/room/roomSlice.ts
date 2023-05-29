@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { Booking } from "../../types/Booking";
-import bookingService from "./bookingService";
+import { Room } from "../../types/Room";
+import roomService from "./roomService";
 
 const initialState = {
   booking: [],
@@ -11,10 +11,10 @@ const initialState = {
 };
 
 export const remove = createAsyncThunk(
-  "booking/remove",
+  "room/remove",
   async (accommodationId: string, thunkAPI) => {
     try {
-      return await bookingService.remove(accommodationId);
+      return await roomService.remove(accommodationId);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -28,10 +28,10 @@ export const remove = createAsyncThunk(
 );
 
 export const update = createAsyncThunk(
-  "booking/update",
-  async (booking: Booking, thunkAPI) => {
+  "room/update",
+  async (room: Room, thunkAPI) => {
     try {
-      return await bookingService.update(booking);
+      return await roomService.update(room);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -44,8 +44,8 @@ export const update = createAsyncThunk(
   }
 );
 
-export const bookingSlice: any = createSlice({
-  name: "booking",
+export const roomSlice: any = createSlice({
+  name: "room",
   initialState,
   reducers: {
     reset: (state) => {
@@ -84,5 +84,5 @@ export const bookingSlice: any = createSlice({
   },
 });
 
-export const { reset } = bookingSlice.actions;
-export default bookingSlice.reducer;
+export const { reset } = roomSlice.actions;
+export default roomSlice.reducer;

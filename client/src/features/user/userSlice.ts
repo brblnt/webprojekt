@@ -1,9 +1,9 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { Booking } from "../../types/Booking";
-import bookingService from "./bookingService";
+import { ApplicationUser } from "../../types/ApplicationUser";
+import userService from "./userService";
 
 const initialState = {
-  booking: [],
+  user: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
@@ -11,10 +11,10 @@ const initialState = {
 };
 
 export const remove = createAsyncThunk(
-  "booking/remove",
+  "user/remove",
   async (accommodationId: string, thunkAPI) => {
     try {
-      return await bookingService.remove(accommodationId);
+      return await userService.remove(accommodationId);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -28,10 +28,10 @@ export const remove = createAsyncThunk(
 );
 
 export const update = createAsyncThunk(
-  "booking/update",
-  async (booking: Booking, thunkAPI) => {
+  "user/update",
+  async (user: ApplicationUser, thunkAPI) => {
     try {
-      return await bookingService.update(booking);
+      return await userService.update(user);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -44,8 +44,9 @@ export const update = createAsyncThunk(
   }
 );
 
-export const bookingSlice: any = createSlice({
-  name: "booking",
+
+export const userSlice: any = createSlice({
+  name: "user",
   initialState,
   reducers: {
     reset: (state) => {
@@ -81,8 +82,9 @@ export const bookingSlice: any = createSlice({
         state.isError = true;
         state.message = action.payload as string;
       });
+      
   },
 });
 
-export const { reset } = bookingSlice.actions;
-export default bookingSlice.reducer;
+export const { reset } = userSlice.actions;
+export default userSlice.reducer;

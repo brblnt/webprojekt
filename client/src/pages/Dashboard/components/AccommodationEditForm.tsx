@@ -10,15 +10,18 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  Button,
+  Center
 } from "@chakra-ui/react";
 import { everyCountry } from "../../../constants/everyCountry";
 
 export interface AccommodationEditFormProps {
   accommodation: Accommodation;
+  onUpdate: (updatedAccommodation: Accommodation) => void;
 }
 
 export const AccommodationEditForm: FC<AccommodationEditFormProps> = ({
-  accommodation,
+  accommodation, onUpdate
 }) => {
   const [accName, setAccName] = useState(accommodation.accommodationName);
   const [emailAddress, setEmailAddress] = useState(accommodation.emailAddress);
@@ -34,8 +37,6 @@ export const AccommodationEditForm: FC<AccommodationEditFormProps> = ({
   const [addressName, setAddressName] = useState(
     accommodation.address.addressName
   );
-
-
 
   const accNameChange = (e: any) => {
     setAccName(e.target.value);
@@ -75,6 +76,29 @@ export const AccommodationEditForm: FC<AccommodationEditFormProps> = ({
 
   const addressNameChange = (e: any) => {
     setAddressName(e.target.value);
+  };
+
+  const handleUpdate = () => {
+    const updatedAccommodation: Accommodation = {
+      ...accommodation,
+      accommodationName: accName,
+      emailAddress: emailAddress,
+      phoneNumber: phoneNumber,
+      accommodationType: accType,
+      serviceTypes: serviceType,
+      address: {
+        ...accommodation.address,
+        addressId: addressId,
+        country: country,
+        city: {
+          ...accommodation.address.city,
+          postalCode: postalCode,
+          cityName: city,
+        },
+        addressName: addressName,
+      },
+    };
+    onUpdate(updatedAccommodation);
   };
 
   return (
@@ -178,6 +202,11 @@ export const AccommodationEditForm: FC<AccommodationEditFormProps> = ({
           onChange={addressNameChange}
         />
       </FormControl>
+      <Center>
+        <Button variant="solid" onClick={handleUpdate} colorScheme={"pink"} mt={3}>
+          Update Data
+        </Button>
+      </Center>
     </>
   );
 };

@@ -38,9 +38,23 @@ const remove = async (accommodationId: string) => {
   }
 };
 
+// Update accommodation by ID
+const update = async (accommodation: any) => {
+  try {
+    const response = await axios.put(`/hotel-booking/accommodation/${accommodation.id}`, accommodation);
+    toast.success('Accommodation Updated!');
+    return response.data;
+  } catch (error: any) {
+    const message = error.response?.data?.message || error.message || error.toString();
+    toast.error('Error during accommodation update!');
+    throw new Error(message);
+  }
+};
+
 const accommodationService = {
     create,
-    remove
+    remove,
+    update
 }
 
 export default accommodationService

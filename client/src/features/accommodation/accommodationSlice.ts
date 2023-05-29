@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { Accommodation } from "../../types/Accommodation";
 import accommodationService from "./accommodationService";
 
 const initialState = {
@@ -32,6 +33,23 @@ export const remove = createAsyncThunk(
   async (accommodationId: string, thunkAPI) => {
     try {
       return await accommodationService.remove(accommodationId);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const update = createAsyncThunk(
+  "accommodations/update",
+  async (accommodation: Accommodation, thunkAPI) => {
+    try {
+      return await accommodationService.update(accommodation);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -79,6 +97,18 @@ export const accommodationSlice: any = createSlice({
         // state.accommodations = state.accommodations.filter((accommodation) => accommodation.id !== action.payload.id)
       })
       .addCase(remove.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload as string;
+      })
+      .addCase(update.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(update.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(update.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload as string;

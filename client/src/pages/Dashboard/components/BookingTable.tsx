@@ -26,14 +26,17 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { Booking } from "../../../types/Booking";
 import { BookingEditForm } from "./BookingEditForm";
 import { useDispatch } from "react-redux";
-import { remove } from "../../../features/booking/bookingSlice";
+import { remove, update } from "../../../features/booking/bookingSlice";
 
 export const BookingTableRow = ({
   booking,
   onDelete,
+  onUpdate,
 }: {
   booking: Booking;
   onDelete: () => void;
+  onUpdate: (updatedBooking: Booking) => void;
+
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -68,7 +71,7 @@ export const BookingTableRow = ({
         <Td>{booking.serviceType}</Td>
         <Td>{formatBooleanValue(booking.archived)}</Td>
         <Td>{formatBooleanValue(booking.resigned)}</Td>
-        <Td>{formatBooleanValue(booking.payed)}</Td>
+        <Td>{formatBooleanValue(booking.paid)}</Td>
         <Td>
           <Button colorScheme={"red"} onClick={handleDelete}>
             <DeleteIcon />
@@ -87,14 +90,8 @@ export const BookingTableRow = ({
           <ModalHeader>Update Booking</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <BookingEditForm booking={booking} />
+            <BookingEditForm booking={booking} onUpdate={onUpdate}/>
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="pink" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Update Data</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
@@ -104,17 +101,20 @@ export const BookingTableRow = ({
 export const BookingTable = () => {
   const [bookings, setBookings] = useState<Booking[] | null>(null);
 
-  const updateBookings = (deletedBookingId: number) => {
-    setBookings((prevBookings) =>
-      prevBookings!.filter((booking) => booking.id !== deletedBookingId)
-    );
+  const dispatch = useDispatch();
+
+
+  const loadBookings = async () => {
+    const bookings = await getAllBookings();
+    setBookings(bookings);
+  };
+
+  const handleUpdate = async (updatedBooking: Booking) => {
+    await dispatch(update(updatedBooking) as any);
+    loadBookings();
   };
 
   useEffect(() => {
-    const loadBookings = async () => {
-      const bookings = await getAllBookings();
-      setBookings(bookings);
-    };
     loadBookings();
   }, []);
 
@@ -155,7 +155,9 @@ export const BookingTable = () => {
                 <BookingTableRow
                   key={booking.id}
                   booking={booking}
-                  onDelete={() => updateBookings(booking.id)}
+                  onDelete={() => loadBookings()}
+                  onUpdate={handleUpdate}
+
                 />
               );
             })}

@@ -5,58 +5,26 @@ import {
   Input,
   FormLabel,
   Select,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
+  Button,
+  Center
 } from "@chakra-ui/react";
 
 export interface BookingEditFormProps {
   booking: Booking;
+  onUpdate: (updatedBooking: Booking) => void;
 }
 
-export const BookingEditForm: FC<BookingEditFormProps> = ({ booking }) => {
-  const [userId, setUserId] = useState(booking.user.id);
-  const [userName, setUserName] = useState(
-    booking.user.authenticationData.userName
-  );
-  const [accId, setAccId] = useState(booking.accommodation.id);
-  const [accName, setAccName] = useState(
-    booking.accommodation.accommodationName
-  );
-  const [roomId, setRoomId] = useState(booking.room.id);
-  const [roomType, setRoomType] = useState(booking.room.roomType);
+export const BookingEditForm: FC<BookingEditFormProps> = ({
+  booking,
+  onUpdate,
+}) => {
   const [dateStart, setDateStart] = useState(booking.dateStart);
   const [dateFinish, setDateFinish] = useState(booking.dateFinish);
   const [serviceType, setServiceType] = useState(booking.serviceType);
   const [archived, setArchived] = useState(booking.archived);
   const [resigned, setResigned] = useState(booking.resigned);
-  const [paid, setPaid] = useState(booking.payed);
+  const [paid, setPaid] = useState(booking.paid);
 
-  const userIdChange = (value: string) => {
-    setUserId(Number(value));
-  };
-
-  const userNameChange = (e: any) => {
-    setUserName(e.target.value);
-  };
-
-  const accIdChange = (value: string) => {
-    setAccId(Number(value));
-  };
-
-  const accNameChange = (e: any) => {
-    setAccName(e.target.value);
-  };
-
-  const roomIdChange = (value: string) => {
-    setRoomId(Number(value));
-  };
-
-  const roomTypeChange = (e: any) => {
-    setRoomType(e.target.value);
-  };
 
   const dateStartChange = (e: any) => {
     setDateStart(e.target.value);
@@ -82,79 +50,22 @@ export const BookingEditForm: FC<BookingEditFormProps> = ({ booking }) => {
     setPaid(e.target.value);
   };
 
+  const handleUpdate = () => {
+    const updatedBooking: Booking = {
+      ...booking,
+      dateStart: dateStart,
+      dateFinish: dateFinish,
+      serviceType: serviceType,
+      archived: archived,
+      resigned: resigned,
+      paid: paid,
+    };
+
+    onUpdate(updatedBooking);
+  };
+
   return (
     <>
-      <FormControl id="userId">
-        <FormLabel mb={0} mt={3}>
-          User Id
-        </FormLabel>
-        <NumberInput rounded="md" value={userId} onChange={userIdChange} min={0}>
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
-      </FormControl>
-
-      <FormControl id="userName">
-        <FormLabel mb={0} mt={3}>
-          Username
-        </FormLabel>
-        <Input
-          type="text"
-          rounded="md"
-          value={userName}
-          onChange={userNameChange}
-        />
-      </FormControl>
-
-      <FormControl id="accId">
-        <FormLabel mb={0} mt={3}>
-          Accomodation Id
-        </FormLabel>
-        <NumberInput rounded="md" value={accId} onChange={accIdChange} min={0}>
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
-      </FormControl>
-
-      <FormControl id="accName">
-        <FormLabel mb={0} mt={3}>
-          Accommodation Name
-        </FormLabel>
-        <Input
-          type="text"
-          rounded="md"
-          value={accName}
-          onChange={accNameChange}
-        />
-      </FormControl>
-
-      <FormControl id="roomId">
-        <FormLabel mb={0} mt={3}>
-          Room Id
-        </FormLabel>
-        <NumberInput rounded="md" value={roomId} onChange={roomIdChange} min={0}>
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
-      </FormControl>
-
-      <FormControl id="roomType">
-        <FormLabel mb={0}>Room Type</FormLabel>
-        <Select value={roomType} onChange={roomTypeChange}>
-          <option value="SZOBA">Szoba</option>
-          <option value="LAKOSZTALY">Lakosztály</option>
-        </Select>
-      </FormControl>
-
       <FormControl id="dateStart">
         <FormLabel mb={0} mt={3}>
           Date Start
@@ -188,7 +99,6 @@ export const BookingEditForm: FC<BookingEditFormProps> = ({ booking }) => {
         </Select>
       </FormControl>
 
-
       <FormControl id="archived">
         <FormLabel mb={0}>Archived</FormLabel>
         <Select value={archived.toString()} onChange={archivedChange}>
@@ -212,6 +122,11 @@ export const BookingEditForm: FC<BookingEditFormProps> = ({ booking }) => {
           <option value={false.toString()}>False</option>
         </Select>
       </FormControl>
+      <Center>
+        <Button variant="solid" onClick={handleUpdate} colorScheme={"pink"} mt={3}>
+          Update Data
+        </Button>
+      </Center>
     </>
   );
 };

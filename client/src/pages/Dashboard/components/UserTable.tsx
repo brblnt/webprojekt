@@ -16,7 +16,6 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
@@ -25,9 +24,18 @@ import { getAllApplicationUsers } from "../../../services/apiRequests";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { ApplicationUser } from "../../../types/ApplicationUser";
 import { UserEditForm } from "./UserEditForm";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { remove, update } from "../../../features/user/userSlice";
 
-const UserTableRow = ({ user }: { user: ApplicationUser }) => {
+const UserTableRow = ({
+  user,
+  onDelete,
+  onUpdate,
+}: {
+  user: ApplicationUser;
+  onDelete: () => void;
+  onUpdate: (updatedUser: ApplicationUser) => void;
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleEdit = () => {
@@ -38,12 +46,12 @@ const UserTableRow = ({ user }: { user: ApplicationUser }) => {
     return value ? "True" : "False";
   };
 
-  const handleDelete = async (userId: any) => {
-    try {
-      const response = await axios.delete(`http://localhost:3010/hotel-booking/application-user/${userId}`);
-    } catch (error) {
-      console.error(error);
-    }
+  const dispatch = useDispatch();
+
+  const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const userId = user.id.toString();
+    await dispatch(remove(userId) as any);
+    onDelete();
   };
 
   return (
@@ -67,7 +75,7 @@ const UserTableRow = ({ user }: { user: ApplicationUser }) => {
         <Td>{formatBooleanValue(user.authenticationData.accountEnabled)}</Td>
 
         <Td>
-          <Button colorScheme={"red"} onClick={() => handleDelete(user.id)}>
+          <Button colorScheme={"red"} onClick={handleDelete}>
             <DeleteIcon />
           </Button>
         </Td>
@@ -84,14 +92,8 @@ const UserTableRow = ({ user }: { user: ApplicationUser }) => {
           <ModalHeader>Update User</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <UserEditForm user={user} />
+            <UserEditForm user={user} onUpdate={onUpdate} />
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="pink" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button variant="ghost">Update Data</Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>
@@ -100,12 +102,19 @@ const UserTableRow = ({ user }: { user: ApplicationUser }) => {
 
 export const UserTable = () => {
   const [users, setUsers] = useState<ApplicationUser[] | null>(null);
+  const dispatch = useDispatch();
+
+  const loadUsers = async () => {
+    const users = await getAllApplicationUsers();
+    setUsers(users);
+  };
+
+  const handleUpdate = async (updatedUser: ApplicationUser) => {
+    await dispatch(update(updatedUser) as any);
+    loadUsers();
+  };
 
   useEffect(() => {
-    const loadUsers = async () => {
-      const users = await getAllApplicationUsers();
-      setUsers(users);
-    };
     loadUsers();
   }, []);
 
@@ -142,7 +151,12 @@ export const UserTable = () => {
 
           <Tbody>
             {users?.map((user) => (
-              <UserTableRow key={user.id} user={user} />
+              <UserTableRow
+                key={user.id}
+                user={user}
+                onDelete={() => loadUsers()}
+                onUpdate={handleUpdate}
+              />
             ))}
           </Tbody>
 
