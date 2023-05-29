@@ -1,5 +1,7 @@
 package nostra.cosa.hotelbooking.auth.dto;
 
+import java.util.List;
+
 import lombok.*;
 import nostra.cosa.hotelbooking.auth.dto.enums.Role;
 
@@ -19,7 +21,7 @@ public class AuthenticationDataDTO {
 
   private Role role;
 
-  private String imgPath;
+  private List<String> imgPath;
 
   private String registrationDate;
 

@@ -48,6 +48,13 @@ public class ApplicationUserServiceImpl implements BookingService<ApplicationUse
             .orElseThrow(() -> new NotFoundException("There is no ApplicationUser with ID:" + id));
   }
 
+  public ApplicationUserDTO getUserByAuthId(Long id) throws NotFoundException {
+    log.info("Get ApplicationUserDTO by auth id : {}", id);
+    return applicationUserRepository.findApplicationUserByAuthenticationId(id)
+            .map(convertApplicationUserEntityToDTO::convert)
+            .orElseThrow(() -> new NotFoundException("There is no ApplicationUser with auth ID:" + id));
+  }
+
   @Override
   public ApplicationUserDTO update(ApplicationUserDTO newApplicationUser) throws NotFoundException {
     return create(

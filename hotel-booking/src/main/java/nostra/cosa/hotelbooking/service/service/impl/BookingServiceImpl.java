@@ -42,14 +42,14 @@ public class BookingServiceImpl implements BookingService<BookingDTO> {
             .orElseThrow(() -> new NotFoundException("There is no Booking with ID:" + id));
   }
 
-  public List<BookingDTO> getAllByUserId(Long id) throws NotFoundException  {
+  public List<BookingDTO> getAllByUserId(Long id) {
     log.info("Get all BookingDTOs by user id: {}", id);
     return bookingRepository.findAllByUserId(id).stream()
             .map(convertBookingEntityToDTO::convert)
             .toList();
   }
 
-  public List<BookingDTO> getAllByAccommodationId(Long id) throws NotFoundException  {
+  public List<BookingDTO> getAllByAccommodationId(Long id) {
     log.info("Get all BookingDTOs by accommodation id: {}", id);
     return bookingRepository.findAllByAccommodationId(id).stream()
             .map(convertBookingEntityToDTO::convert)
