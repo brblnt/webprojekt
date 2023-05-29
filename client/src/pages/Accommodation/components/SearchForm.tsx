@@ -114,7 +114,6 @@ export const SearchForm: FC = () => {
                 </option>
               ))}
             </Select>
-            {/* TODO: Make utils folder and make a file that collects all cities from accommodation data */}
             <Select
               placeholder="Select country"
               id="country"
@@ -146,6 +145,7 @@ export const SearchForm: FC = () => {
               onChange={accommodationTypeChange}
               focusBorderColor="pink.300"
               value={accommodationType}
+              placeholder={`ASD`}
             >
               {accommodationTypeOptions.map((option) => (
                 <option key={option.value} value={option.value}>

@@ -41,9 +41,11 @@ public class Accommodation{
   private AccommodationType accommodationType;
 
   @Column(name = "service_types", nullable = false)
+  @ElementCollection
   private List<ServiceType> serviceTypes;
 
   @Column(name = "room_ids", nullable = false)
+  @ElementCollection
   private Set<Integer> roomIds;
 
 }

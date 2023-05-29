@@ -8,7 +8,6 @@ import {
   Button,
   VStack,
   Checkbox,
-  Link,
   Center,
   Heading,
   Select,
@@ -19,7 +18,6 @@ import {
   NumberDecrementStepper,
   Text,
 } from "@chakra-ui/react";
-import { BiLockAlt } from "react-icons/bi";
 import { everyCountry } from "../../constants/everyCountry";
 import { accommodationTypeOptions } from "../../constants/accommodationType";
 import { serviceTypeOptions } from "../../constants/serviceType";

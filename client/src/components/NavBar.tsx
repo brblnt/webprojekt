@@ -16,7 +16,9 @@ import {
 import { AuthenticationData } from "../types/AuthenticationData";
 import { Role } from "../types/enums/Role";
 function NavBar() {
+
   const { user } = useSelector((state: { auth: { user: any } }) => state.auth);
+
 
   return (
     <Box>
@@ -48,6 +50,7 @@ function NavBar() {
             {user && user.authenticationData.role === Role.ADMIN && <AdminNav />}
             {user && user.authenticationData.role === Role.ACCOMMODATION && <AccommodationNav />}
             {user && user.authenticationData.role === Role.APPLICATION_USER && <UserNav />}
+
           </Flex>
         </Flex>
         {user && <UserLoggedIn />}
@@ -112,6 +115,7 @@ const AdminNav = () => {
 
 const UserLoggedIn = () => {
   const { user } = useSelector((state: any) => state.auth);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

@@ -23,7 +23,6 @@ const create = async (accommodationData: any) => {
     throw new Error(message);
   }
 
-  
 };
 
 const accommodationService = {
