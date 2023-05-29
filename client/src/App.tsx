@@ -8,6 +8,9 @@ import { LoginPage } from "./pages/Auth/LoginPage";
 import { RegisterPage } from "./pages/Auth/RegisterPage";
 import { AccommodationDetail } from "./pages/Accommodation/AccommodationDetail";
 import { AccommodationCreatePage } from "./pages/Accommodation/AccommodationCreatePage";
+
+import {ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { ProfilePage } from "./pages/Profile/ProfilePage";
 import { RoomPage } from "./pages/Room/RoomPage";
 import { RoomCreatePage } from "./pages/Room/RoomCreatePage";
@@ -21,6 +24,9 @@ export const App = () => (
       <Routes>
         <Route path={`/`} element={<HomePage />} />
         <Route path={`/accommodation`} element={<AccommodationPage />} />
+        <Route path={`/accommodation/:accommodationId`} element={<AccommodationDetail />} />
+        <Route path={`/accommodation/:accommodationId/room`} element={<RoomPage />} />
+        <Route path={`/accommodation/:accommodationId/room/post`} element={<RoomCreatePage />} />
         <Route path={`/accommodation/post`} element={<AccommodationCreatePage />} />
         <Route path={`/accommodation/:accommodationId`} element={<AccommodationDetail />} />
         <Route path={`/accommodation/:accommodationId/room`} element={<RoomPage />} />
@@ -31,6 +37,7 @@ export const App = () => (
         <Route path={`/profile/:userName`} element={<ProfilePage />} />
         <Route path={`/profile/:userName/settings`} element={<Settings />} />
       </Routes>
+      <ToastContainer />
     </BrowserRouter>
   </ChakraProvider>
 );

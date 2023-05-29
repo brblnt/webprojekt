@@ -23,9 +23,10 @@ console.log('localStorage user:', user);
 // Register user
 export const register = createAsyncThunk(
   'auth/register',
-  async (user: any, thunkAPI) => {
+  async (userData: any, thunkAPI) => {
     try {
-      return await authService.register(user)
+      console.log(userData)
+      return await authService.register(userData)
     } catch (error: any) {
       const message =
         (error.response &&
