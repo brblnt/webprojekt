@@ -11,6 +11,7 @@ import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.BookingService;
 import nostra.cosa.hotelbooking.service.util.data.AddressUtilities;
 import nostra.cosa.hotelbooking.service.util.data.CityUtilities;
+import nostra.cosa.hotelbooking.service.util.service.impl.AddressUtilitiesService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class AddressServiceImpl implements BookingService<AddressDTO> {
 
+  private final AddressUtilitiesService addressUtilitiesService;
   private final AddressUtilities addressUtilities;
   private final CityUtilities cityUtilities;
   private final AddressRepository addressRepository;
@@ -46,7 +48,10 @@ public class AddressServiceImpl implements BookingService<AddressDTO> {
 
   @Override
   public AddressDTO update(AddressDTO update) throws NotFoundException {
-    return null;//TODO
+    return create(
+            addressUtilitiesService.update(
+                    getById(update.getAddressId()),
+                    update));
   }
 
   @Override
