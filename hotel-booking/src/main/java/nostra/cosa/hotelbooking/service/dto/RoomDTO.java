@@ -19,6 +19,8 @@ public class RoomDTO {
 
   private RoomType roomType;
 
+  private Integer roomNumber;
+
   private Integer numberOfRooms;
 
   private Integer numberOfSingleBeds;
@@ -33,6 +35,6 @@ public class RoomDTO {
 
   private Double priceOfADay;
 
-  private String other;
+  private String roomDetail;
 
 }

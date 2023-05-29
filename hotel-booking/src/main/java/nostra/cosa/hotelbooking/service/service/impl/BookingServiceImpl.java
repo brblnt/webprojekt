@@ -4,11 +4,8 @@ import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nostra.cosa.hotelbooking.data.entity.ApplicationUser;
 import nostra.cosa.hotelbooking.data.entity.Booking;
-import nostra.cosa.hotelbooking.data.repository.ApplicationUserRepository;
 import nostra.cosa.hotelbooking.data.repository.BookingRepository;
-import nostra.cosa.hotelbooking.service.dto.ApplicationUserDTO;
 import nostra.cosa.hotelbooking.service.dto.BookingDTO;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.BookingService;
@@ -44,6 +41,21 @@ public class BookingServiceImpl implements BookingService<BookingDTO> {
             .map(convertBookingEntityToDTO::convert)
             .orElseThrow(() -> new NotFoundException("There is no Booking with ID:" + id));
   }
+
+  public List<BookingDTO> getAllByUserId(Long id) {
+    log.info("Get all BookingDTOs by user id: {}", id);
+    return bookingRepository.findAllByUserId(id).stream()
+            .map(convertBookingEntityToDTO::convert)
+            .toList();
+  }
+
+  public List<BookingDTO> getAllByAccommodationId(Long id) {
+    log.info("Get all BookingDTOs by accommodation id: {}", id);
+    return bookingRepository.findAllByAccommodationId(id).stream()
+            .map(convertBookingEntityToDTO::convert)
+            .toList();
+  }
+
 
   @Override
   public BookingDTO update(BookingDTO newBooking) throws NotFoundException {

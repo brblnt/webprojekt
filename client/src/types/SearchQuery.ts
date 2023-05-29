@@ -6,6 +6,6 @@ export type SearchQuery = {
   sortBy: string;
   country: string;
   city: string;
-  accommodationType: AccommodationType;
-  serviceType: ServiceType;
+  accommodationType: AccommodationType | undefined;
+  serviceType: ServiceType | undefined;
 }

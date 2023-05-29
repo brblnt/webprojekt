@@ -28,7 +28,7 @@ public class ConvertBookingDTOToEntity implements Converter<BookingDTO, Booking>
             source.getServiceType(),
             source.getArchived(),
             source.getResigned(),
-            source.getPayed(),
+            source.getPaid(),
             source.getOther()
     );
   }

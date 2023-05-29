@@ -21,6 +21,9 @@ public class Room {
   @Column(name = "room_type", nullable = false)
   private RoomType roomType;
 
+  @Column(name = "room_number", nullable = false)
+  private Integer roomNumber;
+
   @Column(name = "number_of_rooms", nullable = false)
   private Integer numberOfRooms;
 
@@ -42,6 +45,6 @@ public class Room {
   @Column(name = "price_of_a_day", nullable = false)
   private Double priceOfADay;
 
-  @Column(name = "other", nullable = false)
-  private String other;
+  @Column(name = "room_detail", nullable = false)
+  private String roomDetail;
 }
