@@ -50,7 +50,7 @@ public class ApplicationUserServiceImpl implements BookingService<ApplicationUse
 
   public ApplicationUserDTO getUserByAuthId(Long id) throws NotFoundException {
     log.info("Get ApplicationUserDTO by auth id : {}", id);
-    return applicationUserRepository.findApplicationUserByAuthenticationId(id)
+    return applicationUserRepository.findByAuthenticationId(id)
             .map(convertApplicationUserEntityToDTO::convert)
             .orElseThrow(() -> new NotFoundException("There is no ApplicationUser with auth ID:" + id));
   }
