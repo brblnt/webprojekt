@@ -39,7 +39,7 @@ public class BookingController extends HotelBookingController {
     }
 
     @PreAuthorize(GET_ALL_PERMISSION_ALL)
-    @GetMapping("/{id}")
+    @GetMapping("/application-user/{id}")
     public ResponseEntity<List<BookingDTO>> getAllByUserId(final @PathVariable("id") Long id) {
         final List<BookingDTO> result = bookingService.getAllByUserId(id);
 
@@ -47,7 +47,7 @@ public class BookingController extends HotelBookingController {
     }
 
     @PreAuthorize(GET_ALL_PERMISSION_ALL)
-    @GetMapping("/{id}")
+    @GetMapping("/accommodation/{id}")
     public ResponseEntity<List<BookingDTO>> getAllByAccommodationId(final @PathVariable("id") Long id) {
         final List<BookingDTO> result = bookingService.getAllByAccommodationId(id);
 

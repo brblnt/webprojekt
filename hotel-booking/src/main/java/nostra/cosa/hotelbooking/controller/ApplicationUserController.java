@@ -38,7 +38,7 @@ public class ApplicationUserController extends HotelBookingController {
     }
 
     @PreAuthorize(GET_BY_ID_PERMISSION_ADMIN_APPLICATION_USER)
-    @GetMapping("/{id}")
+    @GetMapping("/{id}/all")
     public ResponseEntity<ApplicationUserDTO> getAllByAuthenticationId(final @PathVariable("id") Long id) throws NotFoundException {
         final ApplicationUserDTO result = applicationUserService.getUserByAuthId(id);
 
