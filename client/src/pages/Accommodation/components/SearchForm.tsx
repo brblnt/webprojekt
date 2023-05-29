@@ -16,10 +16,8 @@ export const SearchForm: FC = () => {
   const [sortBy, setSortBy] = useState("default");
   const [country, setCountry] = useState("");
   const [city, setCity] = useState("");
-  const [accommodationType, setAccommodationType] = useState(
-    AccommodationType.SZALLODA
-  );
-  const [serviceType, setServiceType] = useState(ServiceType.TELJES_PANZIO);
+  const [accommodationType, setAccommodationType] = useState<AccommodationType | undefined>();
+  const [serviceType, setServiceType] = useState<ServiceType | undefined>();
 
   const [accommodation, setAccommodation] = useState<Accommodation[] | null>(
     null
@@ -115,7 +113,7 @@ export const SearchForm: FC = () => {
               ))}
             </Select>
             <Select
-              placeholder="Select country"
+              placeholder="Country"
               id="country"
               onChange={countryChange}
               focusBorderColor="pink.300"
@@ -127,7 +125,7 @@ export const SearchForm: FC = () => {
               ))}
             </Select>
             <Select
-              placeholder="Select city"
+              placeholder="City"
               id="city"
               onChange={cityChange}
               value={city}
@@ -145,7 +143,7 @@ export const SearchForm: FC = () => {
               onChange={accommodationTypeChange}
               focusBorderColor="pink.300"
               value={accommodationType}
-              placeholder={`ASD`}
+              placeholder={`Accommodation Type`}
             >
               {accommodationTypeOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -159,6 +157,7 @@ export const SearchForm: FC = () => {
               onChange={serviceTypeChange}
               focusBorderColor="pink.300"
               value={serviceType}
+              placeholder={`Service Type`}
             >
               {serviceTypeOptions.map((option) => (
                 <option key={option.value} value={option.value}>
