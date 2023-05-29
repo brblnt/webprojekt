@@ -19,8 +19,8 @@ public class AddressDTO {
 
   private CityDTO city;
 
-  private String address;
+  private String addressName;
 
   private String other;
-
+  
 }

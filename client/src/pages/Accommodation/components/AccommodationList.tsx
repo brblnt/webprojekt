@@ -11,19 +11,53 @@ export interface AccommodationItemProps {
 
 export const AccommodationList: FC<AccommodationItemProps> = ({ query }) => {
 
-  const [accommodation, setAccommodation] = useState<Accommodation[]>(
-    []
+  const [accommodation, setAccommodation] = useState<Accommodation[] | null>(
+    null
   );
-
+  
   useEffect(() => {
     const loadAccommodation = async () => {
       const accommodation = await getAllAccommodations();
-      setAccommodation(accommodation);
+      if (query.sortBy === "default") {
+        setAccommodation(accommodation);
+      } else if (query.sortBy === "cheapest") {
+        const sortedAccommodation = [...accommodation].sort((a, b) => {
+          const averagePriceA =
+            a.rooms.reduce((sum, room) => sum + room.priceOfADay, 0) /
+            a.rooms.length;
+          const averagePriceB =
+            b.rooms.reduce((sum, room) => sum + room.priceOfADay, 0) /
+            b.rooms.length;
+  
+          return averagePriceA - averagePriceB;
+        });
+  
+        setAccommodation(sortedAccommodation);
+      }
+      else if (query.sortBy === "expensive") {
+        const sortedAccommodation = [...accommodation].sort((a, b) => {
+          const averagePriceA =
+            a.rooms.reduce((sum, room) => sum + room.priceOfADay, 0) /
+            a.rooms.length;
+          const averagePriceB =
+            b.rooms.reduce((sum, room) => sum + room.priceOfADay, 0) /
+            b.rooms.length;
+  
+          return averagePriceB - averagePriceA;
+        });
+  
+        setAccommodation(sortedAccommodation);
+
+      }
     };
     loadAccommodation();
-  }, []);
+  }, [query.sortBy]);
 
-  const filteredAccommodations = accommodation.filter((accommodation) => {
+  const filteredAccommodations = accommodation?.filter((accommodation) => {
+    if (query.search && !accommodation.accommodationName.toLowerCase().includes(query.search.toLowerCase())) {
+      return false;
+    }
+    
     if (query.country && accommodation.address.country !== query.country) {
       return false;
     }
@@ -48,7 +82,7 @@ export const AccommodationList: FC<AccommodationItemProps> = ({ query }) => {
 
   return (
     <div>
-      {filteredAccommodations.map((accommodation) => {
+      {filteredAccommodations?.map((accommodation) => {
         return (
           <Container
             key={accommodation.id}

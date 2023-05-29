@@ -23,7 +23,7 @@ public class ConvertAddressEntityToDTO implements Converter<Address, AddressDTO>
             source.getAddressId(),
             source.getCountry(),
             cityUtilities.getActualCity(source.getPostalCode()),
-            source.getAddress(),
+            source.getAddressName(),
             source.getOther()
     );
   }
