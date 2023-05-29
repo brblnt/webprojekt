@@ -42,8 +42,8 @@ public class Booking {
   @Column(name = "resigned", nullable = false)
   private Boolean resigned;
 
-  @Column(name = "payed", nullable = false)
-  private Boolean payed;
+  @Column(name = "paid", nullable = false)
+  private Boolean paid;
 
   @Column(name = "other", nullable = false)
   private String other;

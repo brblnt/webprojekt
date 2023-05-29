@@ -32,7 +32,7 @@ public class BookingDTO {
 
   private Boolean resigned;
 
-  private Boolean payed;
+  private Boolean paid;
 
   private String other;
 

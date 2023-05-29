@@ -26,7 +26,7 @@ public class BookingUtilities implements UtilitiesForService<BookingDTO> {
             checkNull(oldDTO.getServiceType(), newDTO.getServiceType()),
             checkNull(oldDTO.getArchived(), newDTO.getArchived()),
             checkNull(oldDTO.getResigned(), newDTO.getResigned()),
-            checkNull(oldDTO.getPayed(), newDTO.getPayed()),
+            checkNull(oldDTO.getPaid(), newDTO.getPaid()),
             checkNull(oldDTO.getOther(), newDTO.getOther())
     );
   }
