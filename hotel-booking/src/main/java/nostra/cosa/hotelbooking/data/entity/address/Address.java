@@ -26,7 +26,7 @@ public class Address {
   @Column(name = "addressName", nullable = false)
   private String addressName;
 
-  @Column(name = "other", nullable = false)
-  private String other;
+  @Column(name = "address_detail", nullable = false)
+  private String addressDetail;
 
 }

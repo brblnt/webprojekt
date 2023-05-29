@@ -24,7 +24,7 @@ export const HomePage = () => {
       navigate('/login');
       dispatch(logout() as any);
     } else {
-      console.log(user.userName)
+      console.log(user.authenticationData.userName)
     }
 
 
@@ -32,7 +32,7 @@ export const HomePage = () => {
 
   return (
     <div>
-      {user && user.userName ? 'Welcome ' + user.userName : ''}
+      {user && user.authenticationData.userName ? 'Welcome ' + user.authenticationData.userName : ''}
     </div>
   );
 };

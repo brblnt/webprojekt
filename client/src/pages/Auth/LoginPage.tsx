@@ -21,7 +21,7 @@ export const LoginPage = () => {
 
   useEffect(() => {
     if (isError) {
-      toast.error(message)
+      console.log(message)
     }
 
     if (isSuccess && user) {

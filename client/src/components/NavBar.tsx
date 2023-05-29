@@ -16,8 +16,10 @@ import {
 import { AuthenticationData } from "../types/AuthenticationData";
 import { Role } from "../types/enums/Role";
 function NavBar() {
-  const { user } = useSelector((state: { auth: { user: AuthenticationData } }) => state.auth);
-  
+
+  const { user } = useSelector((state: { auth: { user: any } }) => state.auth);
+
+
   return (
     <Box>
       <Flex
@@ -45,9 +47,10 @@ function NavBar() {
           </Text>
 
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
-            {user && user.role === Role.ADMIN && <AdminNav />}
-            {user && user.role === Role.ACCOMMODATION && <AccommodationNav />}
-            {user && user.role === Role.APPLICATION_USER && <UserNav />}
+            {user && user.authenticationData.role === Role.ADMIN && <AdminNav />}
+            {user && user.authenticationData.role === Role.ACCOMMODATION && <AccommodationNav />}
+            {user && user.authenticationData.role === Role.APPLICATION_USER && <UserNav />}
+
           </Flex>
         </Flex>
         {user && <UserLoggedIn />}
@@ -121,7 +124,8 @@ const AdminNav = () => {
 };
 
 const UserLoggedIn = () => {
-  const { user } = useSelector((state: { auth: { user: AuthenticationData } }) => state.auth);
+  const { user } = useSelector((state: any) => state.auth);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -135,10 +139,10 @@ const UserLoggedIn = () => {
         <Avatar></Avatar>
       </MenuButton>
       <MenuList>
-        <MenuItem as='a' href={`/profile/${user.userName}`}>
+        <MenuItem as='a' href={`/profile/${user.authenticationData.userName}`}>
           Profile
         </MenuItem>
-        <MenuItem as='a' href={`/profile/${user.userName}/settings`}>
+        <MenuItem as='a' href={`/profile/${user.authenticationData.userName}/settings`}>
           Settings
         </MenuItem>
         <MenuItem onClick={onLogout}>

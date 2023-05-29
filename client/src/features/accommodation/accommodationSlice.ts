@@ -27,8 +27,8 @@ export const create = createAsyncThunk(
     }
   )
 
-  export const accommodationSlice = createSlice({
-    name: 'accommodation',
+  export const accommodationSlice: any = createSlice({
+    name: 'accomm',
     initialState,
     reducers: {
         reset: (state) => {

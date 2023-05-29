@@ -11,4 +11,6 @@ public interface AuthenticationRepository extends JpaRepository<AuthenticationDa
 
   AuthenticationData findByUserName(String userName);
 
+  AuthenticationData findByToken(String token);
+
 }

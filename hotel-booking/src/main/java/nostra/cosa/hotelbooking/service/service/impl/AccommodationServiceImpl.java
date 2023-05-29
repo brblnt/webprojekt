@@ -44,6 +44,13 @@ public class AccommodationServiceImpl implements BookingService<AccommodationDTO
             .orElseThrow(() -> new NotFoundException("There is no Accommodation with ID:" + id));
   }
 
+  public List<AccommodationDTO> getAllByAuthenticationId(Long id) {
+    log.info("Get AccommodationDTOs by auth id : {}", id);
+    return accommodationRepository.findAllByAuthenticationId(id).stream()
+            .map(convertAccommodationEntityToDTO::convert)
+            .toList();
+  }
+
   @Override
   public AccommodationDTO update(AccommodationDTO newAccommodation) throws NotFoundException {
     return create(
@@ -54,7 +61,7 @@ public class AccommodationServiceImpl implements BookingService<AccommodationDTO
 
   @Override
   public AccommodationDTO create(AccommodationDTO newAccommodation) {
-    addressService.create(newAccommodation.getAddress());
+    newAccommodation.setAddress(addressService.create(newAccommodation.getAddress()));
     return convertAccommodationEntityToDTO.convert(
             accommodationRepository.save(convertAccommodationDTOToEntity.convert(newAccommodation)));
   }

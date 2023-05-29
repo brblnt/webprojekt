@@ -10,19 +10,28 @@ import {
   Center,
   Heading,
   Select,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
+  Text,
 } from "@chakra-ui/react";
 import { everyCountry } from "../../constants/everyCountry";
 import { accommodationTypeOptions } from "../../constants/accommodationType";
 import { serviceTypeOptions } from "../../constants/serviceType";
 import { create } from '../../features/accommodation/accommodationSlice'
-import { useDispatch, useSelector } from "react-redux";
+import { AnyIfEmpty, useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 export const AccommodationCreatePage = () => {
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state: any) => {
+  const { user, message } = useSelector((state: any) => {
     return state.auth;
   });
 
@@ -38,6 +47,14 @@ export const AccommodationCreatePage = () => {
     accommodationType: "",
     serviceType: [],
     rooms: [],
+    /*roomType: [],
+    numberOfRooms: "",
+    numberOfSingleBeds: "",
+    numberOfDoubleBeds: "",
+    hasOwnKitchen: "",
+    hasOwnBathroom: "",
+    active: "true",
+    priceOfADay: "",*/
   });
 
   const { accommodationName,
@@ -49,34 +66,48 @@ export const AccommodationCreatePage = () => {
     addressName,
     other,
     accommodationType,
-    serviceType, rooms} = formData;
+    serviceType,
+    rooms
+    /*roomType,
+    numberOfRooms,
+    numberOfSingleBeds,
+    numberOfDoubleBeds,
+    hasOwnKitchen,
+    hasOwnBathroom,
+    active,
+    priceOfADay*/
+  } = formData;
 
   const onChange = useCallback((e: any) => {
-    setFormData((prevState: any) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
+    if (e.target) {
+      const { name, value } = e.target;
+      //console.log(`Value of ${name}:`, value); // Add this line to log the value
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   }, []);
-
+  
   const onSubmit = (e: any) => {
     e.preventDefault();
     const accommodationData = {
       id: "",
       authenticationData: {
-        id: user.id,
-        userName: user.userName,
-        password: user.password,
-        role: user.role,
+        id: user.authenticationData.id,
+        userName: user.authenticationData.userName,
+        password: user.authenticationData.password,
+        role: user.authenticationDatarole,
         imgPath: "",
-        registrationDate: user.registrationDate,
-        accountNonExpired: user.accountNonExpired,
-        accountNonLocked: user.accountNonLocked,
-        accountCredentialsNonExpired: user.accountCredentialsNonExpired,
-        accountEnabled: user.accountEnabled
+        registrationDate: user.authenticationData.registrationDate,
+        accountNonExpired: user.authenticationData.accountNonExpired,
+        accountNonLocked: user.authenticationData.accountNonLocked,
+        accountCredentialsNonExpired: user.authenticationData.accountCredentialsNonExpired,
+        accountEnabled: user.authenticationData.accountEnabled
       },
       accommodationName,
       address: {
-        addressId: "2",
+        addressId: "",
         country,
         city: {
           postalCode,
@@ -89,7 +120,20 @@ export const AccommodationCreatePage = () => {
       phoneNumber,
       accommodationType,
       serviceTypes: [serviceType],
-      rooms,
+      rooms /*[
+        {
+          id: "",
+          roomType,
+          numberOfRooms,
+          numberOfSingleBeds,
+          numberOfDoubleBeds,
+          hasOwnKitchen,
+          hasOwnBathroom,
+          active,
+          priceOfADay,
+          other,
+        }
+      ],*/
     };
     dispatch(create(accommodationData) as any);
   };
@@ -99,7 +143,7 @@ export const AccommodationCreatePage = () => {
       <Center>
         <Stack spacing={4}>
           <Stack align="center">
-            <Heading fontSize="3xl">{user && user.userName ? 'Accommodation creation for ' + user.userName : ''} </Heading>
+            <Heading fontSize="3xl">{user && user.authenticationData.userName ? 'Accommodation creation for ' + user.authenticationData.userName : ''} </Heading>
           </Stack>
           <Container maxW="7xl" p={{ base: 5, md: 10 }}>
             <Stack spacing={4}>
@@ -276,19 +320,25 @@ export const AccommodationCreatePage = () => {
                     </Center>
                   </FormControl>
                 </VStack>
+            
                 <VStack w="100%">
-                  <Button
-                    bg="pink.400"
-                    color="white"
-                    _hover={{
-                      bg: "pink.300",
-                    }}
-                    rounded="md"
-                    w="100%"
-                    type="submit"
-                  >
-                    Post Accommodation
-                  </Button>
+                <Button
+                  bg="pink.400"
+                  color="white"
+                  _hover={{
+                    bg: "pink.300",
+                  }}
+                  rounded="md"
+                  w="100%"
+                  type="submit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSubmit(e);
+                  }}                
+                >
+                  Post Accommodation
+                </Button>
+
                 </VStack>
                 
               </VStack>

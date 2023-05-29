@@ -6,6 +6,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Service for Authorization.
@@ -30,14 +32,20 @@ public class HotelBookingAuthorizationService implements PermissionEvaluator {
         return false;
     }
 
-    private boolean hasAuthority(Authentication authentication, String role, String permission) {
-        String authority = role + "_" + permission;
-        for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
-            if (grantedAuthority.getAuthority().equals(authority)) {
-                return true;
+    private boolean hasAuthority(final Authentication authentication, final String role, final String permission) {
+        List<String> authorities = getAuthorities(role, permission);
+        for (final String authority: authorities) {
+            for (GrantedAuthority grantedAuthority : authentication.getAuthorities()) {
+                if (grantedAuthority.getAuthority().equals(authority)) {
+                    return true;
+                }
             }
         }
         return false;
+    }
+
+    private List<String> getAuthorities(final String role, final String permission) {
+        return Arrays.stream(role.split(",")).map(value -> value.concat("_").concat(permission)).toList();
     }
 
 }

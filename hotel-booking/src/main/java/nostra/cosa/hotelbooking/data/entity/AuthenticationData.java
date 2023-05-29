@@ -1,5 +1,7 @@
 package nostra.cosa.hotelbooking.data.entity;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.*;
 import nostra.cosa.hotelbooking.auth.dto.enums.Role;
@@ -21,7 +23,7 @@ public class AuthenticationData {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long authenticationId;
 
-  @Column(name = "user_name", nullable = false)
+  @Column(name = "user_name", nullable = false, unique = true)
   private String userName;
 
   @Column(name = "password", nullable = false)
@@ -31,7 +33,8 @@ public class AuthenticationData {
   private Role role;
 
   @Column(name = "img_path", nullable = false)
-  private String imgPath;
+  @ElementCollection
+  private List<String> imgPath;
 
   @Column(name = "registration_date", nullable = false)
   private String registrationDate;
@@ -51,5 +54,8 @@ public class AuthenticationData {
   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
   @JoinColumn(name = "authentication_id")
   private List<Permission> permissions;
+
+  @Column(name = "token", nullable = false)
+  private String token;
 
 }
