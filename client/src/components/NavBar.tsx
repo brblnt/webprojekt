@@ -1,64 +1,142 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../features/auth/authSlice';
-import './NavBar.css';
-
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../features/auth/authSlice";
+import {
+  Box,
+  Flex,
+  Text,
+  Button,
+  Stack,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Avatar,
+} from "@chakra-ui/react";
+import { AuthenticationData } from "../types/AuthenticationData";
+import { Role } from "../types/enums/Role";
 function NavBar() {
+  const { user } = useSelector((state: { auth: { user: any } }) => state.auth);
+
+  return (
+    <Box>
+      <Flex
+        bg={"gray.800"}
+        color={"white"}
+        minH={"60px"}
+        py={{ base: 2 }}
+        px={{ base: 4 }}
+        borderBottom={1}
+        borderStyle={"solid"}
+        borderColor={"gray.900"}
+        align={"center"}
+      >
+        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
+          <Text fontFamily={"heading"} color={"white"}>
+            <Link to="/">
+              <Text
+                _hover={{
+                  color: "pink.300",
+                }}
+              >
+                Cosa Nostra
+              </Text>
+            </Link>
+          </Text>
+
+          <Flex display={{ base: "none", md: "flex" }} ml={10}>
+            {user && user.authenticationData.role === Role.ADMIN && <AdminNav />}
+            {user && user.authenticationData.role === Role.ACCOMMODATION && <AccommodationNav />}
+            {user && user.authenticationData.role === Role.APPLICATION_USER && <UserNav />}
+          </Flex>
+        </Flex>
+        {user && <UserLoggedIn />}
+      </Flex>
+    </Box>
+  );
+}
+
+const UserNav = () => {
+  return (
+    <Link to={`/accommodation`}>
+      <Text
+        _hover={{
+          color: "pink.300",
+        }}
+      >
+        Discover Accommodation
+      </Text>
+    </Link>
+  );
+};
+
+const AccommodationNav = () => {
+  return (
+    <Link to={`/accommodation/post`}>
+      <Text
+        _hover={{
+          color: "pink.300",
+        }}
+      >
+        Post Accommodation
+      </Text>
+    </Link>
+  );
+};
+
+const AdminNav = () => {
+  return (
+    <Flex>
+      <Link to={`/accommodation`} style={{ marginRight: "1rem" }}>
+        <Text
+          _hover={{
+            color: "pink.300",
+          }}
+        >
+          Discover Accommodation
+        </Text>
+      </Link>
+      <Text>/</Text>
+      <Link to={`/accommodation/post`} style={{ marginLeft: "1rem" }}>
+        <Text
+          _hover={{
+            color: "pink.300",
+          }}
+        >
+          Post Accommodation
+        </Text>
+      </Link>
+    </Flex>
+  );
+};
+
+const UserLoggedIn = () => {
+  const { user } = useSelector((state: any) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state: any) => state.auth);
 
   const onLogout = () => {
     dispatch(logout() as any);
-    navigate('/login');
+    navigate("/login");
   };
-
   return (
-    <header className='header'>
-      <div className='logo'>
-        <Link to='/'>Cosa Nostra</Link>
-      </div>
-      <ul>
-        {user && user.role === 'ADMIN' && (
-          <>
-            <li>
-              <Link to='/accommodation/post'>Create Accommodation</Link>
-            </li>
-            <li>
-              <Link to='/accommodation'>Accommodation Page</Link>
-            </li>
-          </>
-        )}
-        {user && user.role === 'ACCOMMODATION' && (
-          <li>
-            <Link to='/accommodation/post'>Create Accommodation</Link>
-          </li>
-        )}
-        {user && user.role === 'APPLICATION_USER' && (
-          <li>
-            <Link to='/accommodation'>Search Accommodation</Link>
-          </li>
-        )}
-        {user && (
-          <li>
-            <button className='btn' onClick={onLogout}>
-              Logout
-            </button>
-          </li>
-        )}
-        {!user && (
-          <>
-            <li>
-              <Link to='/login'>Login</Link>
-            </li>
-            <li>
-              <Link to='/register'>Register</Link>
-            </li>
-          </>
-        )}
-      </ul>
-    </header>
+    <Menu colorScheme="pink">
+      <MenuButton>
+        <Avatar></Avatar>
+      </MenuButton>
+      <MenuList>
+        <MenuItem as='a' href={`/profile/${user.authenticationData.userName}`}>
+          Profile
+        </MenuItem>
+        <MenuItem as='a' href={`/profile/${user.authenticationData.userName}/settings`}>
+          Settings
+        </MenuItem>
+        <MenuItem onClick={onLogout}>
+          Logout
+        </MenuItem>
+      </MenuList>
+    </Menu>
   );
-}
+};
 
 export default NavBar;
