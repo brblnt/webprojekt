@@ -35,6 +35,8 @@ export const AccommodationEditForm: FC<AccommodationEditFormProps> = ({
     accommodation.address.addressName
   );
 
+
+
   const accNameChange = (e: any) => {
     setAccName(e.target.value);
   };
@@ -131,7 +133,7 @@ export const AccommodationEditForm: FC<AccommodationEditFormProps> = ({
         <FormLabel mb={0} mt={3}>
           Address Id
         </FormLabel>
-        <NumberInput rounded="md" value={addressId} onChange={addressIdChange}>
+        <NumberInput rounded="md" value={addressId} onChange={addressIdChange} min={0}>
           <NumberInputField />
           <NumberInputStepper>
             <NumberIncrementStepper />

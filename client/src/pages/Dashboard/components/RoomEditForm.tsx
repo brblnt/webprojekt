@@ -77,7 +77,12 @@ export const RoomEditForm: FC<RoomEditFormProps> = ({ room }) => {
         <FormLabel mb={0} mt={3}>
           Number of Rooms
         </FormLabel>
-        <NumberInput rounded="md" value={roomsNum} onChange={roomsNumChange}>
+        <NumberInput
+          rounded="md"
+          value={roomsNum}
+          onChange={roomsNumChange}
+          min={0}
+        >
           <NumberInputField />
           <NumberInputStepper>
             <NumberIncrementStepper />
@@ -94,6 +99,7 @@ export const RoomEditForm: FC<RoomEditFormProps> = ({ room }) => {
           rounded="md"
           value={singleBedNum}
           onChange={singleBedNumChange}
+          min={0}
         >
           <NumberInputField />
           <NumberInputStepper>
@@ -108,6 +114,7 @@ export const RoomEditForm: FC<RoomEditFormProps> = ({ room }) => {
           Number of Double Beds
         </FormLabel>
         <NumberInput
+          min={0}
           rounded="md"
           value={doubleBedNum}
           onChange={doubleBedNumChange}
@@ -148,11 +155,8 @@ export const RoomEditForm: FC<RoomEditFormProps> = ({ room }) => {
         <FormLabel mb={0} mt={3}>
           Price Of A Day
         </FormLabel>
-        <NumberInput
-          rounded="md"
-          value={price}
-          onChange={priceChange}
-        >
+        <NumberInput rounded="md" value={price} onChange={priceChange}>
+          min={0}
           <NumberInputField />
           <NumberInputStepper>
             <NumberIncrementStepper />
@@ -165,12 +169,7 @@ export const RoomEditForm: FC<RoomEditFormProps> = ({ room }) => {
         <FormLabel mb={0} mt={3}>
           Phone Number
         </FormLabel>
-        <Input
-          type="text"
-          rounded="md"
-          value={other}
-          onChange={otherChange}
-        />
+        <Input type="text" rounded="md" value={other} onChange={otherChange} />
       </FormControl>
     </>
   );

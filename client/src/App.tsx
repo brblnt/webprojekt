@@ -8,7 +8,6 @@ import { LoginPage } from "./pages/Auth/LoginPage";
 import { RegisterPage } from "./pages/Auth/RegisterPage";
 import { AccommodationDetail } from "./pages/Accommodation/AccommodationDetail";
 import { AccommodationCreatePage } from "./pages/Accommodation/AccommodationCreatePage";
-
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { ProfilePage } from "./pages/Profile/ProfilePage";
@@ -29,9 +28,6 @@ export const App = () => (
         <Route path={`/accommodation/:accommodationId/room`} element={<RoomPage />} />
         <Route path={`/accommodation/:accommodationId/room/post`} element={<RoomCreatePage />} />
         <Route path={`/accommodation/post`} element={<AccommodationCreatePage />} />
-        <Route path={`/accommodation/:accommodationId`} element={<AccommodationDetail />} />
-        <Route path={`/accommodation/:accommodationId/room`} element={<RoomPage />} />
-        <Route path={`/accommodation/:accommodationId/room/post`} element={<RoomCreatePage />} />
         <Route path={`/accommodation/:accommodationId/booking`} element={<BookingCreatePage />} />
         <Route path={`/login`} element={<LoginPage />} />
         <Route path={`/register`} element={<RegisterPage />} />

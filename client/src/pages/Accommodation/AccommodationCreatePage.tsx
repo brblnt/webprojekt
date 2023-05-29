@@ -43,7 +43,7 @@ export const AccommodationCreatePage = () => {
     postalCode: "",
     cityName: "",
     addressName: "",
-    other: "",
+    addressDetail: "",
     accommodationType: "",
     serviceType: [],
     rooms: [],
@@ -64,7 +64,7 @@ export const AccommodationCreatePage = () => {
     postalCode,
     cityName,
     addressName,
-    other,
+    addressDetail,
     accommodationType,
     serviceType,
     rooms
@@ -95,15 +95,6 @@ export const AccommodationCreatePage = () => {
       id: "",
       authenticationData: {
         id: user.authenticationData.id,
-        userName: user.authenticationData.userName,
-        password: user.authenticationData.password,
-        role: user.authenticationDatarole,
-        imgPath: "",
-        registrationDate: user.authenticationData.registrationDate,
-        accountNonExpired: user.authenticationData.accountNonExpired,
-        accountNonLocked: user.authenticationData.accountNonLocked,
-        accountCredentialsNonExpired: user.authenticationData.accountCredentialsNonExpired,
-        accountEnabled: user.authenticationData.accountEnabled
       },
       accommodationName,
       address: {
@@ -114,7 +105,7 @@ export const AccommodationCreatePage = () => {
           cityName,
         },
         addressName,
-        other,
+        addressDetail,
       },
       emailAddress,
       phoneNumber,
@@ -268,12 +259,12 @@ export const AccommodationCreatePage = () => {
                   >
                     <Input
                       type="text"
-                      placeholder="Address Other"
-                      value={other}
+                      placeholder="Address Detail"
+                      value={addressDetail}
                       rounded="md"
                       borderTopLeftRadius="0"
                       borderTopRightRadius="0"
-                      name="other"
+                      name="addressDetail"
                       onChange={onChange}
                     />
                   </FormControl>

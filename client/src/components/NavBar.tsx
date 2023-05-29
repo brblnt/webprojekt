@@ -50,7 +50,6 @@ function NavBar() {
             {user && user.authenticationData.role === Role.ADMIN && <AdminNav />}
             {user && user.authenticationData.role === Role.ACCOMMODATION && <AccommodationNav />}
             {user && user.authenticationData.role === Role.APPLICATION_USER && <UserNav />}
-
           </Flex>
         </Flex>
         {user && <UserLoggedIn />}

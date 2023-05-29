@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   Thead,
@@ -25,16 +25,29 @@ import { getAllAccommodations } from "../../../services/apiRequests";
 import { Accommodation } from "../../../types/Accommodation";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { AccommodationEditForm } from "./AccommodationEditForm";
+import { useDispatch } from "react-redux";
+import { remove } from "../../../features/accommodation/accommodationSlice";
 
 export const AccommodationTableRow = ({
   accommodation,
+  onDelete,
 }: {
   accommodation: Accommodation;
+  onDelete: () => void;
+
 }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleEdit = () => {
     onOpen();
+  };
+
+  const dispatch = useDispatch();
+
+  const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const accommodationId = accommodation.id.toString();
+    await dispatch(remove(accommodationId) as any);
+    onDelete();
   };
 
   return (
@@ -52,7 +65,7 @@ export const AccommodationTableRow = ({
         <Td>{accommodation.address.city.cityName}</Td>
         <Td>{accommodation.address.addressName}</Td>
         <Td>
-          <Button colorScheme={"red"}>
+          <Button colorScheme={"red"} onClick={handleDelete}>
             <DeleteIcon />
           </Button>
         </Td>
@@ -87,6 +100,14 @@ export const AccommodationTable = () => {
   const [accommodations, setAccommodations] = useState<Accommodation[] | null>(
     null
   );
+
+  const updateAccommodations = (deletedAccommodationId: number) => {
+    setAccommodations((prevAccommodations) =>
+      prevAccommodations!.filter(
+        (accommodation) => accommodation.id !== deletedAccommodationId
+      )
+    );
+  };
 
   useEffect(() => {
     const loadAccommodation = async () => {
@@ -131,7 +152,8 @@ export const AccommodationTable = () => {
                 <AccommodationTableRow
                   key={accommodation.id}
                   accommodation={accommodation}
-                />
+                  onDelete={() => updateAccommodations(accommodation.id)}
+                  />
               );
             })}
           </Tbody>

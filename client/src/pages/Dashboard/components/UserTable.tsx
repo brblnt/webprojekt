@@ -25,6 +25,7 @@ import { getAllApplicationUsers } from "../../../services/apiRequests";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { ApplicationUser } from "../../../types/ApplicationUser";
 import { UserEditForm } from "./UserEditForm";
+import axios from "axios";
 
 const UserTableRow = ({ user }: { user: ApplicationUser }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -35,6 +36,14 @@ const UserTableRow = ({ user }: { user: ApplicationUser }) => {
 
   const formatBooleanValue = (value: boolean) => {
     return value ? "True" : "False";
+  };
+
+  const handleDelete = async (userId: any) => {
+    try {
+      const response = await axios.delete(`http://localhost:3010/hotel-booking/application-user/${userId}`);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -58,7 +67,7 @@ const UserTableRow = ({ user }: { user: ApplicationUser }) => {
         <Td>{formatBooleanValue(user.authenticationData.accountEnabled)}</Td>
 
         <Td>
-          <Button colorScheme={"red"}>
+          <Button colorScheme={"red"} onClick={() => handleDelete(user.id)}>
             <DeleteIcon />
           </Button>
         </Td>

@@ -88,7 +88,7 @@ export const BookingEditForm: FC<BookingEditFormProps> = ({ booking }) => {
         <FormLabel mb={0} mt={3}>
           User Id
         </FormLabel>
-        <NumberInput rounded="md" value={userId} onChange={userIdChange}>
+        <NumberInput rounded="md" value={userId} onChange={userIdChange} min={0}>
           <NumberInputField />
           <NumberInputStepper>
             <NumberIncrementStepper />
@@ -113,7 +113,7 @@ export const BookingEditForm: FC<BookingEditFormProps> = ({ booking }) => {
         <FormLabel mb={0} mt={3}>
           Accomodation Id
         </FormLabel>
-        <NumberInput rounded="md" value={accId} onChange={accIdChange}>
+        <NumberInput rounded="md" value={accId} onChange={accIdChange} min={0}>
           <NumberInputField />
           <NumberInputStepper>
             <NumberIncrementStepper />
@@ -138,7 +138,7 @@ export const BookingEditForm: FC<BookingEditFormProps> = ({ booking }) => {
         <FormLabel mb={0} mt={3}>
           Room Id
         </FormLabel>
-        <NumberInput rounded="md" value={roomId} onChange={roomIdChange}>
+        <NumberInput rounded="md" value={roomId} onChange={roomIdChange} min={0}>
           <NumberInputField />
           <NumberInputStepper>
             <NumberIncrementStepper />

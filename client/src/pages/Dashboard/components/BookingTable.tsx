@@ -25,8 +25,16 @@ import { getAllBookings } from "../../../services/apiRequests";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { Booking } from "../../../types/Booking";
 import { BookingEditForm } from "./BookingEditForm";
+import { useDispatch } from "react-redux";
+import { remove } from "../../../features/booking/bookingSlice";
 
-export const BookingTableRow = ({ booking }: { booking: Booking }) => {
+export const BookingTableRow = ({
+  booking,
+  onDelete,
+}: {
+  booking: Booking;
+  onDelete: () => void;
+}) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleEdit = () => {
@@ -35,6 +43,14 @@ export const BookingTableRow = ({ booking }: { booking: Booking }) => {
 
   const formatBooleanValue = (value: boolean) => {
     return value ? "True" : "False";
+  };
+
+  const dispatch = useDispatch();
+
+  const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const bookingId = booking.id.toString();
+    await dispatch(remove(bookingId) as any);
+    onDelete();
   };
 
   return (
@@ -54,7 +70,7 @@ export const BookingTableRow = ({ booking }: { booking: Booking }) => {
         <Td>{formatBooleanValue(booking.resigned)}</Td>
         <Td>{formatBooleanValue(booking.payed)}</Td>
         <Td>
-          <Button colorScheme={"red"}>
+          <Button colorScheme={"red"} onClick={handleDelete}>
             <DeleteIcon />
           </Button>
         </Td>
@@ -87,6 +103,12 @@ export const BookingTableRow = ({ booking }: { booking: Booking }) => {
 
 export const BookingTable = () => {
   const [bookings, setBookings] = useState<Booking[] | null>(null);
+
+  const updateBookings = (deletedBookingId: number) => {
+    setBookings((prevBookings) =>
+      prevBookings!.filter((booking) => booking.id !== deletedBookingId)
+    );
+  };
 
   useEffect(() => {
     const loadBookings = async () => {
@@ -129,7 +151,13 @@ export const BookingTable = () => {
           </Thead>
           <Tbody>
             {bookings?.map((booking) => {
-              return <BookingTableRow key={booking.id} booking={booking} />;
+              return (
+                <BookingTableRow
+                  key={booking.id}
+                  booking={booking}
+                  onDelete={() => updateBookings(booking.id)}
+                />
+              );
             })}
           </Tbody>
 
