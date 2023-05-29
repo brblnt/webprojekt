@@ -36,7 +36,7 @@ public class ConvertBookingEntityToDTO implements Converter<Booking, BookingDTO>
               source.getServiceType(),
               source.getArchived(),
               source.getResigned(),
-              source.getPayed(),
+              source.getPaid(),
               source.getOther()
       );
     } catch (NotFoundException e) {
