@@ -11,6 +11,7 @@ import nostra.cosa.hotelbooking.data.repository.RoomRepository;
 import nostra.cosa.hotelbooking.service.dto.RoomDTO;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.BookingService;
+import nostra.cosa.hotelbooking.service.util.service.impl.RoomUtilitiesService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 public class RoomServiceImpl implements BookingService<RoomDTO> {
 
 
+  private final RoomUtilitiesService roomUtilities;
   private final RoomRepository roomRepository;
   private final Converter<RoomDTO, Room> convertRoomDTOToEntity;
   private final Converter<Room, RoomDTO> convertRoomEntityToDTO;
@@ -46,7 +48,10 @@ public class RoomServiceImpl implements BookingService<RoomDTO> {
 
   @Override
   public RoomDTO update(RoomDTO update) throws NotFoundException {
-    return null;//TODO
+    return create(
+            roomUtilities.update(
+                    getById(update.getId()),
+                    update));
   }
 
   @Override

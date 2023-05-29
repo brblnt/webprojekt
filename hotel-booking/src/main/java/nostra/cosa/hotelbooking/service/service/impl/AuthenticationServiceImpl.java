@@ -3,6 +3,7 @@ package nostra.cosa.hotelbooking.service.service.impl;
 import static nostra.cosa.hotelbooking.auth.constants.PermissionConstants.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import nostra.cosa.hotelbooking.data.entity.AuthenticationData;
 import nostra.cosa.hotelbooking.data.repository.AuthenticationRepository;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.BookingService;
+import nostra.cosa.hotelbooking.service.util.service.impl.AuthenticationUtilitiesService;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class AuthenticationServiceImpl implements BookingService<AuthenticationDataDTO> {
 
+  private final AuthenticationUtilitiesService authenticationUtilities;
   private final AuthenticationRepository authenticationRepository;
   private final Converter<AuthenticationDataDTO, AuthenticationData> convertAuthenticationDTOToEntity;
   private final Converter<AuthenticationData, AuthenticationDataDTO> convertAuthenticationEntityToDTO;
@@ -52,12 +55,15 @@ public class AuthenticationServiceImpl implements BookingService<AuthenticationD
 
 
   public AuthenticationDataDTO getAuthenticationDataByToken(String token) {
-      return convertAuthenticationEntityToDTO.convert(authenticationRepository.findByToken(token));
+    return convertAuthenticationEntityToDTO.convert(authenticationRepository.findByToken(token));
   }
 
   @Override
   public AuthenticationDataDTO update(AuthenticationDataDTO update) throws NotFoundException {
-    return null; //TODO
+    return create(
+            authenticationUtilities.update(
+                    getById(update.getId()),
+                    update));
   }
 
   @Override
@@ -69,7 +75,7 @@ public class AuthenticationServiceImpl implements BookingService<AuthenticationD
   public AuthenticationDataDTO toAuthenticationDataDTO(final RegistrationDTO registrationDTO, final String token) {
     final Role role = Role.valueOf(registrationDTO.getRole());
     return new AuthenticationDataDTO(null, registrationDTO.getUserName(),
-            registrationDTO.getPassword(), role, "", LocalDateTime.now().toString(),
+            registrationDTO.getPassword(), role, new ArrayList<String>(), LocalDateTime.now().toString(),
             true, true, true, true, getPermissionsByRole(role), token);
   }
 

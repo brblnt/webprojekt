@@ -1,6 +1,9 @@
 package nostra.cosa.hotelbooking.data.populator.impl;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import nostra.cosa.hotelbooking.auth.constants.PermissionConstants;
 import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
@@ -26,12 +29,14 @@ public class DatabasePopulatorSampleUsers  implements DatabasePopulator {
   public void populateDatabase() {
     PermissionDTO permissionDTO = new PermissionDTO();
     permissionDTO.setAdmin(PermissionConstants.ADMIN_PERMISSIONS);
+    List<String> imgPath = new ArrayList<>();
+    imgPath.add("img-url");
     AuthenticationDataDTO sampleAdmin = new AuthenticationDataDTO(
             1L,
             "admin",
             passwordEncoder.encode("password"),
             Role.ADMIN,
-            "img-url",
+            imgPath,
             "2023.05.9",
             true,
             true,
