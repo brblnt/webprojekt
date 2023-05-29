@@ -21,6 +21,9 @@ public class Room {
   @Column(name = "room_type", nullable = false)
   private RoomType roomType;
 
+  @Column(name = "room_number", nullable = false)
+  private Integer roomNumber;
+
   @Column(name = "number_of_rooms", nullable = false)
   private Integer numberOfRooms;
 

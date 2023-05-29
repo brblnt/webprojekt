@@ -19,6 +19,8 @@ public class RoomDTO {
 
   private RoomType roomType;
 
+  private Integer roomNumber;
+
   private Integer numberOfRooms;
 
   private Integer numberOfSingleBeds;
