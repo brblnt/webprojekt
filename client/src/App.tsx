@@ -28,9 +28,6 @@ export const App = () => (
         <Route path={`/accommodation/:accommodationId/room`} element={<RoomPage />} />
         <Route path={`/accommodation/:accommodationId/room/post`} element={<RoomCreatePage />} />
         <Route path={`/accommodation/post`} element={<AccommodationCreatePage />} />
-        <Route path={`/accommodation/:accommodationId`} element={<AccommodationDetail />} />
-        <Route path={`/accommodation/:accommodationId/room`} element={<RoomPage />} />
-        <Route path={`/accommodation/:accommodationId/room/post`} element={<RoomCreatePage />} />
         <Route path={`/accommodation/:accommodationId/booking`} element={<BookingCreatePage />} />
         <Route path={`/login`} element={<LoginPage />} />
         <Route path={`/register`} element={<RegisterPage />} />

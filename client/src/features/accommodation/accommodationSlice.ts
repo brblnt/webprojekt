@@ -27,6 +27,23 @@ export const create = createAsyncThunk(
     }
   )
 
+export const getaccomms = createAsyncThunk(
+  'accommodations/get',
+  async (authId: any, thunkAPI) => {
+    try {
+      return await accommodationService.getaccomm(authId)
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
   export const accommodationSlice: any = createSlice({
     name: 'accomm',
     initialState,
@@ -49,6 +66,19 @@ export const create = createAsyncThunk(
             state.accommodations = action.payload
         })
         .addCase(create.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload as string
+        })
+        .addCase(getaccomms.pending, (state) => {
+          state.isLoading = true
+        })
+        .addCase(getaccomms.fulfilled, (state, action: any) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.accommodations = action.payload
+        })
+        .addCase(getaccomms.rejected, (state, action) => {
             state.isLoading = false
             state.isError = true
             state.message = action.payload as string

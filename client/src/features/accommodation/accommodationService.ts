@@ -22,11 +22,24 @@ const create = async (accommodationData: any) => {
     toast.error('Error during accommodation creation!');
     throw new Error(message);
   }
-
 };
 
+const getaccomm = async (authId: any) => {
+
+  try{
+    console.log(authId)
+    const response = await axios.get('/hotel-booking/accommodation/' + authId + '/all')
+    return response.data
+  }catch(error: any){
+    const message = error.response.data.message || error.message || error.toString();
+    console.log(message);
+  }
+
+}
+
 const accommodationService = {
-    create
+    create,
+    getaccomm,
 }
 
 export default accommodationService

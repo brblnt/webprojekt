@@ -11,8 +11,6 @@ import {
   Center,
   Heading,
   Select,
-  Center,
-  Heading,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
