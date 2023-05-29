@@ -13,6 +13,8 @@ import {
   StackDivider,
   List,
   ListItem,
+  VStack,
+  Button,
 } from "@chakra-ui/react";
 import { getAccommodationById } from "../../services/apiRequests";
 import { Link } from "react-router-dom";
@@ -32,8 +34,9 @@ export const AccommodationDetail = () => {
     loadAccommodation(Number(accommodationId));
   }, [accommodationId]);
 
-  const activeRoomCount = accommodation?.rooms.filter((room: Room) => room.active === true)?.length ?? 0;
-
+  const activeRoomCount =
+    accommodation?.rooms.filter((room: Room) => room.active === true)?.length ??
+    0;
 
   return (
     <div>
@@ -156,7 +159,11 @@ export const AccommodationDetail = () => {
                       </Text>
                     </Link>
                   </Text>
-                  <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10} marginBottom={3}>
+                  <SimpleGrid
+                    columns={{ base: 1, md: 2 }}
+                    spacing={10}
+                    marginBottom={3}
+                  >
                     <List spacing={2}>
                       <ListItem>Available</ListItem>
                     </List>
@@ -180,6 +187,22 @@ export const AccommodationDetail = () => {
                     );
                   })}
                 </Box>
+
+                <Link to={`booking`}>
+                  <VStack w="100%">
+                    <Button
+                      bg="pink.400"
+                      color="white"
+                      _hover={{
+                        bg: "pink.300",
+                      }}
+                      rounded="md"
+                      w="100%"
+                    >
+                      Book Room
+                    </Button>
+                  </VStack>
+                </Link>
               </Stack>
             </Stack>
           </SimpleGrid>
