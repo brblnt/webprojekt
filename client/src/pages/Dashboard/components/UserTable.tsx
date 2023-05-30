@@ -42,10 +42,6 @@ const UserTableRow = ({
     onOpen();
   };
 
-  const formatBooleanValue = (value: boolean) => {
-    return value ? "True" : "False";
-  };
-
   const dispatch = useDispatch();
 
   const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -58,22 +54,10 @@ const UserTableRow = ({
     <>
       <Tr>
         <Td>{user.id}</Td>
-        <Td>{user.authenticationData.userName}</Td>
-        <Td>{user.authenticationData.role}</Td>
-        <Td>{user.authenticationData.registrationDate}</Td>
         <Td>{user.firstName}</Td>
         <Td>{user.lastName}</Td>
         <Td>{user.emailAddress}</Td>
         <Td>{user.phoneNumber}</Td>
-        <Td>{formatBooleanValue(user.authenticationData.accountNonExpired)}</Td>
-        <Td>{formatBooleanValue(user.authenticationData.accountNonLocked)}</Td>
-        <Td>
-          {formatBooleanValue(
-            user.authenticationData.accountCredentialsNonExpired
-          )}
-        </Td>
-        <Td>{formatBooleanValue(user.authenticationData.accountEnabled)}</Td>
-
         <Td>
           <Button colorScheme={"red"} onClick={handleDelete}>
             <DeleteIcon />
@@ -121,7 +105,7 @@ export const UserTable = () => {
   return (
     <Box>
       <Center>
-        <Text>User Table</Text>
+        <Text>Appliction User Table</Text>
       </Center>
       <TableContainer
         maxWidth={"1800px"}
@@ -133,17 +117,10 @@ export const UserTable = () => {
           <Thead>
             <Tr>
               <Th>Id</Th>
-              <Th>Username</Th>
-              <Th>Role</Th>
-              <Th>Registration Date</Th>
               <Th>First Name</Th>
               <Th>Last Name</Th>
               <Th>Email Address</Th>
               <Th>Phone Number</Th>
-              <Th>Non Expired</Th>
-              <Th>Non Locked</Th>
-              <Th>Credentials Non Expired</Th>
-              <Th>Enabled</Th>
               <Th>DELETE</Th>
               <Th>UPDATE</Th>
             </Tr>
@@ -163,17 +140,10 @@ export const UserTable = () => {
           <Tfoot>
             <Tr>
               <Th>Id</Th>
-              <Th>Username</Th>
-              <Th>Role</Th>
-              <Th>Registration Date</Th>
               <Th>First Name</Th>
               <Th>Last Name</Th>
               <Th>Email Address</Th>
               <Th>Phone Number</Th>
-              <Th>Non Expired</Th>
-              <Th>Non Locked</Th>
-              <Th>Credentials Non Expired</Th>
-              <Th>Enabled</Th>
               <Th>DELETE</Th>
               <Th>UPDATE</Th>
             </Tr>

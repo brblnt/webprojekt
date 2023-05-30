@@ -80,7 +80,7 @@ export const SearchForm: FC = () => {
   );
 
   return (
-    <div>
+    <>
       <Center>
         <Flex justify="space-between" direction="column">
           <Stack
@@ -169,6 +169,6 @@ export const SearchForm: FC = () => {
         </Flex>
       </Center>
       <AccommodationList query={query} />
-    </div>
+    </>
   );
 };

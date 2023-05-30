@@ -1,5 +1,6 @@
 import { Accommodation } from "../types/Accommodation";
 import { ApplicationUser } from "../types/ApplicationUser";
+import { AuthenticationData } from "../types/AuthenticationData";
 import { Booking } from "../types/Booking";
 import { Room } from "../types/Room";
 import { apiClient } from "./apiClient";
@@ -26,6 +27,14 @@ export const getAllApplicationUsers = async (): Promise<ApplicationUser[]> => {
 
 export const getApplicationUserById = async (applicationUser_id: number): Promise<ApplicationUser> => {
   return apiClient<ApplicationUser>(`/hotel-booking/application-user/${applicationUser_id}`);
+};
+
+export const getAllAuthentications = async (): Promise<AuthenticationData[]> => {
+  return apiClient<AuthenticationData[]>(`/hotel-booking/authentication`);
+};
+
+export const getAuthenticationById = async (authentication_id: number): Promise<AuthenticationData> => {
+  return apiClient<AuthenticationData>(`/hotel-booking/authentication/${authentication_id}`);
 };
 
 export const getAllBookings = async (): Promise<Booking[]> => {
