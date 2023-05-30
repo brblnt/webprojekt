@@ -18,6 +18,9 @@ import {
 import { Accommodation } from "../../../types/Accommodation";
 import { Link } from "react-router-dom";
 import { RoomCreatePage } from "../../Room/RoomCreatePage";
+import { useSelector } from "react-redux";
+import { ApplicationUser } from "../../../types/ApplicationUser";
+import { Role } from "../../../types/enums/Role";
 
 export interface AccommodationItemProps {
   accommodation: Accommodation;
@@ -26,6 +29,10 @@ export interface AccommodationItemProps {
 export const AccommodationItem: FC<AccommodationItemProps> = ({
   accommodation,
 }) => {
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const openModal = () => {
     onOpen();
@@ -111,11 +118,32 @@ export const AccommodationItem: FC<AccommodationItemProps> = ({
             {accommodation.phoneNumber}
           </Text>
         </Flex>
-        <Flex direction={"row"} justifyContent={"space-around"}>
-          <Button onClick={openModal} w={"256px"}>Add Room</Button>
-          <Button w={"256px"} colorScheme={"red"}>Delete</Button>
-          <Button w={"256px"} colorScheme={"blue"}>Update</Button>
-        </Flex>
+        {(user.authenticationData.role === Role.ACCOMMODATION && (
+          <Flex direction={"row"} justifyContent={"space-around"}>
+            <Button onClick={openModal} w={"256px"}>
+              Add Room
+            </Button>
+            <Button w={"256px"} colorScheme={"red"}>
+              Delete
+            </Button>
+            <Button w={"256px"} colorScheme={"blue"}>
+              Update
+            </Button>
+          </Flex>
+        )) ||
+          (user.authenticationData.role === Role.ADMIN && (
+            <Flex direction={"row"} justifyContent={"space-around"}>
+              <Button onClick={openModal} w={"256px"}>
+                Add Room
+              </Button>
+              <Button w={"256px"} colorScheme={"red"}>
+                Delete
+              </Button>
+              <Button w={"256px"} colorScheme={"blue"}>
+                Update
+              </Button>
+            </Flex>
+          ))}
 
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
