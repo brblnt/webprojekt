@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify';
 
 // Register user
 const register = async (userData: any) => {
@@ -62,12 +63,26 @@ const login = async (userData: any) => {
 //Logout user
 const logout = () => {
   localStorage.removeItem('user')
-}  
+} 
+
+// Update authData by ID
+const update = async (auth: any) => {
+  try {
+    const response = await axios.put(`/hotel-booking/authentication/${auth.id}`, auth);
+    toast.success('User Updated!');
+    return response.data;
+  } catch (error: any) {
+    const message = error.response?.data?.message || error.message || error.toString();
+    toast.error('Error during user update!');
+    throw new Error(message);
+  }
+};
 
 const authService = {
     login,
     logout,
-    register
+    register,
+    update
 }
 
 export default authService
