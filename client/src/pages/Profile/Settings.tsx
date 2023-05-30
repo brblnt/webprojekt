@@ -1,5 +1,6 @@
-import {useState} from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import {
   Container,
@@ -11,15 +12,24 @@ import {
   Center,
   Heading,
   FormLabel,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { ApplicationUser } from "../../types/ApplicationUser";
-import { update as updateUser } from "../../features/user/userSlice";
-import { update as updateAuth } from "../../features/auth/authSlice";
+import { remove, update as updateUser } from "../../features/user/userSlice";
+import { logout, update as updateAuth } from "../../features/auth/authSlice";
 import { AuthenticationData } from "../../types/AuthenticationData";
 
 export const Settings = () => {
-  const { user } = useSelector((state: { auth: { user: ApplicationUser } }) => state.auth);
-  
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
+
   const dispatch = useDispatch();
   const [pic, setPic] = useState(user.authenticationData.imgPath);
   const [password, setPassword] = useState(user.authenticationData.password);
@@ -28,6 +38,7 @@ export const Settings = () => {
   const [lastName, setLastName] = useState(user.lastName);
   const [emailAddress, setEmailAddress] = useState(user.emailAddress);
   const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
+  const navigate = useNavigate();
 
   const picChange = (e: any) => {
     setPic(e.target.value);
@@ -73,11 +84,23 @@ export const Settings = () => {
       ...user.authenticationData,
       userName: userName,
       password: password,
-      imgPath: pic
+      imgPath: pic,
     };
     await dispatch(updateAuth(updatedAuth) as any);
   };
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleDeleteConfirm = () => {
+    onOpen();
+  };
+
+  const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const userId = user.id.toString();
+    await dispatch(remove(userId) as any);
+    dispatch(logout() as any);
+    navigate("/login");
+  };
 
   return (
     <Container maxW="7xl" p={{ base: 5, md: 10 }}>
@@ -97,7 +120,7 @@ export const Settings = () => {
                 <VStack spacing={0} w="100%">
                   <FormControl id="uploadPic">
                     <FormLabel>Profile Picture</FormLabel>
-                    <Input type={"file"} mb={3} onChange={picChange}/>
+                    <Input type={"file"} mb={3} onChange={picChange} />
                     <Button
                       mb={3}
                       bg="pink.400"
@@ -255,6 +278,48 @@ export const Settings = () => {
                     >
                       Change Last Name
                     </Button>
+                  </FormControl>
+                  <FormControl>
+                    <Button
+                      mt={3}
+                      mb={3}
+                      colorScheme={"red"}
+                      rounded="md"
+                      w="100%"
+                      onClick={handleDeleteConfirm}
+                    >
+                      Delete User
+                    </Button>
+
+                    <Modal isOpen={isOpen} onClose={onClose}>
+                      <ModalOverlay />
+                      <ModalContent>
+                        <ModalHeader>
+                          Are you sure you want to delete your account?
+                        </ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                          <Button
+                            mb={3}
+                            colorScheme={"red"}
+                            rounded="md"
+                            w="100%"
+                            onClick={handleDelete}
+                          >
+                            Delete User
+                          </Button>
+                          <Button
+                            colorScheme="blue"
+                            rounded="md"
+                            w="100%"
+                            mb={3}
+                            onClick={onClose}
+                          >
+                            No
+                          </Button>
+                        </ModalBody>
+                      </ModalContent>
+                    </Modal>
                   </FormControl>
                 </VStack>
               </VStack>
