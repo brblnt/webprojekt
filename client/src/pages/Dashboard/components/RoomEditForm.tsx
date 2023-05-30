@@ -10,7 +10,7 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Button,
-  Center
+  Center,
 } from "@chakra-ui/react";
 import { Room } from "../../../types/Room";
 
@@ -30,7 +30,6 @@ export const RoomEditForm: FC<RoomEditFormProps> = ({ room, onUpdate }) => {
   const [price, setPrice] = useState(room.priceOfADay);
   const [other, setOther] = useState(room.roomDetail);
   const [roomNumber, setRoomNumber] = useState(room.roomNumber);
-
 
   const roomTypeChange = (e: any) => {
     setRoomType(e.target.value);
@@ -182,8 +181,7 @@ export const RoomEditForm: FC<RoomEditFormProps> = ({ room, onUpdate }) => {
         <FormLabel mb={0} mt={3}>
           Price Of A Day
         </FormLabel>
-        <NumberInput rounded="md" value={price} onChange={priceChange}>
-          min={0}
+        <NumberInput rounded="md" value={price} onChange={priceChange} min={0}>
           <NumberInputField />
           <NumberInputStepper>
             <NumberIncrementStepper />
@@ -217,7 +215,12 @@ export const RoomEditForm: FC<RoomEditFormProps> = ({ room, onUpdate }) => {
         </NumberInput>
       </FormControl>
       <Center>
-        <Button variant="solid" onClick={handleUpdate} colorScheme={"pink"} mt={3}>
+        <Button
+          variant="solid"
+          onClick={handleUpdate}
+          colorScheme={"pink"}
+          mt={3}
+        >
           Update Data
         </Button>
       </Center>

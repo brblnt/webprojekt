@@ -1,17 +1,22 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import {
-  Heading,
-  Avatar,
-  Box,
-  Center,
-  Text,
-  Stack,
-} from "@chakra-ui/react";
-import { AuthenticationData } from "../../types/AuthenticationData";
+import { Heading, Avatar, Box, Center, Text, Stack } from "@chakra-ui/react";
+import { ApplicationUser } from "../../types/ApplicationUser";
+import { getApplicationUserById } from "../../services/apiRequests";
 export const ProfilePage = () => {
-  const { user } = useSelector((state: { auth: { user: AuthenticationData } }) => state.auth);
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
+  const [ userP, setUser] = useState<ApplicationUser | null>(null);
+
+  useEffect(() => {
+    const loadUser = async (userId: any) => {
+      const users = await getApplicationUserById(userId);
+      setUser(users);
+    };
+    loadUser(user.id);
+  }, [user.id]);
 
   return (
     <div>
@@ -25,23 +30,25 @@ export const ProfilePage = () => {
         >
           <Avatar size={"xl"} src={""} mb={4} pos={"relative"} />
           <Heading fontSize={"2xl"} fontFamily={"body"}>
-            firstName lastName
+            {userP && userP.firstName && userP.firstName } {userP && userP.lastName && userP.lastName}
           </Heading>
           <Text fontWeight={600} color={"pink.300"} mb={4}>
-            {user.userName}
+            {userP && userP.authenticationData.userName}
           </Text>
           <Stack align={"center"} justify={"center"} direction={"row"} mt={6}>
             <Text px={2} py={1} fontWeight={"400"}>
-              Email Address
+              {userP && userP.emailAddress ? userP.emailAddress : "Email Not Provided"}
             </Text>
             <Text px={2} py={1} fontWeight={"400"}>
-              Phone Number
+              {userP && userP.phoneNumber
+                ? userP.phoneNumber
+                : "Phone Number Not Provided"}
             </Text>
           </Stack>
 
           <Stack align={"center"} justify={"center"} direction={"row"} mt={6}>
             <Text px={2} py={1} fontWeight={"400"}>
-              Role
+              {userP && userP.authenticationData.role}
             </Text>
           </Stack>
         </Box>

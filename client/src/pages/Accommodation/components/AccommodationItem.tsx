@@ -6,14 +6,21 @@ import {
   Flex,
   Text,
   Image,
-  VStack,
   Button,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { Accommodation } from "../../../types/Accommodation";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { addRoom } from "../../../features/accommodation/accommodationSlice";
+import { Link } from "react-router-dom";
 import { RoomCreatePage } from "../../Room/RoomCreatePage";
+import { useSelector } from "react-redux";
+import { ApplicationUser } from "../../../types/ApplicationUser";
+import { Role } from "../../../types/enums/Role";
 
 export interface AccommodationItemProps {
   accommodation: Accommodation;
@@ -22,18 +29,14 @@ export interface AccommodationItemProps {
 export const AccommodationItem: FC<AccommodationItemProps> = ({
   accommodation,
 }) => {
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
 
-  const { user } = useSelector((state: { auth: { user: any } }) => state.auth);
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch()
-
-  const onAdd = () => {
-    const accommodationId = accommodation.id;
-    navigate(`/accommodation/${accommodationId}/room/post`, { state: { accommodation } });
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const openModal = () => {
+    onOpen();
   };
-  
-
   return (
     <Stack
       spacing={{ base: 0, md: 4 }}
@@ -115,18 +118,43 @@ export const AccommodationItem: FC<AccommodationItemProps> = ({
             {accommodation.phoneNumber}
           </Text>
         </Flex>
-        <Button
-                  bg="pink.400"
-                  color="white"
-                  _hover={{
-                    bg: "pink.300",
-                  }}
-                  rounded="md"
-                  w="15%"
-                  onClick={onAdd}            
-                >
-                  Add rooms
-                </Button>
+        {(user.authenticationData.role === Role.ACCOMMODATION && (
+          <Flex direction={"row"} justifyContent={"space-around"}>
+            <Button onClick={openModal} w={"256px"}>
+              Add Room
+            </Button>
+            <Button w={"256px"} colorScheme={"red"}>
+              Delete
+            </Button>
+            <Button w={"256px"} colorScheme={"blue"}>
+              Update
+            </Button>
+          </Flex>
+        )) ||
+          (user.authenticationData.role === Role.ADMIN && (
+            <Flex direction={"row"} justifyContent={"space-around"}>
+              <Button onClick={openModal} w={"256px"}>
+                Add Room
+              </Button>
+              <Button w={"256px"} colorScheme={"red"}>
+                Delete
+              </Button>
+              <Button w={"256px"} colorScheme={"blue"}>
+                Update
+              </Button>
+            </Flex>
+          ))}
+
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Add Room</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <RoomCreatePage />
+            </ModalBody>
+          </ModalContent>
+        </Modal>
       </Stack>
     </Stack>
   );
