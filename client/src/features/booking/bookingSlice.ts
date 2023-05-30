@@ -1,38 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { Accommodation } from "../../types/Accommodation";
-import accommodationService from "./accommodationService";
+import { Booking } from "../../types/Booking";
+import bookingService from "./bookingService";
 
 const initialState = {
-  accommodations: [],
+  booking: [],
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: "",
 };
 
-// Create accommodation
-export const create = createAsyncThunk(
-  "accommodations/create",
-  async (accommodationData: any, thunkAPI) => {
-    try {
-      return await accommodationService.create(accommodationData);
-    } catch (error: any) {
-      const message =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      return thunkAPI.rejectWithValue(message);
-    }
-  }
-);
-
 export const remove = createAsyncThunk(
-  "accommodations/remove",
+  "booking/remove",
   async (accommodationId: string, thunkAPI) => {
     try {
-      return await accommodationService.remove(accommodationId);
+      return await bookingService.remove(accommodationId);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -46,10 +28,10 @@ export const remove = createAsyncThunk(
 );
 
 export const update = createAsyncThunk(
-  "accommodations/update",
-  async (accommodation: Accommodation, thunkAPI) => {
+  "booking/update",
+  async (booking: Booking, thunkAPI) => {
     try {
-      return await accommodationService.update(accommodation);
+      return await bookingService.update(booking);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -62,8 +44,8 @@ export const update = createAsyncThunk(
   }
 );
 
-export const accommodationSlice: any = createSlice({
-  name: "accomm",
+export const bookingSlice: any = createSlice({
+  name: "booking",
   initialState,
   reducers: {
     reset: (state) => {
@@ -75,26 +57,12 @@ export const accommodationSlice: any = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(create.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(create.fulfilled, (state, action: any) => {
-        state.isLoading = false;
-        state.isSuccess = true;
-        state.accommodations = action.payload;
-      })
-      .addCase(create.rejected, (state, action) => {
-        state.isLoading = false;
-        state.isError = true;
-        state.message = action.payload as string;
-      })
       .addCase(remove.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(remove.fulfilled, (state, action) => {
+      .addCase(remove.fulfilled, (state) => {
         state.isLoading = false;
         state.isSuccess = true;
-        // state.accommodations = state.accommodations.filter((accommodation) => accommodation.id !== action.payload.id)
       })
       .addCase(remove.rejected, (state, action) => {
         state.isLoading = false;
@@ -116,5 +84,5 @@ export const accommodationSlice: any = createSlice({
   },
 });
 
-export const { reset } = accommodationSlice.actions;
-export default accommodationSlice.reducer;
+export const { reset } = bookingSlice.actions;
+export default bookingSlice.reducer;

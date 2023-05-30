@@ -13,6 +13,6 @@ export type Booking = {
   serviceType: ServiceType;
   archived: boolean;
   resigned: boolean;
-  payed: boolean;
+  paid: boolean;
   other: string;
 }

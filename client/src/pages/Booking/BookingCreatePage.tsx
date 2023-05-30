@@ -54,7 +54,7 @@ export const BookingCreatePage = () => {
                     <Select id="sortBy" focusBorderColor="pink.300">
                       {activeRooms?.map((option) => (
                         <option key={option.id} value={option.id}>
-                          {option.other}
+                          {option.roomDetail}
                         </option>
                       ))}
                     </Select>
