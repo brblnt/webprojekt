@@ -10,5 +10,6 @@ export type Room = {
   hasOwnBathroom: boolean;
   active: boolean;
   priceOfADay: number;
-  other: string;
+  roomDetail: string;
+  roomNumber: number;
 }

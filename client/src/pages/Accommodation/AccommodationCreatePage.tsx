@@ -7,7 +7,6 @@ import {
   Stack,
   Button,
   VStack,
-  Checkbox,
   Center,
   Heading,
   Select,
@@ -21,11 +20,11 @@ import {
 import { everyCountry } from "../../constants/everyCountry";
 import { accommodationTypeOptions } from "../../constants/accommodationType";
 import { serviceTypeOptions } from "../../constants/serviceType";
-import { Accommodation } from "../../types/Accommodation";
 import { create } from '../../features/accommodation/accommodationSlice'
 import { AnyIfEmpty, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
 
 export const AccommodationCreatePage = () => {
 

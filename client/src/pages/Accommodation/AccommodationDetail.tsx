@@ -137,7 +137,7 @@ export const AccommodationDetail = () => {
                     <List spacing={2}>
                       <ListItem>{accommodation.address.country}</ListItem>
                       <ListItem>{accommodation.address.city.cityName}</ListItem>
-                      <ListItem>{accommodation.address.address}</ListItem>
+                      <ListItem>{accommodation.address.addressName}</ListItem>
                     </List>
                   </SimpleGrid>
                 </Box>
@@ -180,7 +180,7 @@ export const AccommodationDetail = () => {
                               color: "pink.300",
                             }}
                           >
-                            {room.other}
+                            {room.roomDetail}
                           </Text>
                         </Link>
                       </div>

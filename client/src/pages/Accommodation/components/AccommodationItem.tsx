@@ -92,7 +92,7 @@ export const AccommodationItem: FC<AccommodationItemProps> = ({
             {accommodation.address.city.cityName}
           </Text>
           <Text fontSize="lg" fontWeight="500">
-            {accommodation.address.address}
+            {accommodation.address.addressName}
           </Text>
         </Box>
         <Box>

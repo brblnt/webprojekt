@@ -4,6 +4,6 @@ export type Address = {
   addressId: number;
   country: string;
   city: City;
-  address: string;
+  addressName: string;
   other: string;
 }
