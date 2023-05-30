@@ -24,6 +24,7 @@ const create = async (accommodationData: any) => {
   }
 };
 
+
 const getaccomm = async (authId: any) => {
 
   try{
@@ -37,9 +38,36 @@ const getaccomm = async (authId: any) => {
 
 }
 
+// Delete accommodation by ID
+const remove = async (accommodationId: string) => {
+  try {
+    const response = await axios.delete(`/hotel-booking/accommodation/${accommodationId}`);
+    toast.success('Accommodation Deleted!');
+    return response.data;
+  } catch (error: any) {
+    const message = error.response.data.message || error.message || error.toString();
+    toast.error('Error during accommodation deletion!');
+    throw new Error(message);
+  }
+};
+
+// Update accommodation by ID
+const update = async (accommodation: any) => {
+  try {
+    const response = await axios.put(`/hotel-booking/accommodation/${accommodation.id}`, accommodation);
+    toast.success('Accommodation Updated!');
+    return response.data;
+  } catch (error: any) {
+    const message = error.response?.data?.message || error.message || error.toString();
+    toast.error('Error during accommodation update!');
+    throw new Error(message);
+  }
+};
+
 const accommodationService = {
     create,
-    getaccomm,
+    remove,
+    update
 }
 
 export default accommodationService
