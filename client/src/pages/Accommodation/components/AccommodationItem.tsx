@@ -6,9 +6,14 @@ import {
   Flex,
   Text,
   Image,
+  VStack,
+  Button,
 } from "@chakra-ui/react";
 import { Accommodation } from "../../../types/Accommodation";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addRoom } from "../../../features/accommodation/accommodationSlice";
+import { RoomCreatePage } from "../../Room/RoomCreatePage";
 
 export interface AccommodationItemProps {
   accommodation: Accommodation;
@@ -17,6 +22,18 @@ export interface AccommodationItemProps {
 export const AccommodationItem: FC<AccommodationItemProps> = ({
   accommodation,
 }) => {
+
+  const { user } = useSelector((state: { auth: { user: any } }) => state.auth);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+  const onAdd = () => {
+    const accommodationId = accommodation.id;
+    navigate(`/accommodation/${accommodationId}/room/post`, { state: { accommodation } });
+  };
+  
+
   return (
     <Stack
       spacing={{ base: 0, md: 4 }}
@@ -98,6 +115,18 @@ export const AccommodationItem: FC<AccommodationItemProps> = ({
             {accommodation.phoneNumber}
           </Text>
         </Flex>
+        <Button
+                  bg="pink.400"
+                  color="white"
+                  _hover={{
+                    bg: "pink.300",
+                  }}
+                  rounded="md"
+                  w="15%"
+                  onClick={onAdd}            
+                >
+                  Add rooms
+                </Button>
       </Stack>
     </Stack>
   );

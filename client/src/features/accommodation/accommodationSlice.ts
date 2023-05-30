@@ -44,6 +44,25 @@ export const getaccomms = createAsyncThunk(
   }
 )
 
+export const addRoom = createAsyncThunk(
+  'accommodations/addRoom',
+  async (roomData, accommData) => {
+    /*const { roomData, accommData } = arg;*/
+    try {
+      return await accommodationService.room(roomData, accommData);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return console.log(message);
+    }
+  }
+);
+
+
   export const accommodationSlice: any = createSlice({
     name: 'accomm',
     initialState,
@@ -79,6 +98,19 @@ export const getaccomms = createAsyncThunk(
             state.accommodations = action.payload
         })
         .addCase(getaccomms.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload as string
+        })
+        .addCase(addRoom.pending, (state) => {
+          state.isLoading = true
+        })
+        .addCase(addRoom.fulfilled, (state, action: any) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.accommodations = action.payload
+        })
+        .addCase(addRoom.rejected, (state, action) => {
             state.isLoading = false
             state.isError = true
             state.message = action.payload as string

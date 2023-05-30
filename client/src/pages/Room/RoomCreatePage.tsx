@@ -18,14 +18,18 @@ import {
   NumberDecrementStepper,
   Text,
 } from "@chakra-ui/react";
+import { useParams } from "react-router-dom";
 
-export const RoomCreatePage = () => {
+export const RoomCreatePage = (props: any) => {
+
+  //const { accommodation } = props.location.state;
+
   return (
     <Container maxW="7xl" p={{ base: 5, md: 10 }}>
       <Center>
         <Stack spacing={4}>
           <Stack align="center">
-            <Heading fontSize="3xl">Room Post Form</Heading>
+            <Heading fontSize="3xl">Create room for {props.accommodationName}</Heading>
           </Stack>
           <Container maxW="7xl" p={{ base: 5, md: 10 }}>
             <Stack spacing={4}>

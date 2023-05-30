@@ -37,9 +37,47 @@ const getaccomm = async (authId: any) => {
 
 }
 
+
+// Register user
+const room = async (roomData: any, accommData: any) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const roomCreate = await axios.post('/hotel-booking/room', JSON.stringify(roomData), config);
+
+  if (roomCreate.data) {
+    const accomm = {
+      authenticationData: {
+        id: accommData.authenticationData.id,
+      },
+      acommodationName: accommData.acommodationName,
+      room: [
+        {
+          id: roomCreate.data.id
+        }
+      ]
+    };
+
+    await axios.post('/hotel-booking/accommodation/' + accommData.id, JSON.stringify(accomm), config);
+
+    /*const updatedUser = {
+      ...accomm,
+      ...response.data,
+    };*/
+
+    /*localStorage.setItem('accommodation', JSON.stringify(response.data));
+    console.log(updatedUser)
+    return updatedUser;*/
+  }
+};
+
 const accommodationService = {
     create,
     getaccomm,
+    room,
 }
 
 export default accommodationService
