@@ -4,7 +4,7 @@ import { Role } from "./enums/Role";
 export type AuthenticationData = {
   id: number;
   userName: string;
-  // password: string;
+  password: string;
   role: Role;
   imgPath?: string;
   registrationDate: string;

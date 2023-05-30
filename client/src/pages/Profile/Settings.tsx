@@ -1,4 +1,6 @@
-import React from "react";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import {
   Container,
@@ -10,9 +12,96 @@ import {
   Center,
   Heading,
   FormLabel,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
+import { ApplicationUser } from "../../types/ApplicationUser";
+import { remove, update as updateUser } from "../../features/user/userSlice";
+import { logout, update as updateAuth } from "../../features/auth/authSlice";
+import { AuthenticationData } from "../../types/AuthenticationData";
 
 export const Settings = () => {
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
+
+  const dispatch = useDispatch();
+  const [pic, setPic] = useState(user.authenticationData.imgPath);
+  const [password, setPassword] = useState(user.authenticationData.password);
+  const [userName, setUserName] = useState(user.authenticationData.userName);
+  const [firstName, setFirstName] = useState(user.firstName);
+  const [lastName, setLastName] = useState(user.lastName);
+  const [emailAddress, setEmailAddress] = useState(user.emailAddress);
+  const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
+  const navigate = useNavigate();
+
+  const picChange = (e: any) => {
+    setPic(e.target.value);
+  };
+
+  const passwordChange = (e: any) => {
+    setPassword(e.target.value);
+  };
+
+  const userNameChange = (e: any) => {
+    setUserName(e.target.value);
+  };
+
+  const firstNameChange = (e: any) => {
+    setFirstName(e.target.value);
+  };
+
+  const lastNameChange = (e: any) => {
+    setLastName(e.target.value);
+  };
+
+  const emailAddressChange = (e: any) => {
+    setEmailAddress(e.target.value);
+  };
+
+  const phoneNumberChange = (e: any) => {
+    setPhoneNumber(e.target.value);
+  };
+
+  const handleUserUpdate = async () => {
+    const updatedUser: ApplicationUser = {
+      ...user,
+      firstName: firstName,
+      lastName: lastName,
+      emailAddress: emailAddress,
+      phoneNumber: phoneNumber,
+    };
+    await dispatch(updateUser(updatedUser) as any);
+  };
+
+  const handleAuthUpdate = async () => {
+    const updatedAuth: AuthenticationData = {
+      ...user.authenticationData,
+      userName: userName,
+      password: password,
+      imgPath: pic,
+    };
+    await dispatch(updateAuth(updatedAuth) as any);
+  };
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const handleDeleteConfirm = () => {
+    onOpen();
+  };
+
+  const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const userId = user.id.toString();
+    await dispatch(remove(userId) as any);
+    dispatch(logout() as any);
+    navigate("/login");
+  };
+
   return (
     <Container maxW="7xl" p={{ base: 5, md: 10 }}>
       <Center>
@@ -31,7 +120,7 @@ export const Settings = () => {
                 <VStack spacing={0} w="100%">
                   <FormControl id="uploadPic">
                     <FormLabel>Profile Picture</FormLabel>
-                    <Input type={"file"} mb={3} />
+                    <Input type={"file"} mb={3} onChange={picChange} />
                     <Button
                       mb={3}
                       bg="pink.400"
@@ -41,6 +130,7 @@ export const Settings = () => {
                       }}
                       rounded="md"
                       w="100%"
+                      onClick={handleAuthUpdate}
                     >
                       Upload Picture
                     </Button>
@@ -50,10 +140,10 @@ export const Settings = () => {
                     <Input
                       mb={3}
                       type="text"
-                      placeholder="Change Username"
-                      value={``}
+                      placeholder={userName}
                       rounded="md"
                       name="changeUsername"
+                      onChange={userNameChange}
                     />
                     <Button
                       mb={3}
@@ -64,8 +154,33 @@ export const Settings = () => {
                       }}
                       rounded="md"
                       w="100%"
+                      onClick={handleAuthUpdate}
                     >
                       Change Username
+                    </Button>
+                  </FormControl>
+                  <FormControl id="changePassword">
+                    <FormLabel>Password</FormLabel>
+                    <Input
+                      mb={3}
+                      type="password"
+                      placeholder="Password"
+                      rounded="md"
+                      name="changePassword"
+                      onChange={passwordChange}
+                    />
+                    <Button
+                      mb={3}
+                      bg="pink.400"
+                      color="white"
+                      _hover={{
+                        bg: "pink.300",
+                      }}
+                      rounded="md"
+                      w="100%"
+                      onClick={handleAuthUpdate}
+                    >
+                      Change Password
                     </Button>
                   </FormControl>
                   <FormControl id="changeEmail">
@@ -73,10 +188,10 @@ export const Settings = () => {
                     <Input
                       mb={3}
                       type="text"
-                      placeholder="Change Email"
-                      value={``}
+                      placeholder={emailAddress}
                       rounded="md"
                       name="changeEmail"
+                      onChange={emailAddressChange}
                     />
                     <Button
                       mb={3}
@@ -87,6 +202,7 @@ export const Settings = () => {
                       }}
                       rounded="md"
                       w="100%"
+                      onClick={handleUserUpdate}
                     >
                       Change Email
                     </Button>
@@ -96,10 +212,10 @@ export const Settings = () => {
                     <Input
                       mb={3}
                       type="text"
-                      placeholder="Change Phone Number"
-                      value={``}
+                      placeholder={phoneNumber}
                       rounded="md"
                       name="changePhoneNum"
+                      onChange={phoneNumberChange}
                     />
                     <Button
                       mb={3}
@@ -110,19 +226,20 @@ export const Settings = () => {
                       }}
                       rounded="md"
                       w="100%"
+                      onClick={handleUserUpdate}
                     >
                       Change Phone Number
                     </Button>
                   </FormControl>
-                  <FormControl id="changePassword">
-                    <FormLabel>Password</FormLabel>
+                  <FormControl id="firstName">
+                    <FormLabel>First Name</FormLabel>
                     <Input
                       mb={3}
-                      type="password"
-                      placeholder="Change Password"
-                      value={``}
+                      type="text"
+                      placeholder={firstName}
                       rounded="md"
-                      name="changePassword"
+                      name="firstName"
+                      onChange={firstNameChange}
                     />
                     <Button
                       mb={3}
@@ -133,9 +250,76 @@ export const Settings = () => {
                       }}
                       rounded="md"
                       w="100%"
+                      onClick={handleUserUpdate}
                     >
-                      Change Password
+                      Change First Name
                     </Button>
+                  </FormControl>
+                  <FormControl id="lastName">
+                    <FormLabel>Last Name</FormLabel>
+                    <Input
+                      mb={3}
+                      type="text"
+                      placeholder={lastName}
+                      rounded="md"
+                      name="firstName"
+                      onChange={lastNameChange}
+                    />
+                    <Button
+                      mb={3}
+                      bg="pink.400"
+                      color="white"
+                      _hover={{
+                        bg: "pink.300",
+                      }}
+                      rounded="md"
+                      w="100%"
+                      onClick={handleUserUpdate}
+                    >
+                      Change Last Name
+                    </Button>
+                  </FormControl>
+                  <FormControl>
+                    <Button
+                      mt={3}
+                      mb={3}
+                      colorScheme={"red"}
+                      rounded="md"
+                      w="100%"
+                      onClick={handleDeleteConfirm}
+                    >
+                      Delete User
+                    </Button>
+
+                    <Modal isOpen={isOpen} onClose={onClose}>
+                      <ModalOverlay />
+                      <ModalContent>
+                        <ModalHeader>
+                          Are you sure you want to delete your account?
+                        </ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                          <Button
+                            mb={3}
+                            colorScheme={"red"}
+                            rounded="md"
+                            w="100%"
+                            onClick={handleDelete}
+                          >
+                            Delete User
+                          </Button>
+                          <Button
+                            colorScheme="blue"
+                            rounded="md"
+                            w="100%"
+                            mb={3}
+                            onClick={onClose}
+                          >
+                            No
+                          </Button>
+                        </ModalBody>
+                      </ModalContent>
+                    </Modal>
                   </FormControl>
                 </VStack>
               </VStack>
