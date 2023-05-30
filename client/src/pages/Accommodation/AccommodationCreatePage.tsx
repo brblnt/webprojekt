@@ -16,6 +16,7 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Text,
+  Checkbox
 } from "@chakra-ui/react";
 import { everyCountry } from "../../constants/everyCountry";
 import { accommodationTypeOptions } from "../../constants/accommodationType";
