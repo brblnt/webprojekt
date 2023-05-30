@@ -5,23 +5,23 @@ import { toast } from "react-toastify";
 import { logout } from "../../features/auth/authSlice";
 import { getaccomms } from "../../features/accommodation/accommodationSlice";
 import { AccommodationItem } from "../Accommodation/components/AccommodationItem";
-import { Center, chakra, Flex } from "@chakra-ui/react";
+import { Center, chakra, Flex, Box, Heading } from "@chakra-ui/react";
+import { Accommodation } from "../../types/Accommodation";
 export const HomePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isError, message } = useSelector(
     (state: any) => {
-      console.log(state); // Log the Redux state
+      console.log(state);
       return state.auth;
     }
   );
 
   const { accommodations } = useSelector((state: any) => {
-    console.log(state); // Log the Redux state
+    console.log(state);
     return state.accomm;
   });
-
 
   useEffect(() => {
     if (isError) {
@@ -38,17 +38,21 @@ export const HomePage = () => {
   }, [user, navigate, isError, message, dispatch]);
 
   return (
-    <>
-      {user && user.authenticationData.userName
-        ? "Welcome " + user.authenticationData.userName
-        : ""}
+    <Box>
+      <Center my={3}>
+        <Heading>
+          {user && user.authenticationData.userName
+            ? "Welcome " + user.authenticationData.userName
+            : ""}
+        </Heading>
+      </Center>
 
       <Center>
         {accommodations.length > 0 ? (
-          <Flex direction={"column"} >
-            {accommodations.map((accommodation: any) => (
+          <Flex direction={"column"}>
+            {accommodations.map((accommodation: Accommodation) => (
               <AccommodationItem
-                key={accommodation._id}
+                key={accommodation.id}
                 accommodation={accommodation}
               />
             ))}
@@ -57,6 +61,6 @@ export const HomePage = () => {
           <chakra.h3>You have not created any accommodations</chakra.h3>
         )}
       </Center>
-    </>
+    </Box>
   );
 };

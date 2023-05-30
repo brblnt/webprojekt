@@ -7,20 +7,19 @@ import {
   Heading,
   VStack,
   Center,
-  Link
-} from '@chakra-ui/react';
-import { Select } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { register } from '../../features/auth/authSlice';
+  Link,
+} from "@chakra-ui/react";
+import { Select } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { register } from "../../features/auth/authSlice";
 
 export const RegisterPage = () => {
   const [formData, setFormData] = useState({
-    userName: '',
-    password: '',
-    role: ''
+    userName: "",
+    password: "",
+    role: "",
   });
 
   const { userName, password, role } = formData;
@@ -28,17 +27,17 @@ export const RegisterPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
+  const { user, isError, isSuccess, message } = useSelector(
     (state: any) => state.auth
   );
 
   useEffect(() => {
     if (isError) {
-      console.log(message)
+      console.log(message);
     }
 
     if (isSuccess) {
-      navigate('/');
+      navigate("/");
     }
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
@@ -69,7 +68,7 @@ export const RegisterPage = () => {
           <VStack
             as="form"
             spacing={8}
-            w={{ base: 'sm', sm: 'lg' }}
+            w={{ base: "sm", sm: "lg" }}
             p={{ base: 5, sm: 6 }}
             onSubmit={onSubmit}
           >
@@ -90,9 +89,7 @@ export const RegisterPage = () => {
                 <Input
                   type="password"
                   placeholder="Password"
-                  rounded="md"
-                  borderTopLeftRadius="0"
-                  borderTopRightRadius="0"
+                  rounded="none"
                   name="password"
                   value={password}
                   onChange={onChange}
@@ -104,6 +101,8 @@ export const RegisterPage = () => {
                   name="role"
                   value={role}
                   onChange={onChange}
+                  borderTopLeftRadius="0"
+                  borderTopRightRadius="0"
                 >
                   <option value="APPLICATION_USER">Application User</option>
                   <option value="ACCOMMODATION">Accommodation</option>
@@ -112,7 +111,7 @@ export const RegisterPage = () => {
             </VStack>
             <VStack w="100%">
               <Stack direction="row" justify="space-between" w="100%">
-                <Link href="/login" fontSize={{ base: 'md', sm: 'md' }}>
+                <Link href="/login" fontSize={{ base: "md", sm: "md" }}>
                   Already have an account?
                 </Link>
               </Stack>
@@ -120,7 +119,7 @@ export const RegisterPage = () => {
                 bg="pink.400"
                 color="white"
                 _hover={{
-                  bg: 'pink.300',
+                  bg: "pink.300",
                 }}
                 rounded="md"
                 w="100%"

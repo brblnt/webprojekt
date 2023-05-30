@@ -1,93 +1,127 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/auth/authSlice";
+import { Role } from "../types/enums/Role";
 import {
   Box,
   Flex,
-  Text,
-  Button,
-  Stack,
+  Avatar,
+  HStack,
+  IconButton,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  Avatar,
+  useDisclosure,
+  useColorModeValue,
+  Stack,
+  Text,
 } from "@chakra-ui/react";
-import { AuthenticationData } from "../types/AuthenticationData";
-import { Role } from "../types/enums/Role";
-function NavBar() {
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { ColorModeSwitcher } from "../ColorModeSwitcher";
 
+export const NavBar = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useSelector((state: { auth: { user: any } }) => state.auth);
+  return (
+    <>
+      <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
+        <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+          <IconButton
+            size={"md"}
+            icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+            aria-label={"Open Menu"}
+            display={{ md: "none" }}
+            onClick={isOpen ? onClose : onOpen}
+            variant={"ghost"}
+          />
+          <HStack spacing={8} alignItems={"center"}>
+            <Box>
+              <Link to="/">
+                <Text
+                  _hover={{
+                    color: "pink.300",
+                  }}
+                  fontFamily={"heading"}
+                  color={useColorModeValue("black", "white")}
+                >
+                  Cosa Nostra
+                </Text>
+              </Link>
+            </Box>
+            <HStack
+              as={"nav"}
+              spacing={4}
+              display={{ base: "none", md: "flex" }}
+            >
+              {user && user.authenticationData.role === Role.ADMIN && (
+                <AdminNav />
+              )}
+              {
+                user &&
+                  user.authenticationData.role === Role.ACCOMMODATION &&
+                  <AccommodationNav />
+              }
+              {
+                user &&
+                  user.authenticationData.role === Role.APPLICATION_USER &&
+                  <UserNav />
+              }
+            </HStack>
+          </HStack>
+          <Flex alignItems={"center"}>
+            <ColorModeSwitcher mr={5} />
+            {user && <UserLoggedIn />}
+          </Flex>
+        </Flex>
 
+        {isOpen ? (
+          <Box pb={4} display={{ md: "none" }}>
+            <Stack as={"nav"} spacing={4}>
+              {user && user.authenticationData.role === Role.ADMIN && (
+                <AdminNav />
+              )}
+              {
+                user &&
+                  user.authenticationData.role === Role.ACCOMMODATION &&
+                  <AccommodationNav />
+              }
+              {
+                user &&
+                  user.authenticationData.role === Role.APPLICATION_USER &&
+                  <UserNav />
+              }
+            </Stack>
+          </Box>
+        ) : null}
+      </Box>
+    </>
+  );
+};
 
+const UserNav = () => {
   return (
     <Box>
-      <Flex
-        bg={"gray.800"}
-        color={"white"}
-        minH={"60px"}
-        py={{ base: 2 }}
-        px={{ base: 4 }}
-        borderBottom={1}
-        borderStyle={"solid"}
-        borderColor={"gray.900"}
-        align={"center"}
-      >
-        <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-            <Link to="/">
+      <Box pb={4} display={{ md: "none" }}>
+        <Stack as={"nav"} spacing={4} mx={3}>
+          <Flex direction={"column"}>
+            <Link to={`/accommodation`}>
               <Text
                 _hover={{
                   color: "pink.300",
                 }}
-                fontFamily={"heading"} color={"white"}
+                my={3}
+                borderBottom={1}
+                borderStyle={"solid"}
+                borderColor={useColorModeValue("gray.900", "gray.200")}
               >
-                Cosa Nostra
+                Discover Accommodation
               </Text>
             </Link>
-          <Flex display={{ base: "none", md: "flex" }} ml={10}>
-            {user && user.authenticationData.role === Role.ADMIN && <AdminNav />}
-            {user && user.authenticationData.role === Role.ACCOMMODATION && <AccommodationNav />}
-            {user && user.authenticationData.role === Role.APPLICATION_USER && <UserNav />}
           </Flex>
-        </Flex>
-        {user && <UserLoggedIn />}
-      </Flex>
-    </Box>
-  );
-}
-
-const UserNav = () => {
-  return (
-    <Link to={`/accommodation`}>
-      <Text
-        _hover={{
-          color: "pink.300",
-        }}
-      >
-        Discover Accommodation
-      </Text>
-    </Link>
-  );
-};
-
-const AccommodationNav = () => {
-  return (
-    <Link to={`/accommodation/post`}>
-      <Text
-        _hover={{
-          color: "pink.300",
-        }}
-      >
-        Post Accommodation
-      </Text>
-    </Link>
-  );
-};
-
-const AdminNav = () => {
-  return (
-    <Flex>
-      <Link to={`/accommodation`} style={{ marginRight: "1rem" }}>
+        </Stack>
+      </Box>
+      <Link to={`/accommodation`}>
         <Text
           _hover={{
             color: "pink.300",
@@ -96,8 +130,33 @@ const AdminNav = () => {
           Discover Accommodation
         </Text>
       </Link>
-      <Text>/</Text>
-      <Link to={`/accommodation/post`} style={{ marginLeft: "1rem", marginRight: "1rem" }}>
+    </Box>
+  );
+};
+
+const AccommodationNav = () => {
+  return (
+    <Box>
+      <Box pb={4} display={{ md: "none" }}>
+        <Stack as={"nav"} spacing={4} mx={3}>
+          <Flex direction={"column"}>
+            <Link to={`/accommodation/post`}>
+              <Text
+                _hover={{
+                  color: "pink.300",
+                }}
+                my={3}
+                borderBottom={1}
+                borderStyle={"solid"}
+                borderColor={useColorModeValue("gray.900", "gray.200")}
+              >
+                Post Accommodation
+              </Text>
+            </Link>
+          </Flex>
+        </Stack>
+      </Box>
+      <Link to={`/accommodation/post`}>
         <Text
           _hover={{
             color: "pink.300",
@@ -106,17 +165,93 @@ const AdminNav = () => {
           Post Accommodation
         </Text>
       </Link>
-      <Text>/</Text>
-      <Link to={`/dashboard`} style={{ marginLeft: "1rem" }}>
-        <Text
-          _hover={{
-            color: "pink.300",
-          }}
+    </Box>
+  );
+};
+
+const AdminNav = () => {
+  return (
+    <Box>
+      <Box pb={4} display={{ md: "none" }}>
+        <Stack as={"nav"} spacing={4} mx={3}>
+          <Flex direction={"column"}>
+            <Link to={`/accommodation`}>
+              <Text
+                _hover={{
+                  color: "pink.300",
+                }}
+                my={3}
+                borderBottom={1}
+                borderStyle={"solid"}
+                borderColor={useColorModeValue("gray.900", "gray.200")}
+              >
+                Discover Accommodation
+              </Text>
+            </Link>
+            <Link to={`/accommodation/post`}>
+              <Text
+                _hover={{
+                  color: "pink.300",
+                }}
+                mb={3}
+                borderBottom={1}
+                borderStyle={"solid"}
+                borderColor={useColorModeValue("gray.900", "gray.200")}
+              >
+                Post Accommodation
+              </Text>
+            </Link>
+            <Link to={`/dashboard`}>
+              <Text
+                _hover={{
+                  color: "pink.300",
+                }}
+                mb={3}
+                borderBottom={1}
+                borderStyle={"solid"}
+                borderColor={useColorModeValue("gray.900", "gray.200")}
+              >
+                Dashboard
+              </Text>
+            </Link>
+          </Flex>
+        </Stack>
+      </Box>
+      <Flex display={{ base: "none", md: "flex" }}>
+        <Link to={`/accommodation`} style={{ marginRight: "1rem" }}>
+          <Text
+            _hover={{
+              color: "pink.300",
+            }}
+          >
+            Discover Accommodation
+          </Text>
+        </Link>
+        <Text>/</Text>
+        <Link
+          to={`/accommodation/post`}
+          style={{ marginLeft: "1rem", marginRight: "1rem" }}
         >
-          Dashboard
-        </Text>
-      </Link>
-    </Flex>
+          <Text
+            _hover={{
+              color: "pink.300",
+            }}
+          >
+            Post Accommodation
+          </Text>
+        </Link>
+        <Text>/</Text>
+        <Link to={`/dashboard`} style={{ marginLeft: "1rem" }}>
+          <Text
+            _hover={{
+              color: "pink.300",
+            }}
+          >
+            Dashboard
+          </Text>
+        </Link>
+      </Flex>
+    </Box>
   );
 };
 
@@ -131,23 +266,22 @@ const UserLoggedIn = () => {
     navigate("/login");
   };
   return (
-    <Menu colorScheme="pink">
+    <Menu>
       <MenuButton>
         <Avatar></Avatar>
       </MenuButton>
       <MenuList>
-        <MenuItem as='a' href={`/profile/${user.authenticationData.userName}`}>
+        <MenuItem as="a" href={`/profile/${user.authenticationData.userName}`}>
           Profile
         </MenuItem>
-        <MenuItem as='a' href={`/profile/${user.authenticationData.userName}/settings`}>
+        <MenuItem
+          as="a"
+          href={`/profile/${user.authenticationData.userName}/settings`}
+        >
           Settings
         </MenuItem>
-        <MenuItem onClick={onLogout}>
-          Logout
-        </MenuItem>
+        <MenuItem onClick={onLogout}>Logout</MenuItem>
       </MenuList>
     </Menu>
   );
 };
-
-export default NavBar;

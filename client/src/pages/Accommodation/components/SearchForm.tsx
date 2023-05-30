@@ -82,11 +82,9 @@ export const SearchForm: FC = () => {
   return (
     <>
       <Center>
-        <Flex justify="space-between" direction="column">
+        <Flex justify={"space-between"} direction={"column"}>
           <Stack
             marginTop={{ base: "25px !important" }}
-            spacing={{ base: 0, md: 4 }}
-            direction={{ base: "column", md: "row" }}
             p={2}
             w={{ base: "auto", md: "7xl" }}
             overflow="hidden"

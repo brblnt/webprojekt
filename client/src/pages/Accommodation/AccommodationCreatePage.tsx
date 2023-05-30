@@ -10,26 +10,18 @@ import {
   Center,
   Heading,
   Select,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
-  Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { everyCountry } from "../../constants/everyCountry";
 import { accommodationTypeOptions } from "../../constants/accommodationType";
 import { serviceTypeOptions } from "../../constants/serviceType";
 import { create } from "../../features/accommodation/accommodationSlice";
-import { AnyIfEmpty, useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import {  useDispatch, useSelector } from "react-redux";
 
 export const AccommodationCreatePage = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { user, message } = useSelector((state: any) => {
+  const { user } = useSelector((state: any) => {
     return state.auth;
   });
 
@@ -45,14 +37,6 @@ export const AccommodationCreatePage = () => {
     accommodationType: "",
     serviceType: [],
     rooms: [],
-    /*roomType: [],
-    numberOfRooms: "",
-    numberOfSingleBeds: "",
-    numberOfDoubleBeds: "",
-    hasOwnKitchen: "",
-    hasOwnBathroom: "",
-    active: "true",
-    priceOfADay: "",*/
   });
 
   const {
@@ -67,20 +51,11 @@ export const AccommodationCreatePage = () => {
     accommodationType,
     serviceType,
     rooms,
-    /*roomType,
-    numberOfRooms,
-    numberOfSingleBeds,
-    numberOfDoubleBeds,
-    hasOwnKitchen,
-    hasOwnBathroom,
-    active,
-    priceOfADay*/
   } = formData;
 
   const onChange = useCallback((e: any) => {
     if (e.target) {
       const { name, value } = e.target;
-      //console.log(`Value of ${name}:`, value); // Add this line to log the value
       setFormData((prevState) => ({
         ...prevState,
         [name]: value,
@@ -110,20 +85,7 @@ export const AccommodationCreatePage = () => {
       phoneNumber,
       accommodationType,
       serviceTypes: [serviceType],
-      rooms /*[
-        {
-          id: "",
-          roomType,
-          numberOfRooms,
-          numberOfSingleBeds,
-          numberOfDoubleBeds,
-          hasOwnKitchen,
-          hasOwnBathroom,
-          active,
-          priceOfADay,
-          other,
-        }
-      ],*/,
+      rooms
     };
     dispatch(create(accommodationData) as any);
   };
@@ -131,9 +93,19 @@ export const AccommodationCreatePage = () => {
   return (
     <Container maxW="7xl" p={{ base: 5, md: 10 }}>
       <Center>
-        <Stack spacing={4}>
-          <Stack align="center">
-            <Heading fontSize="3xl">
+        <Stack
+          spacing={4}
+          bg={useColorModeValue("gray.200", "gray.900")}
+          boxShadow="dark-lg"
+          color={useColorModeValue("black", "white")}
+          p={2}
+          rounded="md"
+          overflow="hidden"
+          pos="relative"
+          mt={3}
+        >
+          <Stack align="center" textAlign={"center"}>
+            <Heading fontSize="3xl" mt={3}>
               {user && user.authenticationData.userName
                 ? "Accommodation creation for " +
                   user.authenticationData.userName
@@ -153,6 +125,7 @@ export const AccommodationCreatePage = () => {
                   <FormControl id="accommodationName">
                     <Input
                       type="text"
+                      focusBorderColor="pink.300"
                       placeholder="Accommodation Name"
                       value={accommodationName}
                       rounded="md"
@@ -160,6 +133,7 @@ export const AccommodationCreatePage = () => {
                       borderBottomRightRadius="0"
                       name="accommodationName"
                       onChange={onChange}
+                      w={{ base: "250px", md: "464px" }}
                     />
                   </FormControl>
                   <FormControl
@@ -169,11 +143,13 @@ export const AccommodationCreatePage = () => {
                   >
                     <Input
                       type="text"
+                      focusBorderColor="pink.300"
                       placeholder="Email"
                       value={emailAddress}
                       rounded="none"
                       name="emailAddress"
                       onChange={onChange}
+                      w={{ base: "250px", md: "464px" }}
                     />
                   </FormControl>
                   <FormControl
@@ -183,6 +159,7 @@ export const AccommodationCreatePage = () => {
                   >
                     <Input
                       type="text"
+                      focusBorderColor="pink.300"
                       placeholder="Phone Number"
                       value={phoneNumber}
                       rounded="md"
@@ -190,6 +167,7 @@ export const AccommodationCreatePage = () => {
                       borderTopRightRadius="0"
                       name="phoneNumber"
                       onChange={onChange}
+                      w={{ base: "250px", md: "464px" }}
                     />
                   </FormControl>
                 </VStack>
@@ -206,6 +184,7 @@ export const AccommodationCreatePage = () => {
                       borderBottomRightRadius="0"
                       name="country"
                       onChange={onChange}
+                      w={{ base: "250px", md: "464px" }}
                     >
                       {everyCountry.map((country, index) => (
                         <option key={index} value={country.value}>
@@ -222,10 +201,12 @@ export const AccommodationCreatePage = () => {
                     <Input
                       type="text"
                       placeholder="Postal Code"
+                      focusBorderColor="pink.300"
                       value={postalCode}
                       rounded="none"
                       name="postalCode"
                       onChange={onChange}
+                      w={{ base: "250px", md: "464px" }}
                     />
                   </FormControl>
                   <FormControl
@@ -236,10 +217,12 @@ export const AccommodationCreatePage = () => {
                     <Input
                       type="text"
                       placeholder="City"
+                      focusBorderColor="pink.300"
                       value={cityName}
                       rounded="none"
                       name="cityName"
                       onChange={onChange}
+                      w={{ base: "250px", md: "464px" }}
                     />
                   </FormControl>
                   <FormControl
@@ -250,10 +233,12 @@ export const AccommodationCreatePage = () => {
                     <Input
                       type="text"
                       placeholder="Address"
+                      focusBorderColor="pink.300"
                       value={addressName}
                       rounded="none"
                       name="addressName"
                       onChange={onChange}
+                      w={{ base: "250px", md: "464px" }}
                     />
                   </FormControl>
                   <FormControl
@@ -264,12 +249,14 @@ export const AccommodationCreatePage = () => {
                     <Input
                       type="text"
                       placeholder="Address Detail"
+                      focusBorderColor="pink.300"
                       value={addressDetail}
                       rounded="md"
                       borderTopLeftRadius="0"
                       borderTopRightRadius="0"
                       name="addressDetail"
                       onChange={onChange}
+                      w={{ base: "250px", md: "464px" }}
                     />
                   </FormControl>
                 </VStack>
@@ -285,6 +272,7 @@ export const AccommodationCreatePage = () => {
                       borderBottomRightRadius="0"
                       name="accommodationType"
                       onChange={onChange}
+                      w={{ base: "250px", md: "464px" }}
                     >
                       {accommodationTypeOptions.map((type, index) => (
                         <option key={index} value={type.value}>
@@ -295,13 +283,14 @@ export const AccommodationCreatePage = () => {
                     <Select
                       placeholder="Select Service Type"
                       id="city"
-                      value={serviceType}
+                      value={serviceType.length > 0 ? serviceType[0] : ""}
                       focusBorderColor="pink.300"
                       rounded="md"
                       borderTopLeftRadius="0"
                       borderTopRightRadius="0"
                       name="serviceType"
                       onChange={onChange}
+                      w={{ base: "250px", md: "464px" }}
                     >
                       {serviceTypeOptions.map((type, index) => (
                         <option key={index} value={type.value}>
@@ -309,26 +298,24 @@ export const AccommodationCreatePage = () => {
                         </option>
                       ))}
                     </Select>
+                    <Button
+                      mt={5}
+                      bg="pink.400"
+                      color="white"
+                      _hover={{
+                        bg: "pink.300",
+                      }}
+                      rounded="md"
+                      type="submit"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onSubmit(e);
+                      }}
+                      w={{ base: "250px", md: "464px" }}
+                    >
+                      Post Accommodation
+                    </Button>
                   </FormControl>
-                </VStack>
-
-                <VStack w="100%">
-                  <Button
-                    bg="pink.400"
-                    color="white"
-                    _hover={{
-                      bg: "pink.300",
-                    }}
-                    rounded="md"
-                    w="100%"
-                    type="submit"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onSubmit(e);
-                    }}
-                  >
-                    Post Accommodation
-                  </Button>
                 </VStack>
               </VStack>
             </Stack>

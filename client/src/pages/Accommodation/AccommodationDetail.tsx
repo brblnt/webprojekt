@@ -15,10 +15,19 @@ import {
   ListItem,
   VStack,
   Button,
+  Center,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalCloseButton,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { getAccommodationById } from "../../services/apiRequests";
 import { Link } from "react-router-dom";
 import { Room } from "../../types/Room";
+import { BookingCreatePage } from "../Booking/BookingCreatePage";
 
 export const AccommodationDetail = () => {
   const { accommodationId } = useParams();
@@ -37,12 +46,15 @@ export const AccommodationDetail = () => {
   const activeRoomCount =
     accommodation?.rooms.filter((room: Room) => room.active === true)?.length ??
     0;
-
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const openModal = () => {
+    onOpen();
+  };
   return (
-    <div>
+    <>
       {accommodation && (
-        <Container maxW={"7xl"}>
-          <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={8} py={5}>
+        <Container maxW={"7xl"} my={5}>
+          <Box>
             <Flex direction={"column"} gap={3}>
               <Image
                 rounded={"md"}
@@ -55,58 +67,39 @@ export const AccommodationDetail = () => {
                 w={"100%"}
                 h={{ base: "100%", sm: "400px", lg: "500px" }}
               />
-              <Image
-                rounded={"md"}
-                alt={`${accommodation.accommodationName} Image`}
-                src={
-                  "https://www.fairmont.com/assets/0/104/3225/3230/3231/f93a3414-b5d1-42a1-8528-4cd5c48d79d3.jpeg"
-                }
-                fit={"cover"}
-                align={"center"}
-                w={"100%"}
-                h={{ base: "100%", sm: "400px", lg: "500px" }}
-              />
             </Flex>
             <Stack spacing={{ base: 6, md: 10 }}>
               <Box as={"header"}>
-                <Heading
-                  lineHeight={1.1}
-                  fontWeight={600}
-                  fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
-                >
-                  {accommodation.accommodationName}
-                </Heading>
-                <Text color={"pink.300"} fontWeight={300} fontSize={"2xl"}>
-                  {"$" +
-                    accommodation.rooms.reduce(
-                      (sum, room) => sum + room.priceOfADay,
-                      0
-                    ) /
-                      accommodation.rooms.length}
-                </Text>
+                <Center mt={3}>
+                  <Heading
+                    lineHeight={1.1}
+                    fontWeight={600}
+                    fontSize={{ base: "4xl", lg: "5xl" }}
+                  >
+                    {accommodation.accommodationName}
+                  </Heading>
+                </Center>
               </Box>
-
               <Stack
                 spacing={{ base: 4, sm: 6 }}
                 direction={"column"}
                 divider={<StackDivider borderColor={"gray.200"} />}
               >
-                <Text fontSize={"lg"}>
-                  Arra gondoltam lehetne valami desc string is. Meg nem tudom
-                  imgPath Array tobb kepnek???
-                </Text>
+                <Text fontSize={"lg"}>accommodation.description</Text>
                 <Box>
-                  <Text
-                    fontSize={{ base: "16px", lg: "18px" }}
-                    color={"pink.300"}
-                    fontWeight={"500"}
-                    textTransform={"uppercase"}
-                    mb={"4"}
-                  >
-                    Contacts
-                  </Text>
+                  <Center>
+                    <Text
+                      fontSize={{ base: "16px", lg: "18px" }}
+                      color={"pink.300"}
+                      fontWeight={"500"}
+                      textTransform={"uppercase"}
+                      mb={"4"}
+                    >
+                      Contacts
+                    </Text>
+                  </Center>
 
-                  <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
+                  <SimpleGrid columns={2} spacing={10}>
                     <List spacing={2}>
                       <ListItem>Email</ListItem>
                       <ListItem>Phone</ListItem>
@@ -118,17 +111,18 @@ export const AccommodationDetail = () => {
                   </SimpleGrid>
                 </Box>
                 <Box>
-                  <Text
-                    fontSize={{ base: "16px", lg: "18px" }}
-                    color={"pink.300"}
-                    fontWeight={"500"}
-                    textTransform={"uppercase"}
-                    mb={"4"}
-                  >
-                    Address
-                  </Text>
-
-                  <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
+                  <Center>
+                    <Text
+                      fontSize={{ base: "16px", lg: "18px" }}
+                      color={"pink.300"}
+                      fontWeight={"500"}
+                      textTransform={"uppercase"}
+                      mb={"4"}
+                    >
+                      Address
+                    </Text>
+                  </Center>
+                  <SimpleGrid columns={2} spacing={10}>
                     <List spacing={2}>
                       <ListItem>Country</ListItem>
                       <ListItem>City</ListItem>
@@ -142,28 +136,18 @@ export const AccommodationDetail = () => {
                   </SimpleGrid>
                 </Box>
                 <Box>
-                  <Text
-                    fontSize={{ base: "16px", lg: "18px" }}
-                    color={"pink.300"}
-                    fontWeight={"500"}
-                    textTransform={"uppercase"}
-                    mb={"4"}
-                  >
-                    <Link to={`rooms`}>
-                      <Text
-                        _hover={{
-                          color: "pink.400",
-                        }}
-                      >
-                        Rooms
-                      </Text>
-                    </Link>
-                  </Text>
-                  <SimpleGrid
-                    columns={{ base: 1, md: 2 }}
-                    spacing={10}
-                    marginBottom={3}
-                  >
+                  <Center>
+                    <Text
+                      fontSize={{ base: "16px", lg: "18px" }}
+                      color={"pink.300"}
+                      fontWeight={"500"}
+                      textTransform={"uppercase"}
+                      mb={"4"}
+                    >
+                      Rooms
+                    </Text>
+                  </Center>
+                  <SimpleGrid columns={2} spacing={10} marginBottom={3}>
                     <List spacing={2}>
                       <ListItem>Available</ListItem>
                     </List>
@@ -173,22 +157,29 @@ export const AccommodationDetail = () => {
                   </SimpleGrid>
                   {accommodation.rooms.map((room) => {
                     return (
-                      <div>
-                        <Link to={`${room.id}`}>
-                          <Text
-                            _hover={{
-                              color: "pink.300",
-                            }}
-                          >
-                            {room.roomDetail}
-                          </Text>
-                        </Link>
-                      </div>
+                      <Box key={room.id}>
+                        <SimpleGrid columns={2} spacing={10} marginBottom={3}>
+                          <List spacing={2}>
+                            <ListItem>
+                              <Link to={`${room.id}`}>
+                                <Text
+                                  _hover={{
+                                    color: "pink.300",
+                                  }}
+                                >
+                                  {room.roomType} {room.roomNumber}
+                                </Text>
+                              </Link>
+                            </ListItem>
+                          </List>
+                          <List spacing={2}>
+                            <ListItem>${room.priceOfADay}</ListItem>
+                          </List>
+                        </SimpleGrid>
+                      </Box>
                     );
                   })}
                 </Box>
-
-                <Link to={`booking`}>
                   <VStack w="100%">
                     <Button
                       bg="pink.400"
@@ -198,16 +189,26 @@ export const AccommodationDetail = () => {
                       }}
                       rounded="md"
                       w="100%"
+                      onClick={openModal}
                     >
                       Book Room
                     </Button>
+                    <Modal isOpen={isOpen} onClose={onClose}>
+                      <ModalOverlay />
+                      <ModalContent>
+                        <ModalHeader>Book Room</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                          <BookingCreatePage />
+                        </ModalBody>
+                      </ModalContent>
+                    </Modal>
                   </VStack>
-                </Link>
               </Stack>
             </Stack>
-          </SimpleGrid>
+          </Box>
         </Container>
       )}
-    </div>
+    </>
   );
 };

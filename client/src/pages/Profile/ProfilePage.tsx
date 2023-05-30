@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import { Heading, Avatar, Box, Center, Text, Stack } from "@chakra-ui/react";
+import { Heading, Avatar, Box, Center, Text, Stack, useColorModeValue } from "@chakra-ui/react";
 import { ApplicationUser } from "../../types/ApplicationUser";
 import { getApplicationUserById } from "../../services/apiRequests";
 export const ProfilePage = () => {
@@ -22,7 +22,7 @@ export const ProfilePage = () => {
     <div>
       <Center py={6}>
         <Box
-          bg={"gray.700"}
+          bg={useColorModeValue("gray.100", "gray.900")}
           boxShadow={"2xl"}
           rounded={"lg"}
           p={6}

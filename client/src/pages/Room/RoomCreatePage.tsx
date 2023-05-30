@@ -1,15 +1,11 @@
-import  { FC, useCallback, useState }  from "react";
+import { FC, useCallback, useState } from "react";
 import {
-  Container,
   FormControl,
   Input,
   Stack,
   Button,
-  VStack,
   Checkbox,
-  Link,
   Center,
-  Heading,
   Select,
   NumberInput,
   NumberInputField,
@@ -25,19 +21,7 @@ import { roomTypeOptions } from "../../constants/roomType";
 export const RoomCreatePage: FC<AccommodationItemProps> = ({
   accommodation,
 }) => {
-
   const [formData, setFormData] = useState({
-    /*accommodationName: "",
-    emailAddress: "",
-    phoneNumber: "",
-    country: "",
-    postalCode: "",
-    cityName: "",
-    addressName: "",
-    addressDetail: "",
-    accommodationType: "",
-    serviceType: [],
-    rooms: [],*/
     roomType: [],
     roomNumber: "",
     numberOfRooms: "",
@@ -50,17 +34,7 @@ export const RoomCreatePage: FC<AccommodationItemProps> = ({
     roomDetail: "",
   });
 
-  const { /*accommodationName,
-    emailAddress,
-    phoneNumber,
-    country,
-    postalCode,
-    cityName,
-    addressName,
-    addressDetail,
-    accommodationType,
-    serviceType,
-    rooms*/
+  const {
     roomType,
     roomNumber,
     numberOfRooms,
@@ -68,24 +42,22 @@ export const RoomCreatePage: FC<AccommodationItemProps> = ({
     numberOfDoubleBeds,
     hasOwnKitchen,
     hasOwnBathroom,
-    active,
     priceOfADay,
-    roomDetail
+    roomDetail,
   } = formData;
-  
 
   const onChange = useCallback((e: any) => {
     if (e.target) {
       if (e.target && e.target.type === "checkbox") {
         const { name, checked } = e.target;
-        console.log(`Value of ${name}:`, checked); // Add this line to log the value
+        console.log(`Value of ${name}:`, checked);
         setFormData((prevState: any) => ({
           ...prevState,
           [name]: checked,
         }));
       } else {
         const { name, value } = e.target;
-        console.log(`Value of ${name}:`, value); // Add this line to log the value
+        console.log(`Value of ${name}:`, value);
         setFormData((prevState: any) => ({
           ...prevState,
           [name]: value,
@@ -94,18 +66,21 @@ export const RoomCreatePage: FC<AccommodationItemProps> = ({
     }
   }, []);
 
-
-
   return (
     <>
       <FormControl id="roomNumber">
-        <Text>
-          Room creation for {accommodation.accommodationName}
-        </Text>
+        <Text>Room creation for {accommodation.accommodationName}</Text>
         <FormLabel mb={0} mt={3}>
           Room Number
         </FormLabel>
-        <NumberInput min={0} rounded="md" value={roomNumber} onChange={(_, valueAsNumber) => onChange({ target: { name: "roomNumber", value: valueAsNumber } })}>
+        <NumberInput
+          min={0}
+          rounded="md"
+          value={roomNumber}
+          onChange={(_, valueAsNumber) =>
+            onChange({ target: { name: "roomNumber", value: valueAsNumber } })
+          }
+        >
           <NumberInputField />
           <NumberInputStepper>
             <NumberIncrementStepper />
@@ -135,40 +110,66 @@ export const RoomCreatePage: FC<AccommodationItemProps> = ({
       </FormControl>
       <FormControl id="roomNum" marginBottom={3}>
         <FormLabel>Number of Rooms</FormLabel>
-        <NumberInput defaultValue={1} min={1} value={numberOfRooms} onChange={(_, valueAsNumber) => onChange({ target: { name: "numberOfRooms", value: valueAsNumber } })}>
+        <NumberInput
+          defaultValue={1}
+          min={1}
+          value={numberOfRooms}
+          onChange={(_, valueAsNumber) =>
+            onChange({
+              target: { name: "numberOfRooms", value: valueAsNumber },
+            })
+          }
+        >
           <NumberInputField name="numberOfRooms" />
           <NumberInputStepper>
             <NumberIncrementStepper />
             <NumberDecrementStepper />
           </NumberInputStepper>
         </NumberInput>
-        </FormControl>
-        <FormControl id="singleBedNum" marginBottom={3}>
-          <Center>
-            <Text>Number of Single Beds</Text>
-          </Center>
-          <NumberInput defaultValue={0} min={0} value={numberOfSingleBeds} onChange={(_, valueAsNumber) => onChange({ target: { name: "numberOfSingleBeds", value: valueAsNumber } })}>
-          <NumberInputField
-            />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </FormControl>
-        <FormControl id="accommodationName" marginBottom={3}>
-          <Center>
-            <Text>Number of Double Beds</Text>
-          </Center>
-          <NumberInput defaultValue={0} min={0} value={numberOfDoubleBeds} onChange={(_, valueAsNumber) => onChange({ target: { name: "numberOfDoubleBeds", value: valueAsNumber } })}>
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </FormControl>
-        <Center marginTop={3}>
+      </FormControl>
+      <FormControl id="singleBedNum" marginBottom={3}>
+        <Center>
+          <Text>Number of Single Beds</Text>
+        </Center>
+        <NumberInput
+          defaultValue={0}
+          min={0}
+          value={numberOfSingleBeds}
+          onChange={(_, valueAsNumber) =>
+            onChange({
+              target: { name: "numberOfSingleBeds", value: valueAsNumber },
+            })
+          }
+        >
+          <NumberInputField />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+      </FormControl>
+      <FormControl id="accommodationName" marginBottom={3}>
+        <Center>
+          <Text>Number of Double Beds</Text>
+        </Center>
+        <NumberInput
+          defaultValue={0}
+          min={0}
+          value={numberOfDoubleBeds}
+          onChange={(_, valueAsNumber) =>
+            onChange({
+              target: { name: "numberOfDoubleBeds", value: valueAsNumber },
+            })
+          }
+        >
+          <NumberInputField />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+      </FormControl>
+      <Center marginTop={3}>
         <Stack spacing={5} direction="row" my={3}>
           <Checkbox
             colorScheme="pink"
@@ -187,20 +188,28 @@ export const RoomCreatePage: FC<AccommodationItemProps> = ({
             Has Own Bathroom
           </Checkbox>
         </Stack>
+      </Center>
+      <FormControl id="priceOfDay" marginBottom={3}>
+        <Center>
+          <Text>Price Of Day</Text>
         </Center>
-        <FormControl id="priceOfDay" marginBottom={3}>
-          <Center>
-            <Text>Price Of Day</Text>
-          </Center>
-          <NumberInput defaultValue={0} min={0} marginBottom={3} value={priceOfADay} onChange={(_, valueAsNumber) => onChange({ target: { name: "priceOfADay", value: valueAsNumber } })}>
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
-        </FormControl>
-        <FormControl id="roomOther">
+        <NumberInput
+          defaultValue={0}
+          min={0}
+          marginBottom={3}
+          value={priceOfADay}
+          onChange={(_, valueAsNumber) =>
+            onChange({ target: { name: "priceOfADay", value: valueAsNumber } })
+          }
+        >
+          <NumberInputField />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+      </FormControl>
+      <FormControl id="roomOther">
         <Input
           type="text"
           placeholder="Room Detail"
@@ -211,7 +220,7 @@ export const RoomCreatePage: FC<AccommodationItemProps> = ({
           name="roomDetail"
           onChange={onChange}
         />
-        </FormControl>
+      </FormControl>
       <Center>
         <Button variant="solid" colorScheme={"pink"} mt={3}>
           Add Room

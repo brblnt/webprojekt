@@ -15,6 +15,7 @@ export const AccommodationList: FC<AccommodationItemProps> = ({ query }) => {
     null
   );
   
+
   useEffect(() => {
     const loadAccommodation = async () => {
       const accommodation = await getAllAccommodations();
