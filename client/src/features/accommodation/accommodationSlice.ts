@@ -33,7 +33,15 @@ export const getaccomms = createAsyncThunk(
   async (authId: any, thunkAPI) => {
     try {
       return await accommodationService.getaccomm(authId);
-    } catch {}
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
   }
 );
 
