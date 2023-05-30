@@ -49,6 +49,7 @@ export const AccommodationItem: FC<AccommodationItemProps> = ({
       w={{ base: "auto", md: "7xl" }}
       overflow="hidden"
       pos="relative"
+      mt={3}
     >
       <Flex ml="0 !important">
         <Image

@@ -82,11 +82,24 @@ const update = async (auth: any) => {
   }
 };
 
+const remove = async (authId: string) => {
+  try {
+    const response = await axios.delete(`/hotel-booking/authentication/${authId}`);
+    toast.success('Authentication Deleted!');
+    return response.data;
+  } catch (error: any) {
+    const message = error.response.data.message || error.message || error.toString();
+    toast.error('Error during authentication deletion!');
+    throw new Error(message);
+  }
+};
+
 const authService = {
     login,
     logout,
     register,
-    update
+    update,
+    remove
 }
 
 export default authService

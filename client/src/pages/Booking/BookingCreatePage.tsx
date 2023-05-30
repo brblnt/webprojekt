@@ -46,7 +46,7 @@ export const BookingCreatePage = () => {
                 as="form"
                 spacing={8}
                 w={{ base: "sm", sm: "lg" }}
-                p={{ base: 5, sm: 6 }}
+                p={5}
               >
                 <VStack spacing={0} w="100%">
                   <FormControl id="bookingDateStart">

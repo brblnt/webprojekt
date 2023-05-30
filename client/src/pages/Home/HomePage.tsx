@@ -24,8 +24,6 @@ export const HomePage = () => {
     }
   );
 
-
-
   useEffect(() => {
     if (isError) { 
       toast.error(message);
