@@ -9,8 +9,10 @@ import nostra.cosa.hotelbooking.auth.constants.PermissionConstants;
 import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
 import nostra.cosa.hotelbooking.auth.dto.PermissionDTO;
 import nostra.cosa.hotelbooking.auth.dto.enums.Role;
+import nostra.cosa.hotelbooking.data.entity.ApplicationUser;
 import nostra.cosa.hotelbooking.data.entity.AuthenticationData;
 import nostra.cosa.hotelbooking.data.populator.DatabasePopulator;
+import nostra.cosa.hotelbooking.data.repository.ApplicationUserRepository;
 import nostra.cosa.hotelbooking.data.repository.AuthenticationRepository;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +23,9 @@ import org.springframework.stereotype.Component;
 public class DatabasePopulatorSampleUsers  implements DatabasePopulator {
 
   private final AuthenticationRepository authenticationRepository;
+
+  private final ApplicationUserRepository applicationUserRepository;
+
   private final Converter<AuthenticationDataDTO, AuthenticationData> converterAuthDTOToEntity;
 
   private final PasswordEncoder passwordEncoder;
@@ -31,7 +36,7 @@ public class DatabasePopulatorSampleUsers  implements DatabasePopulator {
     permissionDTO.setAdmin(PermissionConstants.ADMIN_PERMISSIONS);
     List<String> imgPath = new ArrayList<>();
     imgPath.add("img-url");
-    AuthenticationDataDTO sampleAdmin = new AuthenticationDataDTO(
+    AuthenticationDataDTO sampleAdminAuthData = new AuthenticationDataDTO(
             1L,
             "admin",
             passwordEncoder.encode("password"),
@@ -44,6 +49,14 @@ public class DatabasePopulatorSampleUsers  implements DatabasePopulator {
             true,
             permissionDTO,
             "AdminToken");
-    authenticationRepository.save(converterAuthDTOToEntity.convert(sampleAdmin));
+    authenticationRepository.save(converterAuthDTOToEntity.convert(sampleAdminAuthData));
+    ApplicationUser sampleAdminApplicationUser = new ApplicationUser(
+            1L,
+            sampleAdminAuthData.getId(),
+            "",
+            "",
+            "",
+            "");
+    applicationUserRepository.save(sampleAdminApplicationUser);
   }
 }
