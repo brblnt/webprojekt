@@ -7,7 +7,6 @@ import {
   Stack,
   Button,
   VStack,
-  Checkbox,
   Center,
   Heading,
   Select,
@@ -21,11 +20,11 @@ import {
 import { everyCountry } from "../../constants/everyCountry";
 import { accommodationTypeOptions } from "../../constants/accommodationType";
 import { serviceTypeOptions } from "../../constants/serviceType";
-import { Accommodation } from "../../types/Accommodation";
 import { create } from '../../features/accommodation/accommodationSlice'
 import { AnyIfEmpty, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
 
 export const AccommodationCreatePage = () => {
 
@@ -44,7 +43,7 @@ export const AccommodationCreatePage = () => {
     postalCode: "",
     cityName: "",
     addressName: "",
-    other: "",
+    addressDetail: "",
     accommodationType: "",
     serviceType: [],
     rooms: [],
@@ -66,7 +65,7 @@ export const AccommodationCreatePage = () => {
     postalCode,
     cityName,
     addressName,
-    other,
+    addressDetail,
     accommodationType,
     serviceType,
     rooms,
@@ -118,7 +117,7 @@ export const AccommodationCreatePage = () => {
           cityName,
         },
         addressName,
-        other,
+        addressDetail,
       },
       emailAddress,
       phoneNumber,
@@ -272,12 +271,12 @@ export const AccommodationCreatePage = () => {
                   >
                     <Input
                       type="text"
-                      placeholder="Address Other"
-                      value={other}
+                      placeholder="Address Detail"
+                      value={addressDetail}
                       rounded="md"
                       borderTopLeftRadius="0"
                       borderTopRightRadius="0"
-                      name="other"
+                      name="addressDetail"
                       onChange={onChange}
                     />
                   </FormControl>

@@ -38,6 +38,7 @@ public class PermissionConstants {
     public static final String DELETE_PERMISSION_ADMIN_APPLICATION_USER = "hasPermission('ADMIN,APPLICATION_USER', 'DELETE')";
 
 
+    public static final String GET_ALL_PERMISSION_ADMIN_ACCOMMODATION = "hasPermission('ADMIN,ACCOMMODATION', 'GET_ALL')";
     public static final String CREATE_PERMISSION_ADMIN_ACCOMMODATION = "hasPermission('ADMIN,ACCOMMODATION', 'CREATE')";
     public static final String UPDATE_PERMISSION_ADMIN_ACCOMMODATION = "hasPermission('ADMIN,ACCOMMODATION', 'UPDATE')";
     public static final String DELETE_PERMISSION_ADMIN_ACCOMMODATION = "hasPermission('ADMIN,ACCOMMODATION', 'DELETE')";
