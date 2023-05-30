@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { logout } from '../../features/auth/authSlice';
+import { getaccomms } from '../../features/accommodation/accommodationSlice';
+import { AccommodationItem } from '../Accommodation/components/AccommodationItem';
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -15,6 +17,15 @@ export const HomePage = () => {
     }
   );
 
+  const { accommodations } = useSelector( 
+    (state: any) => {
+      console.log(state); // Log the Redux state
+      return state.accomm;
+    }
+  );
+
+  const authId = user.authenticationData.id
+
   useEffect(() => {
     if (isError) { 
       toast.error(message);
@@ -24,15 +35,26 @@ export const HomePage = () => {
       navigate('/login');
       dispatch(logout() as any);
     } else {
-      console.log(user.authenticationData.userName)
+      dispatch(getaccomms(authId) as any)
     }
-
 
   }, [user, navigate, isError, message, dispatch]);
 
   return (
     <div>
       {user && user.authenticationData.userName ? 'Welcome ' + user.authenticationData.userName : ''}
-    </div>
+    
+            <section className='content'>
+            {accommodations.length > 0 ? (
+              <div className='items'>
+                {accommodations.map((accommodation: any) => (
+                <AccommodationItem key={accommodation._id} accommodation={accommodation}/>
+               ))}
+              </div>
+                  ) : (
+                    <h3>You have not created any accommodations</h3>
+                  )}
+          </section>
+  </div>
   );
 };
