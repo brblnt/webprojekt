@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
+
 import {
   Container,
   FormControl,
@@ -6,8 +7,6 @@ import {
   Stack,
   Button,
   VStack,
-  Checkbox,
-  Link,
   Center,
   Heading,
   Select,
@@ -17,201 +16,327 @@ import {
   NumberIncrementStepper,
   NumberDecrementStepper,
   Text,
-  FormLabel,
 } from "@chakra-ui/react";
+import { everyCountry } from "../../constants/everyCountry";
+import { accommodationTypeOptions } from "../../constants/accommodationType";
+import { serviceTypeOptions } from "../../constants/serviceType";
+import { create } from '../../features/accommodation/accommodationSlice'
+import { AnyIfEmpty, useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
-export const RoomCreatePage = () => {
+
+export const AccommodationCreatePage = () => {
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { user, message } = useSelector((state: any) => {
+    return state.auth;
+  });
+
+  const [formData, setFormData] = useState({
+    accommodationName: "",
+    emailAddress: "",
+    phoneNumber: "",
+    country: "",
+    postalCode: "",
+    cityName: "",
+    addressName: "",
+    addressDetail: "",
+    accommodationType: "",
+    serviceType: [],
+    rooms: [],
+    /*roomType: [],
+    numberOfRooms: "",
+    numberOfSingleBeds: "",
+    numberOfDoubleBeds: "",
+    hasOwnKitchen: "",
+    hasOwnBathroom: "",
+    active: "true",
+    priceOfADay: "",*/
+  });
+
+  const { accommodationName,
+    emailAddress,
+    phoneNumber,
+    country,
+    postalCode,
+    cityName,
+    addressName,
+    addressDetail,
+    accommodationType,
+    serviceType,
+    rooms
+    /*roomType,
+    numberOfRooms,
+    numberOfSingleBeds,
+    numberOfDoubleBeds,
+    hasOwnKitchen,
+    hasOwnBathroom,
+    active,
+    priceOfADay*/
+  } = formData;
+
+  const onChange = useCallback((e: any) => {
+    if (e.target) {
+      const { name, value } = e.target;
+      //console.log(`Value of ${name}:`, value); // Add this line to log the value
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
+  }, []);
+  
+  const onSubmit = (e: any) => {
+    e.preventDefault();
+    const accommodationData = {
+      id: "",
+      authenticationData: {
+        id: user.authenticationData.id,
+      },
+      accommodationName,
+      address: {
+        addressId: "",
+        country,
+        city: {
+          postalCode,
+          cityName,
+        },
+        addressName,
+        addressDetail,
+      },
+      emailAddress,
+      phoneNumber,
+      accommodationType,
+      serviceTypes: [serviceType],
+      rooms /*[
+        {
+          id: "",
+          roomType,
+          numberOfRooms,
+          numberOfSingleBeds,
+          numberOfDoubleBeds,
+          hasOwnKitchen,
+          hasOwnBathroom,
+          active,
+          priceOfADay,
+          other,
+        }
+      ],*/
+    };
+    dispatch(create(accommodationData) as any);
+  };
+
   return (
-    <>
-      <FormControl id="roomNumber">
-        <FormLabel mb={0} mt={3}>
-          Room Number
-        </FormLabel>
-        <NumberInput min={0} rounded="md">
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
-      </FormControl>
-      <FormControl id="roomType">
-        <FormLabel mb={0}>Room Type</FormLabel>
-        <Select>
-          <option value="SZOBA">Szoba</option>
-          <option value="LAKOSZTALY">Lakosztály</option>
-        </Select>
-      </FormControl>
-      <FormControl id="roomNum" marginBottom={3}>
-        <FormLabel>Number of Rooms</FormLabel>
-        <NumberInput defaultValue={1} min={1}>
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
-      </FormControl>
-      <FormControl id="singleBedNum">
-        <FormLabel mb={0} mt={3}>
-          Number of Single Beds
-        </FormLabel>
-        <NumberInput rounded="md" min={0}>
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
-      </FormControl>
-      <FormControl id="doubleBedNum">
-        <FormLabel mb={0} mt={3}>
-          Number of Double Beds
-        </FormLabel>
-        <NumberInput min={0} rounded="md">
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
-      </FormControl>
-      <FormControl id="hasKitchen">
-        <FormLabel mb={0}>Has Kitchen</FormLabel>
-        <Select>
-          <option value={true.toString()}>True</option>
-          <option value={false.toString()}>False</option>
-        </Select>
-      </FormControl>
-      <FormControl id="hasBathroom">
-        <FormLabel mb={0}>Has Bathroom</FormLabel>
-        <Select>
-          <option value={true.toString()}>True</option>
-          <option value={false.toString()}>False</option>
-        </Select>
-      </FormControl>
-      <FormControl id="price">
-        <FormLabel mb={0} mt={3}>
-          Price Of A Day
-        </FormLabel>
-        <NumberInput rounded="md" min={0}>
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
-      </FormControl>
-      <FormControl id="roomDetail">
-        <FormLabel mb={0} mt={3}>
-          Room Detail
-        </FormLabel>
-        <Input type="text" rounded="md" />
-      </FormControl>
+    <Container maxW="7xl" p={{ base: 5, md: 10 }}>
       <Center>
-        <Button variant="solid" colorScheme={"pink"} mt={3}>
-          Add Room
-        </Button>
-      </Center>
-    </>
-    // <Container maxW="7xl" p={{ base: 5, md: 10 }}>
-    //   <Center>
-    //     <Stack spacing={4}>
-    //       <Stack align="center">
-    //         <Heading fontSize="3xl">Room Post Form</Heading>
-    //       </Stack>
-    //       <Container maxW="7xl" p={{ base: 5, md: 10 }}>
-    //         <Stack spacing={4}>
-    //           <VStack
-    //             as="form"
-    //             spacing={8}
-    //             w={{ base: "sm", sm: "lg" }}
-    //             p={{ base: 5, sm: 6 }}
-    //           >
-    //             <VStack spacing={0} w="100%">
-    //               <FormControl id="roomNum" marginBottom={3}>
-    //                 <Center>
-    //                   <Text>Number of Rooms</Text>
-    //                 </Center>
-    //                 <NumberInput defaultValue={1} min={1}>
-    //                   <NumberInputField />
-    //                   <NumberInputStepper>
-    //                     <NumberIncrementStepper />
-    //                     <NumberDecrementStepper />
-    //                   </NumberInputStepper>
-    //                 </NumberInput>
-    //               </FormControl>
-    //               <FormControl id="singleBedNum" marginBottom={3}>
-    //                 <Center>
-    //                   <Text>Number of Single Beds</Text>
-    //                 </Center>
-    //                 <NumberInput defaultValue={0} min={0}>
-    //                   <NumberInputField />
-    //                   <NumberInputStepper>
-    //                     <NumberIncrementStepper />
-    //                     <NumberDecrementStepper />
-    //                   </NumberInputStepper>
-    //                 </NumberInput>
-    //               </FormControl>
-    //               <FormControl id="accommodationName" marginBottom={3}>
-    //                 <Center>
-    //                   <Text>Number of Double Beds</Text>
-    //                 </Center>
-    //                 <NumberInput defaultValue={0} min={0}>
-    //                   <NumberInputField />
-    //                   <NumberInputStepper>
-    //                     <NumberIncrementStepper />
-    //                     <NumberDecrementStepper />
-    //                   </NumberInputStepper>
-    //                 </NumberInput>
-    //               </FormControl>
-    //               <Center marginTop={3}>
-    //                 <Stack spacing={5} direction="row" my={3}>
-    //                   <Checkbox colorScheme="pink">Has Own Kitchen</Checkbox>
-    //                   <Checkbox colorScheme="pink">Has Own Bathroom</Checkbox>
-    //                 </Stack>
-    //               </Center>
-    //               <FormControl id="priceOfDay" marginBottom={3}>
-    //                 <Center>
-    //                   <Text>Price Of Day</Text>
-    //                 </Center>
-    //                 <NumberInput defaultValue={0} min={0} marginBottom={3}>
-    //                   <NumberInputField />
-    //                   <NumberInputStepper>
-    //                     <NumberIncrementStepper />
-    //                     <NumberDecrementStepper />
-    //                   </NumberInputStepper>
-    //                 </NumberInput>
-    //               </FormControl>
-    //               <FormControl id="roomOther">
-    //                 <Input
-    //                   type="text"
-    //                   placeholder="Other Information"
-    //                   value={``}
-    //                   rounded="md"
-    //                   name="roomOther"
-    //                 />
-    //               </FormControl>
-    //             </VStack>
+        <Stack spacing={4}>
+          <Stack align="center">
+            <Heading fontSize="3xl">{user && user.authenticationData.userName ? 'Accommodation creation for ' + user.authenticationData.userName : ''} </Heading>
+          </Stack>
+          <Container maxW="7xl" p={{ base: 5, md: 10 }}>
+            <Stack spacing={4}>
+              <VStack
+                as="form"
+                spacing={8}
+                w={{ base: "sm", sm: "lg" }}
+                p={{ base: 5, sm: 6 }}
+                onSubmit={onSubmit}
+              >
+                <VStack spacing={0} w="100%">
+                  <FormControl id="accommodationName">
+                    <Input
+                      type="text"
+                      placeholder="Accommodation Name"
+                      value={accommodationName}
+                      rounded="md"
+                      borderBottomLeftRadius="0"
+                      borderBottomRightRadius="0"
+                      name="accommodationName"
+                      onChange={onChange}
+                    />
+                  </FormControl>
+                  <FormControl
+                    id="accommodationEmail"
+                    position="relative"
+                    bottom="1px"
+                  >
+                    <Input
+                      type="text"
+                      placeholder="Email"
+                      value={emailAddress}
+                      rounded="none"
+                      name="emailAddress"
+                      onChange={onChange}
+                    />
+                  </FormControl>
+                  <FormControl
+                    id="accommodationPhone"
+                    position="relative"
+                    bottom="1px"
+                  >
+                    <Input
+                      type="text"
+                      placeholder="Phone Number"
+                      value={phoneNumber}
+                      rounded="md"
+                      borderTopLeftRadius="0"
+                      borderTopRightRadius="0"
+                      name="phoneNumber"
+                      onChange={onChange}
+                    />
+                  </FormControl>
+                </VStack>
 
-    //             <VStack w="100%">
-    //               <Button
-    //                 bg="pink.400"
-    //                 color="white"
-    //                 _hover={{
-    //                   bg: "pink.300",
-    //                 }}
-    //                 rounded="md"
-    //                 w="100%"
-    //               >
-    //                 Post Room
-    //               </Button>
-    //             </VStack>
-    //           </VStack>
-    //         </Stack>
-    //       </Container>
-    //     </Stack>
-    //   </Center>
-    // </Container>
+                <VStack spacing={0} w="100%">
+                  <FormControl id="accommodationCountry">
+                    <Select
+                      placeholder="Select country"
+                      id="city"
+                      value={country}
+                      focusBorderColor="pink.300"
+                      rounded="md"
+                      borderBottomLeftRadius="0"
+                      borderBottomRightRadius="0"
+                      name="country"
+                      onChange={onChange}
+                    >
+                      {everyCountry.map((country, index) => (
+                        <option key={index} value={country.value}>
+                          {country.text}
+                        </option>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl
+                    id="accommodationPostalCode"
+                    position="relative"
+                    bottom="1px"
+                  >
+                    <Input
+                      type="text"
+                      placeholder="Postal Code"
+                      value={postalCode}
+                      rounded="none"
+                      name="postalCode"
+                      onChange={onChange}
+                    />
+                  </FormControl>
+                  <FormControl
+                    id="accommodationCity"
+                    position="relative"
+                    bottom="1px"
+                  >
+                    <Input
+                      type="text"
+                      placeholder="City"
+                      value={cityName}
+                      rounded="none"
+                      name="cityName"
+                      onChange={onChange}
+                    />
+                  </FormControl>
+                  <FormControl
+                    id="accommodationAddress"
+                    position="relative"
+                    bottom="1px"
+                  >
+                    <Input
+                      type="text"
+                      placeholder="Address"
+                      value={addressName}
+                      rounded="none"
+                      name="addressName"
+                      onChange={onChange}
+                    />
+                  </FormControl>
+                  <FormControl
+                    id="accommodationOther"
+                    position="relative"
+                    bottom="1px"
+                  >
+                    <Input
+                      type="text"
+                      placeholder="Address Detail"
+                      value={addressDetail}
+                      rounded="md"
+                      borderTopLeftRadius="0"
+                      borderTopRightRadius="0"
+                      name="addressDetail"
+                      onChange={onChange}
+                    />
+                  </FormControl>
+                </VStack>
+                <VStack spacing={0} w="100%">
+                  <FormControl id="accommodationCountry">
+                    <Select
+                      placeholder="Select Accommodation Type"
+                      id="city"
+                      value={accommodationType}
+                      focusBorderColor="pink.300"
+                      rounded="md"
+                      borderBottomLeftRadius="0"
+                      borderBottomRightRadius="0"
+                      name="accommodationType"
+                      onChange={onChange}
+                    >
+                      {accommodationTypeOptions.map((type, index) => (
+                        <option key={index} value={type.value}>
+                          {type.text}
+                        </option>
+                      ))}
+                    </Select>
+                    <Center marginTop={3}>
+                      <Stack spacing={5} direction="row">
+                      <Select
+                      placeholder="Select Service Type"
+                      id="city"
+                      value={serviceType}
+                      focusBorderColor="pink.300"
+                      rounded="md"
+                      borderBottomLeftRadius="0"
+                      borderBottomRightRadius="0"
+                      name="serviceType"
+                      onChange={onChange}
+                    >
+                      {serviceTypeOptions.map((type, index) => (
+                        <option key={index} value={type.value}>
+                          {type.text}
+                        </option>
+                      ))}
+                    </Select>
+                      </Stack>
+                    </Center>
+                  </FormControl>
+                </VStack>
+            
+                <VStack w="100%">
+                <Button
+                  bg="pink.400"
+                  color="white"
+                  _hover={{
+                    bg: "pink.300",
+                  }}
+                  rounded="md"
+                  w="100%"
+                  type="submit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSubmit(e);
+                  }}                
+                >
+                  Post Accommodation
+                </Button>
+
+                </VStack>
+                
+              </VStack>
+            </Stack>
+          </Container>
+        </Stack>
+      </Center>
+    </Container>
   );
 };
