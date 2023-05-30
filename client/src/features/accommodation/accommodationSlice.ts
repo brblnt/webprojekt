@@ -33,10 +33,12 @@ export const getaccomms = createAsyncThunk(
   'accommodations/get',
   async (authId: any, thunkAPI) => {
     try {
+
       return await accommodationService.getaccomm(authId)
     }
   }
  )
+
 
 export const remove = createAsyncThunk(
   "accommodations/remove",
@@ -55,6 +57,14 @@ export const remove = createAsyncThunk(
     }
   }
 )
+
+
+export const addRoom = createAsyncThunk(
+  'accommodations/addRoom',
+  async (roomData, accommData) => {
+    /*const { roomData, accommData } = arg;*/
+    try {
+      return await accommodationService.room(roomData, accommData);
 
   export const accommodationSlice: any = createSlice({
     name: 'accomm',
@@ -96,6 +106,7 @@ export const remove = createAsyncThunk(
             state.message = action.payload as string
         })
 
+
         error.toString();
       return thunkAPI.rejectWithValue(message);
     }
@@ -114,7 +125,7 @@ export const update = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      return thunkAPI.rejectWithValue(message);
+      return console.log(message);
     }
   }
 );
@@ -145,6 +156,32 @@ export const accommodationSlice: any = createSlice({
         state.isError = true;
         state.message = action.payload as string;
       })
+             .addCase(getaccomms.pending, (state) => {
+          state.isLoading = true
+        })
+        .addCase(getaccomms.fulfilled, (state, action: any) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.accommodations = action.payload
+        })
+        .addCase(getaccomms.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload as string
+        })
+        .addCase(addRoom.pending, (state) => {
+          state.isLoading = true
+        })
+        .addCase(addRoom.fulfilled, (state, action: any) => {
+            state.isLoading = false
+            state.isSuccess = true
+            state.accommodations = action.payload
+        })
+        .addCase(addRoom.rejected, (state, action) => {
+            state.isLoading = false
+            state.isError = true
+            state.message = action.payload as string
+        })
       .addCase(remove.pending, (state) => {
         state.isLoading = true;
       })
