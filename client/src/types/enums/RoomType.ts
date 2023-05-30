@@ -1,4 +1,4 @@
 export enum RoomType {
-  LAKOSZTALY,
-  SZOBA
+  LAKOSZTALY = "LAKOSZTALY",
+  SZOBA = "SZOBA"
 }

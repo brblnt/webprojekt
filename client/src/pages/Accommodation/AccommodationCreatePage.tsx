@@ -20,12 +20,14 @@ import {
 import { everyCountry } from "../../constants/everyCountry";
 import { accommodationTypeOptions } from "../../constants/accommodationType";
 import { serviceTypeOptions } from "../../constants/serviceType";
-import { create } from "../../features/accommodation/accommodationSlice";
+import { create } from '../../features/accommodation/accommodationSlice'
 import { AnyIfEmpty, useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+
 export const AccommodationCreatePage = () => {
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -55,8 +57,7 @@ export const AccommodationCreatePage = () => {
     priceOfADay: "",*/
   });
 
-  const {
-    accommodationName,
+  const { accommodationName,
     emailAddress,
     phoneNumber,
     country,
@@ -66,7 +67,7 @@ export const AccommodationCreatePage = () => {
     addressDetail,
     accommodationType,
     serviceType,
-    rooms,
+    rooms
     /*roomType,
     numberOfRooms,
     numberOfSingleBeds,
@@ -80,14 +81,14 @@ export const AccommodationCreatePage = () => {
   const onChange = useCallback((e: any) => {
     if (e.target) {
       const { name, value } = e.target;
-      //console.log(`Value of ${name}:`, value); // Add this line to log the value
+      console.log(`Value of ${name}:`, value); // Add this line to log the value
       setFormData((prevState) => ({
         ...prevState,
         [name]: value,
       }));
     }
   }, []);
-
+  
   const onSubmit = (e: any) => {
     e.preventDefault();
     const accommodationData = {
@@ -123,7 +124,7 @@ export const AccommodationCreatePage = () => {
           priceOfADay,
           other,
         }
-      ],*/,
+      ],*/
     };
     dispatch(create(accommodationData) as any);
   };
@@ -133,12 +134,7 @@ export const AccommodationCreatePage = () => {
       <Center>
         <Stack spacing={4}>
           <Stack align="center">
-            <Heading fontSize="3xl">
-              {user && user.authenticationData.userName
-                ? "Accommodation creation for " +
-                  user.authenticationData.userName
-                : ""}{" "}
-            </Heading>
+            <Heading fontSize="3xl">{user && user.authenticationData.userName ? 'Accommodation creation for ' + user.authenticationData.userName : ''} </Heading>
           </Stack>
           <Container maxW="7xl" p={{ base: 5, md: 10 }}>
             <Stack spacing={4}>
@@ -292,14 +288,16 @@ export const AccommodationCreatePage = () => {
                         </option>
                       ))}
                     </Select>
-                    <Select
+                    <Center marginTop={3}>
+                      <Stack spacing={5} direction="row">
+                      <Select
                       placeholder="Select Service Type"
                       id="city"
                       value={serviceType}
                       focusBorderColor="pink.300"
                       rounded="md"
-                      borderTopLeftRadius="0"
-                      borderTopRightRadius="0"
+                      borderBottomLeftRadius="0"
+                      borderBottomRightRadius="0"
                       name="serviceType"
                       onChange={onChange}
                     >
@@ -309,27 +307,31 @@ export const AccommodationCreatePage = () => {
                         </option>
                       ))}
                     </Select>
+                      </Stack>
+                    </Center>
                   </FormControl>
                 </VStack>
-
+            
                 <VStack w="100%">
-                  <Button
-                    bg="pink.400"
-                    color="white"
-                    _hover={{
-                      bg: "pink.300",
-                    }}
-                    rounded="md"
-                    w="100%"
-                    type="submit"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      onSubmit(e);
-                    }}
-                  >
-                    Post Accommodation
-                  </Button>
+                <Button
+                  bg="pink.400"
+                  color="white"
+                  _hover={{
+                    bg: "pink.300",
+                  }}
+                  rounded="md"
+                  w="100%"
+                  type="submit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onSubmit(e);
+                  }}                
+                >
+                  Post Accommodation
+                </Button>
+
                 </VStack>
+                
               </VStack>
             </Stack>
           </Container>

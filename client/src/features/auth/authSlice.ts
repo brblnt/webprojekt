@@ -8,7 +8,7 @@ const user = JSON.parse(localStorage.getItem("user") as string);
 console.log("localStorage user:", user);
 
 const initialState: {
-  user: string | null;
+  user: any;
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
@@ -43,9 +43,9 @@ export const register = createAsyncThunk(
 // Login user
 export const login = createAsyncThunk(
   "auth/login",
-  async (user: any, thunkAPI) => {
+  async (userData: any, thunkAPI) => {
     try {
-      return await authService.login(user);
+      return await authService.login(userData);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -130,7 +130,6 @@ export const authSlice: any = createSlice({
         state.isLoading = false;
         state.isSuccess = true;
         state.user = action.payload;
-        localStorage.setItem("user", JSON.stringify(action.payload));
       })
 
       .addCase(login.rejected, (state, action) => {

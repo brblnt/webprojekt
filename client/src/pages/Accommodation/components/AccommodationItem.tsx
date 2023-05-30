@@ -37,6 +37,7 @@ export const AccommodationItem: FC<AccommodationItemProps> = ({
   const openModal = () => {
     onOpen();
   };
+
   return (
     <Stack
       spacing={{ base: 0, md: 4 }}
@@ -152,7 +153,7 @@ export const AccommodationItem: FC<AccommodationItemProps> = ({
             <ModalHeader>Add Room</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <RoomCreatePage />
+              <RoomCreatePage accommodation={accommodation}/>
             </ModalBody>
           </ModalContent>
         </Modal>
