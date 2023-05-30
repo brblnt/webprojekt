@@ -29,10 +29,6 @@ export const App = () => (
           element={<AccommodationDetail />}
         />
         <Route
-          path={`/accommodation/:accommodationId/room/post`}
-          element={<RoomCreatePage />}
-        />
-        <Route
           path={`/accommodation/post`}
           element={<AccommodationCreatePage />}
         />

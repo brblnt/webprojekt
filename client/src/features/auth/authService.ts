@@ -40,20 +40,24 @@ const register = async (userData: any) => {
 //Login user
 const login = async (userData: any) => {
     try {
-      const response = await axios.post('/user/login', null, {
+      const logging = await axios.post('/user/login', null, {
         params: {
           userName: userData.userName,
           password: userData.password,
         },
       });
-  
-      let user = response.data;
 
-      if(user){
-        localStorage.setItem('user', JSON.stringify(user))
-    }
-      console.log(user)
-      return user;
+      if(logging.data) {
+        const logId = logging.data.id;
+        const response = await axios.get(`/hotel-booking/application-user/${logId}/all`);
+
+        if(response.data){
+          let user = response.data;
+          localStorage.setItem('user', JSON.stringify(user))
+          console.log(user)
+          return user;
+        }
+      }
     } catch (error) {
       console.log(error);
       throw error;

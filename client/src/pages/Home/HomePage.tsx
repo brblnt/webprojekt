@@ -24,7 +24,7 @@ export const HomePage = () => {
     }
   );
 
-  const authId = user.authenticationData.id
+
 
   useEffect(() => {
     if (isError) { 
@@ -35,6 +35,7 @@ export const HomePage = () => {
       navigate('/login');
       dispatch(logout() as any);
     } else {
+      const authId = user.authenticationData.id
       dispatch(getaccomms(authId) as any)
     }
 
