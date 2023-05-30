@@ -34,18 +34,16 @@ function NavBar() {
         align={"center"}
       >
         <Flex flex={{ base: 1 }} justify={{ base: "center", md: "start" }}>
-          <Text fontFamily={"heading"} color={"white"}>
             <Link to="/">
               <Text
                 _hover={{
                   color: "pink.300",
                 }}
+                fontFamily={"heading"} color={"white"}
               >
                 Cosa Nostra
               </Text>
             </Link>
-          </Text>
-
           <Flex display={{ base: "none", md: "flex" }} ml={10}>
             {user && user.authenticationData.role === Role.ADMIN && <AdminNav />}
             {user && user.authenticationData.role === Role.ACCOMMODATION && <AccommodationNav />}
