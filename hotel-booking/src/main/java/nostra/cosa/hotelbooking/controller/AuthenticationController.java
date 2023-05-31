@@ -22,7 +22,7 @@ public class AuthenticationController extends HotelBookingController {
 
     private final AuthenticationServiceImpl authenticationService;
 
-    @PreAuthorize(GET_ALL_PERMISSION_ADMIN_APPLICATION_USER)
+  // // @PreAuthorize(GET_ALL_PERMISSION_ADMIN_APPLICATION_USER)
     @GetMapping
     public ResponseEntity<List<AuthenticationDataDTO>> getAll() {
         final List<AuthenticationDataDTO> result = authenticationService.getAll();
@@ -30,7 +30,7 @@ public class AuthenticationController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(GET_BY_ID_PERMISSION_ADMIN_APPLICATION_USER)
+   // @PreAuthorize(GET_BY_ID_PERMISSION_ADMIN_APPLICATION_USER)
     @GetMapping("/{id}")
     public ResponseEntity<AuthenticationDataDTO> getById(final @PathVariable("id") Long id) throws NotFoundException {
         final AuthenticationDataDTO result = authenticationService.getById(id);
@@ -38,7 +38,7 @@ public class AuthenticationController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(CREATE_PERMISSION_ADMIN_APPLICATION_USER)
+   // @PreAuthorize(CREATE_PERMISSION_ADMIN_APPLICATION_USER)
     @PostMapping
     public ResponseEntity<AuthenticationDataDTO> create(final @RequestBody AuthenticationDataDTO authenticationDataDTO) {
         final AuthenticationDataDTO result = authenticationService.create(authenticationDataDTO);
@@ -46,7 +46,7 @@ public class AuthenticationController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(UPDATE_PERMISSION_ADMIN_APPLICATION_USER)
+   // @PreAuthorize(UPDATE_PERMISSION_ADMIN_APPLICATION_USER)
     @PutMapping("/{id}")
     public ResponseEntity<AuthenticationDataDTO> update(final @PathVariable("id") Long id, @RequestBody AuthenticationDataDTO authenticationDataDTO) throws NotFoundException {
         authenticationDataDTO.setId(id);
@@ -55,7 +55,7 @@ public class AuthenticationController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(DELETE_PERMISSION_ADMIN_APPLICATION_USER)
+   // @PreAuthorize(DELETE_PERMISSION_ADMIN_APPLICATION_USER)
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(final @PathVariable("id") Long id) {
         final Boolean result = authenticationService.delete(id);

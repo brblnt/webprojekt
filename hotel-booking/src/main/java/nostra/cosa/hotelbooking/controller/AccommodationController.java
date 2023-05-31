@@ -28,7 +28,7 @@ public class AccommodationController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(GET_ALL_PERMISSION_ADMIN_ACCOMMODATION)
+   // @PreAuthorize(GET_ALL_PERMISSION_ADMIN_ACCOMMODATION)
     @GetMapping("/{id}/all")
     public ResponseEntity<List<AccommodationDTO>> getAllByAuthenticationId(final @PathVariable("id") Long id) {
         final List<AccommodationDTO> result = accommodationService.getAllByAuthenticationId(id);
@@ -43,7 +43,7 @@ public class AccommodationController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(CREATE_PERMISSION_ADMIN_ACCOMMODATION)
+ //   @PreAuthorize(CREATE_PERMISSION_ADMIN_ACCOMMODATION)
     @PostMapping
     public ResponseEntity<AccommodationDTO> create(final @RequestBody AccommodationDTO accommodationDTO) {
         final AccommodationDTO result = accommodationService.create(accommodationDTO);
@@ -51,7 +51,7 @@ public class AccommodationController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(UPDATE_PERMISSION_ADMIN_ACCOMMODATION)
+//    @PreAuthorize(UPDATE_PERMISSION_ADMIN_ACCOMMODATION)
     @PutMapping("/{id}")
     public ResponseEntity<AccommodationDTO> update(final @PathVariable("id") Long id, @RequestBody AccommodationDTO accommodationDTO) throws NotFoundException {
         accommodationDTO.setId(id);
@@ -60,7 +60,7 @@ public class AccommodationController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(DELETE_PERMISSION_ADMIN_ACCOMMODATION)
+ //   @PreAuthorize(DELETE_PERMISSION_ADMIN_ACCOMMODATION)
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(final @PathVariable("id") Long id) {
         final Boolean result = accommodationService.delete(id);

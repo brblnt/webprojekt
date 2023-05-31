@@ -35,7 +35,7 @@ public class RoomController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(CREATE_PERMISSION_ADMIN_ACCOMMODATION)
+    // @PreAuthorize(CREATE_PERMISSION_ADMIN_ACCOMMODATION)
     @PostMapping
     public ResponseEntity<RoomDTO> create(final @RequestBody RoomDTO roomDTO) {
         final RoomDTO result = roomService.create(roomDTO);
@@ -43,7 +43,7 @@ public class RoomController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(UPDATE_PERMISSION_ADMIN_ACCOMMODATION)
+    // @PreAuthorize(UPDATE_PERMISSION_ADMIN_ACCOMMODATION)
     @PutMapping("/{id}")
     public ResponseEntity<RoomDTO> update(final @PathVariable("id") Long id, @RequestBody RoomDTO roomDTO) throws NotFoundException {
         roomDTO.setId(id);
@@ -52,7 +52,7 @@ public class RoomController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(DELETE_PERMISSION_ADMIN_ACCOMMODATION)
+    // @PreAuthorize(DELETE_PERMISSION_ADMIN_ACCOMMODATION)
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(final @PathVariable("id") Long id) {
         final Boolean result = roomService.delete(id);

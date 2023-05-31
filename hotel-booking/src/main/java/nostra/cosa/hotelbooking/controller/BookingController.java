@@ -22,7 +22,7 @@ public class BookingController extends HotelBookingController {
 
     private final BookingServiceImpl bookingService;
 
-    @PreAuthorize(GET_ALL_PERMISSION_ALL)
+    // @PreAuthorize(GET_ALL_PERMISSION_ALL)
     @GetMapping
     public ResponseEntity<List<BookingDTO>> getAll() {
         final List<BookingDTO> result = bookingService.getAll();
@@ -30,7 +30,7 @@ public class BookingController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(GET_BY_ID_PERMISSION_ALL)
+    // @PreAuthorize(GET_BY_ID_PERMISSION_ALL)
     @GetMapping("/{id}")
     public ResponseEntity<BookingDTO> getById(final @PathVariable("id") Long id) throws NotFoundException {
         final BookingDTO result = bookingService.getById(id);
@@ -38,7 +38,7 @@ public class BookingController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(GET_ALL_PERMISSION_ALL)
+    //@PreAuthorize(GET_ALL_PERMISSION_ALL)
     @GetMapping("/application-user/{id}")
     public ResponseEntity<List<BookingDTO>> getAllByUserId(final @PathVariable("id") Long id) {
         final List<BookingDTO> result = bookingService.getAllByUserId(id);
@@ -46,7 +46,7 @@ public class BookingController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(GET_ALL_PERMISSION_ALL)
+   // @PreAuthorize(GET_ALL_PERMISSION_ALL)
     @GetMapping("/accommodation/{id}")
     public ResponseEntity<List<BookingDTO>> getAllByAccommodationId(final @PathVariable("id") Long id) {
         final List<BookingDTO> result = bookingService.getAllByAccommodationId(id);
@@ -54,7 +54,7 @@ public class BookingController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(CREATE_PERMISSION_ALL)
+    // @PreAuthorize(CREATE_PERMISSION_ALL)
     @PostMapping
     public ResponseEntity<BookingDTO> create(final @RequestBody BookingDTO bookingDTO) {
         final BookingDTO result = bookingService.create(bookingDTO);
@@ -62,7 +62,7 @@ public class BookingController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(UPDATE_PERMISSION_ALL)
+    // @PreAuthorize(UPDATE_PERMISSION_ALL)
     @PutMapping("/{id}")
     public ResponseEntity<BookingDTO> update(final @PathVariable("id") Long id, @RequestBody BookingDTO bookingDTO) throws NotFoundException {
         bookingDTO.setId(id);
@@ -71,7 +71,7 @@ public class BookingController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(DELETE_PERMISSION_ALL)
+    // @PreAuthorize(DELETE_PERMISSION_ALL)
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(final @PathVariable("id") Long id) {
         final Boolean result = bookingService.delete(id);

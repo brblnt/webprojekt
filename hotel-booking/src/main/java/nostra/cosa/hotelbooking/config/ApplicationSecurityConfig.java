@@ -56,7 +56,7 @@ public class ApplicationSecurityConfig {
                 .addFilterBefore(new ExceptionTranslationFilter(new Http403ForbiddenEntryPoint()), filter.getClass())
                 .authorizeHttpRequests()
                 .requestMatchers(URL_WHITELIST).permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().permitAll();
         return http.build();
     }
 
