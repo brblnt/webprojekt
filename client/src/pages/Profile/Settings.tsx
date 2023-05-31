@@ -22,7 +22,11 @@ import {
 } from "@chakra-ui/react";
 import { ApplicationUser } from "../../types/ApplicationUser";
 import { remove, update as updateUser } from "../../features/user/userSlice";
-import { logout, update as updateAuth } from "../../features/auth/authSlice";
+import {
+  logout,
+  update as updateAuth,
+  uploadFile,
+} from "../../features/auth/authSlice";
 import { AuthenticationData } from "../../types/AuthenticationData";
 
 export const Settings = () => {
@@ -31,6 +35,7 @@ export const Settings = () => {
   );
 
   const dispatch = useDispatch();
+  const [file, setFile] = useState<File>();
   const [pic, setPic] = useState(user.authenticationData.imgPath);
   const [password, setPassword] = useState(user.authenticationData.password);
   const [userName, setUserName] = useState(user.authenticationData.userName);
@@ -40,8 +45,8 @@ export const Settings = () => {
   const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
   const navigate = useNavigate();
 
-  const picChange = (e: any) => {
-    setPic(e.target.value);
+  const fileChange = (e: any) => {
+    setFile(e.target.files && e.target.files[0]);
   };
 
   const passwordChange = (e: any) => {
@@ -68,6 +73,26 @@ export const Settings = () => {
     setPhoneNumber(e.target.value);
   };
 
+  const handlePictureChange = async (e: any) => {
+    if (file) {
+      const fileName = Date.now() + "_" + file.name;
+      const formData = new FormData();
+      formData.append("file", file, fileName);
+      if (user) {
+        const updatedAuth = {
+          ...user.authenticationData,
+          imgPath: user.authenticationData.imgPath ? [...user.authenticationData.imgPath, fileName] : [fileName],
+        };
+        try {
+          await dispatch(uploadFile(formData) as any);
+          await dispatch(updateAuth(updatedAuth) as any);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+  };
+
   const handleUserUpdate = async () => {
     const updatedUser: ApplicationUser = {
       ...user,
@@ -84,7 +109,6 @@ export const Settings = () => {
       ...user.authenticationData,
       userName: userName,
       password: password,
-      imgPath: pic,
     };
     await dispatch(updateAuth(updatedAuth) as any);
   };
@@ -120,7 +144,7 @@ export const Settings = () => {
                 <VStack spacing={0} w="100%">
                   <FormControl id="uploadPic">
                     <FormLabel>Profile Picture</FormLabel>
-                    <Input type={"file"} mb={3} onChange={picChange} />
+                    <Input type={"file"} mb={3} onChange={fileChange} />
                     <Button
                       mb={3}
                       bg="pink.400"
@@ -130,7 +154,7 @@ export const Settings = () => {
                       }}
                       rounded="md"
                       w="100%"
-                      onClick={handleAuthUpdate}
+                      onClick={handlePictureChange}
                     >
                       Upload Picture
                     </Button>

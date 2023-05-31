@@ -96,6 +96,23 @@ export const remove = createAsyncThunk(
   }
 );
 
+export const uploadFile = createAsyncThunk(
+  "auth/upload",
+  async (file: FormData, thunkAPI) => {
+    try {
+      return await authService.uploadFile(file);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const authSlice: any = createSlice({
   name: "auth",
   initialState,
@@ -162,6 +179,18 @@ export const authSlice: any = createSlice({
         state.isSuccess = true;
       })
       .addCase(remove.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload as string;
+      })
+      .addCase(uploadFile.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(uploadFile.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+      })
+      .addCase(uploadFile.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload as string;
