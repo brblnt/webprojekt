@@ -12,10 +12,10 @@ const create = async (accommodationData: any) => {
     console.log(accommodationData)
     const response = await axios.post('/hotel-booking/accommodation', JSON.stringify(accommodationData), config);
     toast.success('Accommodation Created!')
-    if (response.data) {
+/*    if (response.data) {
       localStorage.setItem('user', JSON.stringify(response.data));
     }
-  
+*/  
     return response.data;
   }catch(error: any){
     const message = error.response.data.message || error.message || error.toString();
@@ -46,32 +46,38 @@ const room = async (roomData: any, accommData: any) => {
     },
   };
 
-  const roomCreate = await axios.post('/hotel-booking/room', JSON.stringify(roomData), config);
+  try{
+    const roomCreate = await axios.post('/hotel-booking/room', JSON.stringify(roomData), config);
+
+  const accommodationId = accommData.accommodation.id
+  console.log(accommodationId)
+
+  console.log(roomCreate.data)
 
   if (roomCreate.data) {
+
+    const previousRooms = accommData.accommodation.rooms.map((room: any) => ({ id: room.id }));
+    const newRoom = { id: roomCreate.data.id };
+
     const accomm = {
       authenticationData: {
-        id: accommData.authenticationData.id,
+        id: accommData.accommodation.authenticationData.id,
       },
-      acommodationName: accommData.acommodationName,
-      room: [
-        {
-          id: roomCreate.data.id
-        }
-      ]
+      acommodationName: accommData.accommodation.acommodationName,
+      rooms: [...previousRooms, newRoom],
     };
-
-    await axios.post('/hotel-booking/accommodation/' + accommData.id, JSON.stringify(accomm), config);
-
-    /*const updatedUser = {
-      ...accomm,
-      ...response.data,
-    };*/
-
-    /*localStorage.setItem('accommodation', JSON.stringify(response.data));
-    console.log(updatedUser)
-    return updatedUser;*/
+    console.log(accomm)
+    const response = await axios.put(`/hotel-booking/accommodation/${accommodationId}`, JSON.stringify(accomm), config);
+    console.log(response.data)
+    toast.success('Room created successfully!');
+    return response.data;
   }
+  }catch(error: any){
+    const message = error.response.data.message || error.message || error.toString();
+    toast.error('Error during room creation!');
+    throw new Error(message);
+  }
+
 };
 
 // Delete accommodation by ID

@@ -17,12 +17,21 @@ import {
 } from "@chakra-ui/react";
 import { AccommodationItemProps } from "../Accommodation/components/AccommodationItem";
 import { roomTypeOptions } from "../../constants/roomType";
+import { useDispatch, useSelector } from "react-redux";
+import { addRoom } from "../../features/accommodation/accommodationSlice";
 
 export const RoomCreatePage: FC<AccommodationItemProps> = ({
   accommodation,
 }) => {
+
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((state: any) => {
+    return state.auth;
+  });
+
   const [formData, setFormData] = useState({
-    roomType: [],
+    roomType: "",
     roomNumber: "",
     numberOfRooms: "",
     numberOfSingleBeds: "",
@@ -42,6 +51,7 @@ export const RoomCreatePage: FC<AccommodationItemProps> = ({
     numberOfDoubleBeds,
     hasOwnKitchen,
     hasOwnBathroom,
+    active,
     priceOfADay,
     roomDetail,
   } = formData;
@@ -65,6 +75,29 @@ export const RoomCreatePage: FC<AccommodationItemProps> = ({
       }
     }
   }, []);
+
+  const onSubmit = (e: any) => {
+    e.preventDefault();
+    const accommData = { accommodation };
+    const roomData = {
+      authenticationData: {
+        id: user.authenticationData.id,
+      },
+      roomType,
+      roomNumber,
+      numberOfRooms,
+      numberOfSingleBeds,
+      numberOfDoubleBeds,
+      hasOwnKitchen,
+      hasOwnBathroom,
+      active,
+      priceOfADay,
+      roomDetail,
+    };
+    dispatch(addRoom({roomData, accommData}) as any);
+  };
+  
+  
 
   return (
     <>
@@ -222,7 +255,12 @@ export const RoomCreatePage: FC<AccommodationItemProps> = ({
         />
       </FormControl>
       <Center>
-        <Button variant="solid" colorScheme={"pink"} mt={3}>
+        <Button 
+        variant="solid" colorScheme={"pink"} mt={3}
+        type="submit" onClick={(e) => {
+          e.preventDefault();
+          onSubmit(e);
+        }}>
           Add Room
         </Button>
       </Center>
