@@ -64,13 +64,22 @@ export const remove = createAsyncThunk(
 
 export const addRoom = createAsyncThunk(
   "accommodations/addRoom",
-  async (roomData, accommData) => {
-    /*const { roomData, accommData } = arg;*/
+  async ({ roomData, accommData }: any, thunkAPI) => {
     try {
       return await accommodationService.room(roomData, accommData);
-    } catch {}
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+        return thunkAPI.rejectWithValue(message);
+    }
   }
 );
+
+
 
 export const update = createAsyncThunk(
   "accommodations/update",
@@ -131,10 +140,15 @@ export const accommodationSlice: any = createSlice({
       .addCase(addRoom.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(addRoom.fulfilled, (state, action: any) => {
+      .addCase(addRoom.fulfilled, (state: any, action: any) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.accommodations = action.payload;
+        state.accommodations = state.accommodations.map((item: any) => {
+          if (item.id === action.payload.id) {
+              return action.payload;
+          }
+          return item;
+      });
       })
       .addCase(addRoom.rejected, (state, action) => {
         state.isLoading = false;

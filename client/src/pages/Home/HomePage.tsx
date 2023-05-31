@@ -7,6 +7,11 @@ import { getaccomms } from "../../features/accommodation/accommodationSlice";
 import { AccommodationItem } from "../Accommodation/components/AccommodationItem";
 import { Center, chakra, Flex, Box, Heading } from "@chakra-ui/react";
 import { Accommodation } from "../../types/Accommodation";
+import { Booking } from "../../types/Booking";
+import { Role } from "../../types/enums/Role";
+import { BookingItem } from "../Booking/components/BookingItem";
+import { getbookings } from "../../features/booking/bookingSlice";
+
 export const HomePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -23,6 +28,14 @@ export const HomePage = () => {
     return state.accomm;
   });
 
+  const { booking } = useSelector((state: any) => {
+    console.log(state);
+    return state.booking;
+  });
+
+  const booking_id = booking
+  console.log(booking_id)
+
   useEffect(() => {
     if (isError) {
       toast.error(message);
@@ -34,6 +47,8 @@ export const HomePage = () => {
     } else {
       const authId = user.authenticationData.id;
       dispatch(getaccomms(authId) as any);
+      const bookUserId = user.id
+      dispatch(getbookings(bookUserId) as any);
     }
   }, [user, navigate, isError, message, dispatch]);
 
@@ -46,21 +61,40 @@ export const HomePage = () => {
             : ""}
         </Heading>
       </Center>
-
-      <Center>
-        {accommodations.length > 0 ? (
-          <Flex direction={"column"}>
-            {accommodations.map((accommodation: Accommodation) => (
-              <AccommodationItem
-                key={accommodation.id}
-                accommodation={accommodation}
-              />
-            ))}
-          </Flex>
-        ) : (
-          <chakra.h3>You have not created any accommodations</chakra.h3>
-        )}
-      </Center>
+      {user && (
+        <>
+          {user.authenticationData.role === Role.ADMIN ||
+          user.authenticationData.role === Role.ACCOMMODATION ? (
+            <Center>
+              {accommodations.length > 0 ? (
+                <Flex direction={"column"}>
+                  {accommodations.map((accommodation: Accommodation) => (
+                    <AccommodationItem
+                      key={accommodation.id}
+                      accommodation={accommodation}
+                    />
+                  ))}
+                </Flex>
+              ) : (
+                <chakra.h3>You have not created any accommodations</chakra.h3>
+              )}
+            </Center>
+          ) : (
+            <Center>
+              {booking.length > 0 ? (
+                <Flex direction={"column"}>
+                  {booking.map((booking: Booking) => (
+                    <BookingItem key={booking.id} booking={booking} />
+                  ))}
+                </Flex>
+              ) : (
+                <chakra.h3>You have not booked any rooms yet</chakra.h3>
+              )}
+            </Center>
+          )}
+        </>
+      )}
     </Box>
   );
+  
 };
