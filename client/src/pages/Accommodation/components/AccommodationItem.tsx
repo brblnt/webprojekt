@@ -14,6 +14,8 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
+  useColorModeValue,
+  Center,
 } from "@chakra-ui/react";
 import { Accommodation } from "../../../types/Accommodation";
 import { Link } from "react-router-dom";
@@ -29,21 +31,13 @@ export interface AccommodationItemProps {
 export const AccommodationItem: FC<AccommodationItemProps> = ({
   accommodation,
 }) => {
-  const { user } = useSelector(
-    (state: { auth: { user: ApplicationUser } }) => state.auth
-  );
-
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const openModal = () => {
-    onOpen();
-  };
-
   return (
     <Stack
       spacing={{ base: 0, md: 4 }}
       direction={{ base: "column", md: "row" }}
-      border="1px solid"
-      borderColor="gray.400"
+      bg={useColorModeValue("gray.200", "gray.900")}
+      boxShadow="dark-lg"
+      color={useColorModeValue("black", "white")}
       p={2}
       rounded="md"
       w={{ base: "auto", md: "7xl" }}
@@ -51,7 +45,7 @@ export const AccommodationItem: FC<AccommodationItemProps> = ({
       pos="relative"
       mt={3}
     >
-      <Flex ml="0 !important">
+      <Flex ml="0">
         <Image
           rounded="md"
           w={{ base: "100%", md: "45rem" }}
@@ -120,44 +114,126 @@ export const AccommodationItem: FC<AccommodationItemProps> = ({
             {accommodation.phoneNumber}
           </Text>
         </Flex>
-        {(user.authenticationData.role === Role.ACCOMMODATION && (
-          <Flex direction={"row"} justifyContent={"space-around"}>
-            <Button onClick={openModal} w={"256px"}>
+        <Box display={{ base: "none", md: "unset" }}>
+          <ButtonLayoutDesktop accommodation={accommodation} />
+        </Box>
+        <Box display={{ base: "unset", md: "none" }}>
+          <ButtonLayoutMobile accommodation={accommodation} />
+        </Box>
+      </Stack>
+    </Stack>
+  );
+};
+
+export interface ButtonLayoutDesktopProps {
+  accommodation: Accommodation;
+}
+
+export const ButtonLayoutDesktop: FC<ButtonLayoutDesktopProps> = ({
+  accommodation,
+}) => {
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const openModal = () => {
+    onOpen();
+  };
+  return (
+    <Box>
+      {(user.authenticationData.role === Role.ACCOMMODATION ||
+        user.authenticationData.role === Role.ADMIN) && (
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          justifyContent={"space-around"}
+        >
+          <Button onClick={openModal} w={"256px"} boxShadow={"dark-lg"}>
+            Add Room
+          </Button>
+          <Button w={"256px"} colorScheme={"red"} boxShadow={"dark-lg"}>
+            Delete
+          </Button>
+          <Button w={"256px"} colorScheme={"blue"} boxShadow={"dark-lg"}>
+            Update
+          </Button>
+        </Flex>
+      )}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add Room</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <RoomCreatePage accommodation={accommodation} />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </Box>
+  );
+};
+
+export interface ButtonLayoutMobileProps {
+  accommodation: Accommodation;
+}
+
+export const ButtonLayoutMobile: FC<ButtonLayoutMobileProps> = ({
+  accommodation,
+}) => {
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const openModal = () => {
+    onOpen();
+  };
+  return (
+    <Box>
+      {(user.authenticationData.role === Role.ACCOMMODATION ||
+        user.authenticationData.role === Role.ADMIN) && (
+        <Center>
+          <Flex
+            direction={{ base: "column", md: "row" }}
+            justifyContent={"space-around"}
+          >
+            <Button
+              onClick={openModal}
+              w={"256px"}
+              boxShadow={"dark-lg"}
+              my={3}
+            >
               Add Room
             </Button>
-            <Button w={"256px"} colorScheme={"red"}>
+            <Button
+              w={"256px"}
+              colorScheme={"red"}
+              boxShadow={"dark-lg"}
+              mb={3}
+            >
               Delete
             </Button>
-            <Button w={"256px"} colorScheme={"blue"}>
+            <Button
+              w={"256px"}
+              colorScheme={"blue"}
+              boxShadow={"dark-lg"}
+              mb={3}
+            >
               Update
             </Button>
           </Flex>
-        )) ||
-          (user.authenticationData.role === Role.ADMIN && (
-            <Flex direction={"row"} justifyContent={"space-around"}>
-              <Button onClick={openModal} w={"256px"}>
-                Add Room
-              </Button>
-              <Button w={"256px"} colorScheme={"red"}>
-                Delete
-              </Button>
-              <Button w={"256px"} colorScheme={"blue"}>
-                Update
-              </Button>
-            </Flex>
-          ))}
-
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Add Room</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <RoomCreatePage accommodation={accommodation}/>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
-      </Stack>
-    </Stack>
+        </Center>
+      )}
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Add Room</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <RoomCreatePage accommodation={accommodation} />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+    </Box>
   );
 };
