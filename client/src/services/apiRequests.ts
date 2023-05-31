@@ -41,6 +41,6 @@ export const getAllBookings = async (): Promise<Booking[]> => {
   return apiClient<Booking[]>(`/hotel-booking/booking`);
 }
 
-export const getBookingById = async (booking_id: number): Promise<Booking> => {
-  return apiClient<Booking>(`/hotel-booking/booking/${booking_id}`);
-};
+/*export const getBookingById = async (booking_id: number): Promise<Booking> => {
+  return apiClient<Booking>(`/hotel-booking/booking/application-user/${booking_id}`);
+};*/

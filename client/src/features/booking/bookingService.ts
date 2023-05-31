@@ -1,6 +1,36 @@
 import axios from 'axios'
 import { toast } from 'react-toastify';
 
+const create = async(bookData: any) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },}
+  try{
+
+    const response = await axios.post('/hotel-booking/booking', JSON.stringify(bookData), config )
+    toast.success('Booking created!');
+    return response.data
+  }catch(error: any){
+    const message = error.response.data.message || error.message || error.toString();
+    toast.error('Error during booking deletion!');
+    throw new Error(message);
+  }
+};
+
+const getbook = async (bookUserId: any) => {
+
+  try{
+    console.log(bookUserId)
+    const response = await axios.get('/hotel-booking/booking/application-user/' + bookUserId)
+    return response.data
+  }catch(error: any){
+    const message = error.response.data.message || error.message || error.toString();
+    console.log(message);
+  }
+
+}
+
 // Delete booking by ID
 const remove = async (bookingId: string) => {
   try {
@@ -29,7 +59,9 @@ const update = async (booking: any) => {
 
 const bookingService = {
     remove,
-    update
+    update,
+    create,
+    getbook
 }
 
 export default bookingService

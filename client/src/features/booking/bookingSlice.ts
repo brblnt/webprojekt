@@ -10,6 +10,40 @@ const initialState = {
   message: "",
 };
 
+export const createBook = createAsyncThunk(
+  "bookings/create",
+  async (bookData: any, thunkAPI) => {
+    try {
+      return await bookingService.create(bookData);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
+export const getbookings = createAsyncThunk(
+  "books/get",
+  async (bookUserId: any, thunkAPI) => {
+    try {
+      return await bookingService.getbook(bookUserId);
+    } catch (error: any) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString();
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 export const remove = createAsyncThunk(
   "booking/remove",
   async (accommodationId: string, thunkAPI) => {
@@ -57,6 +91,32 @@ export const bookingSlice: any = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(createBook.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createBook.fulfilled, (state, action: any) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.booking = action.payload;
+      })
+      .addCase(createBook.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload as string;
+      })
+      .addCase(getbookings.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getbookings.fulfilled, (state, action: any) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.booking = action.payload;
+      })
+      .addCase(getbookings.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message = action.payload as string;
+      })  
       .addCase(remove.pending, (state) => {
         state.isLoading = true;
       })
