@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { logout } from "../../features/auth/authSlice";
-import { getaccomms } from "../../features/accommodation/accommodationSlice";
+import { getaccomms, remove } from "../../features/accommodation/accommodationSlice";
 import { AccommodationItem } from "../Accommodation/components/AccommodationItem";
 import { Center, chakra, Flex, Box, Heading } from "@chakra-ui/react";
 import { Accommodation } from "../../types/Accommodation";
@@ -35,6 +35,10 @@ export const HomePage = () => {
 
   const booking_id = booking
   console.log(booking_id)
+
+  const removeAccommodation = (accommodationId: any) => {
+    dispatch(remove(accommodationId) as any);
+  };
 
   useEffect(() => {
     if (isError) {

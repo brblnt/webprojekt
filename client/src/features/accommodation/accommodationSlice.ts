@@ -158,10 +158,12 @@ export const accommodationSlice: any = createSlice({
       .addCase(remove.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(remove.fulfilled, (state, action) => {
+      .addCase(remove.fulfilled, (state: any, action: any) => {
         state.isLoading = false;
         state.isSuccess = true;
-        // state.accommodations = state.accommodations.filter((accommodation) => accommodation.id !== action.payload.id)
+        state.accommodations = state.accommodations.filter(
+          (accommodation: any) => accommodation.id !== action.payload.id
+        );
       })
       .addCase(remove.rejected, (state, action) => {
         state.isLoading = false;

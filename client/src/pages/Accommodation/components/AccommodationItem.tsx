@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
   chakra,
   Box,
@@ -20,17 +20,22 @@ import {
 import { Accommodation } from "../../../types/Accommodation";
 import { Link } from "react-router-dom";
 import { RoomCreatePage } from "../../Room/RoomCreatePage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ApplicationUser } from "../../../types/ApplicationUser";
 import { Role } from "../../../types/enums/Role";
+import { remove, update } from "../../../features/accommodation/accommodationSlice";
+import { AccommodationUpdatePage } from "./AccommodationUpdatePage";
 
 export interface AccommodationItemProps {
   accommodation: Accommodation;
 }
 
 export const AccommodationItem: FC<AccommodationItemProps> = ({
-  accommodation,
+  accommodation
 }) => {
+
+
+
   return (
     <Stack
       spacing={{ base: 0, md: 4 }}
@@ -115,7 +120,7 @@ export const AccommodationItem: FC<AccommodationItemProps> = ({
           </Text>
         </Flex>
         <Box display={{ base: "none", md: "unset" }}>
-          <ButtonLayoutDesktop accommodation={accommodation} />
+          <ButtonLayoutDesktop accommodation={accommodation}/>
         </Box>
         <Box display={{ base: "unset", md: "none" }}>
           <ButtonLayoutMobile accommodation={accommodation} />
@@ -136,10 +141,45 @@ export const ButtonLayoutDesktop: FC<ButtonLayoutDesktopProps> = ({
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const dispatch = useDispatch();
+
+  const accommodationId = accommodation.id.toString()
+
+/*  const { isOpen, onOpen, onClose } = useDisclosure();
+
+
   const openModal = () => {
     onOpen();
   };
+
+  const openUpdateModal = () => {
+    onOpen();
+  };
+*/
+  const [isAddRoomModalOpen, setAddRoomModalOpen] = useState(false);
+  const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
+
+  
+  const openAddRoomModal = () => {
+    setAddRoomModalOpen(true);
+  };
+
+  const closeAddRoomModal = () => {
+    setAddRoomModalOpen(false);
+  };
+
+  const openUpdateModal = () => {
+    setUpdateModalOpen(true);
+  };
+
+  const closeUpdateModal = () => {
+    setUpdateModalOpen(false);
+  };
+
+  const handleUpdate = async (updatedAccommodation: Accommodation) => {
+    await dispatch(update(updatedAccommodation) as any);
+  };
+
   return (
     <Box>
       {(user.authenticationData.role === Role.ACCOMMODATION ||
@@ -148,24 +188,44 @@ export const ButtonLayoutDesktop: FC<ButtonLayoutDesktopProps> = ({
           direction={{ base: "column", md: "row" }}
           justifyContent={"space-around"}
         >
-          <Button onClick={openModal} w={"256px"} boxShadow={"dark-lg"}>
+         <Button onClick={openAddRoomModal} w={"256px"} boxShadow={"dark-lg"}>
             Add Room
           </Button>
-          <Button w={"256px"} colorScheme={"red"} boxShadow={"dark-lg"}>
+          <Button
+            w={"256px"}
+            colorScheme={"red"}
+            boxShadow={"dark-lg"}
+            onClick={() => dispatch(remove(accommodationId) as any)}
+          >
             Delete
           </Button>
-          <Button w={"256px"} colorScheme={"blue"} boxShadow={"dark-lg"}>
+          <Button onClick={openUpdateModal} w={"256px"} colorScheme={"blue"} boxShadow={"dark-lg"}>
             Update
           </Button>
         </Flex>
       )}
-      <Modal isOpen={isOpen} onClose={onClose}>
+
+      <Modal isOpen={isAddRoomModalOpen} onClose={closeAddRoomModal}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Add Room</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <RoomCreatePage accommodation={accommodation} />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      <Modal isOpen={isUpdateModalOpen} onClose={closeUpdateModal}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Update Accommodation</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <AccommodationUpdatePage
+              accommodation={accommodation}
+              onUpdate={handleUpdate}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -184,10 +244,31 @@ export const ButtonLayoutMobile: FC<ButtonLayoutMobileProps> = ({
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const openModal = () => {
-    onOpen();
+  const dispatch = useDispatch();
+
+  const [isAddRoomModalOpen, setAddRoomModalOpen] = useState(false);
+  const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
+
+  const openAddRoomModal = () => {
+    setAddRoomModalOpen(true);
   };
+
+  const closeAddRoomModal = () => {
+    setAddRoomModalOpen(false);
+  };
+
+  const openUpdateModal = () => {
+    setUpdateModalOpen(true);
+  };
+
+  const closeUpdateModal = () => {
+    setUpdateModalOpen(false);
+  };
+
+  const handleUpdate = async (updatedAccommodation: Accommodation) => {
+    await dispatch(update(updatedAccommodation) as any);
+  };
+
   return (
     <Box>
       {(user.authenticationData.role === Role.ACCOMMODATION ||
@@ -198,7 +279,7 @@ export const ButtonLayoutMobile: FC<ButtonLayoutMobileProps> = ({
             justifyContent={"space-around"}
           >
             <Button
-              onClick={openModal}
+              onClick={openAddRoomModal}
               w={"256px"}
               boxShadow={"dark-lg"}
               my={3}
@@ -214,6 +295,7 @@ export const ButtonLayoutMobile: FC<ButtonLayoutMobileProps> = ({
               Delete
             </Button>
             <Button
+              onClick={openUpdateModal}
               w={"256px"}
               colorScheme={"blue"}
               boxShadow={"dark-lg"}
@@ -224,13 +306,28 @@ export const ButtonLayoutMobile: FC<ButtonLayoutMobileProps> = ({
           </Flex>
         </Center>
       )}
-      <Modal isOpen={isOpen} onClose={onClose}>
+
+      <Modal isOpen={isAddRoomModalOpen} onClose={closeAddRoomModal}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Add Room</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <RoomCreatePage accommodation={accommodation} />
+          </ModalBody>
+        </ModalContent>
+      </Modal>
+
+      <Modal isOpen={isUpdateModalOpen} onClose={closeUpdateModal}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Update Accommodation</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <AccommodationUpdatePage
+              accommodation={accommodation}
+              onUpdate={handleUpdate}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>

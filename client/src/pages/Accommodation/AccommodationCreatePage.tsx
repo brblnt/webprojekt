@@ -56,6 +56,7 @@ export const AccommodationCreatePage = () => {
   const onChange = useCallback((e: any) => {
     if (e.target) {
       const { name, value } = e.target;
+      console.log(`Value of ${name}:`, value); // Add this line to log the value
       setFormData((prevState) => ({
         ...prevState,
         [name]: value,
@@ -283,7 +284,7 @@ export const AccommodationCreatePage = () => {
                     <Select
                       placeholder="Select Service Type"
                       id="city"
-                      value={serviceType.length > 0 ? serviceType[0] : ""}
+                      value={serviceType}
                       focusBorderColor="pink.300"
                       rounded="md"
                       borderTopLeftRadius="0"

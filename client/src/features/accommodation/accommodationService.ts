@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { toast } from 'react-toastify';
 
-// Register user
+
 const create = async (accommodationData: any) => {
   const config = {
     headers: {
@@ -12,10 +12,6 @@ const create = async (accommodationData: any) => {
     console.log(accommodationData)
     const response = await axios.post('/hotel-booking/accommodation', JSON.stringify(accommodationData), config);
     toast.success('Accommodation Created!')
-/*    if (response.data) {
-      localStorage.setItem('user', JSON.stringify(response.data));
-    }
-*/  
     return response.data;
   }catch(error: any){
     const message = error.response.data.message || error.message || error.toString();
@@ -37,8 +33,6 @@ const getaccomm = async (authId: any) => {
 
 }
 
-
-// Register user
 const room = async (roomData: any, accommData: any) => {
   const config = {
     headers: {
@@ -84,7 +78,7 @@ const room = async (roomData: any, accommData: any) => {
 const remove = async (accommodationId: string) => {
   try {
     const response = await axios.delete(`/hotel-booking/accommodation/${accommodationId}`);
-    toast.success('Accommodation Deleted!');
+    toast.success('Accommodation Deleted! Please refresh the page!');
     return response.data;
   } catch (error: any) {
     const message = error.response.data.message || error.message || error.toString();

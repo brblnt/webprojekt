@@ -19,9 +19,14 @@ import { AccommodationItemProps } from "../Accommodation/components/Accommodatio
 import { roomTypeOptions } from "../../constants/roomType";
 import { useDispatch, useSelector } from "react-redux";
 import { addRoom } from "../../features/accommodation/accommodationSlice";
+import { Accommodation } from "../../types/Accommodation";
 
-export const RoomCreatePage: FC<AccommodationItemProps> = ({
-  accommodation,
+export interface AccommodationItemPropsForRoomCreate {
+  accommodation: Accommodation;
+}
+
+export const RoomCreatePage: FC<AccommodationItemPropsForRoomCreate> = ({
+  accommodation
 }) => {
 
   const dispatch = useDispatch();
