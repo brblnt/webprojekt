@@ -35,7 +35,7 @@ public class DatabasePopulatorSampleUsers  implements DatabasePopulator {
     PermissionDTO permissionDTO = new PermissionDTO();
     permissionDTO.setAdmin(PermissionConstants.ADMIN_PERMISSIONS);
     List<String> imgPath = new ArrayList<>();
-    imgPath.add("img-url");
+    imgPath.add("tony.PNG");
     AuthenticationDataDTO sampleAdminAuthData = new AuthenticationDataDTO(
             1L,
             "admin",
