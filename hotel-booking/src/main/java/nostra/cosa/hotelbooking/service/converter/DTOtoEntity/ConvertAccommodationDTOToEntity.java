@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.data.entity.Accommodation;
 import nostra.cosa.hotelbooking.service.dto.AccommodationDTO;
-import nostra.cosa.hotelbooking.service.util.data.AddressUtilities;
-import nostra.cosa.hotelbooking.service.util.data.AuthenticationUtilities;
 import nostra.cosa.hotelbooking.service.util.data.RoomUtilities;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
@@ -30,6 +28,8 @@ public class ConvertAccommodationDTOToEntity implements Converter<AccommodationD
             source.getEmailAddress(),
             source.getPhoneNumber(),
             source.getAccommodationType(),
+            source.getImagePath(),
+            source.getDescription(),
             source.getServiceTypes(),
             roomUtilities.getIdsByRoomDTOs(source.getRooms())
     );
