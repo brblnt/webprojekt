@@ -6,7 +6,6 @@ import nostra.cosa.hotelbooking.data.entity.Accommodation;
 import nostra.cosa.hotelbooking.service.dto.AccommodationDTO;
 import nostra.cosa.hotelbooking.service.exceptions.AuthenticationNotFoundException;
 import nostra.cosa.hotelbooking.service.service.impl.AddressServiceImpl;
-import nostra.cosa.hotelbooking.service.util.data.AddressUtilities;
 import nostra.cosa.hotelbooking.service.util.data.AuthenticationUtilities;
 import nostra.cosa.hotelbooking.service.util.data.RoomUtilities;
 import org.springframework.core.convert.converter.Converter;
@@ -35,6 +34,8 @@ public class ConvertAccommodationEntityToDTO implements Converter<Accommodation,
               source.getEmailAddress(),
               source.getPhoneNumber(),
               source.getAccommodationType(),
+              source.getImagePath(),
+              source.getDescription(),
               source.getServiceTypes(),
               roomUtilities.getRoomDTOsByIdList(source.getRoomIds())
       );

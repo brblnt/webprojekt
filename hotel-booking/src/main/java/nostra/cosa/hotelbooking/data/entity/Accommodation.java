@@ -40,6 +40,12 @@ public class Accommodation{
   @Column(name = "accommodation_type", nullable = false)
   private AccommodationType accommodationType;
 
+  @Column(name = "image_path", nullable = false)
+  private String imagePath;
+
+  @Column(name = "description", nullable = false)
+  private String description;
+
   @Column(name = "service_types", nullable = false)
   @ElementCollection
   private List<ServiceType> serviceTypes;

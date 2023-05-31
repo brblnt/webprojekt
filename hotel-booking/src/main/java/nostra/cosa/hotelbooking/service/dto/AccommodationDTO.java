@@ -34,6 +34,10 @@ public class AccommodationDTO {
 
   private AccommodationType accommodationType;
 
+  private String imagePath;
+
+  private String description;
+
   private List<ServiceType> serviceTypes;
 
   private Set<RoomDTO> rooms;

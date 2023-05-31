@@ -24,6 +24,8 @@ public class AccommodationUtilities implements UtilitiesForService<Accommodation
             checkNull(oldDTO.getEmailAddress(), newDTO.getEmailAddress()),
             checkNull(oldDTO.getPhoneNumber(), newDTO.getPhoneNumber()),
             checkNull(oldDTO.getAccommodationType(), newDTO.getAccommodationType()),
+            checkNull(oldDTO.getImagePath(), newDTO.getImagePath()),
+            checkNull(oldDTO.getDescription(), newDTO.getDescription()),
             checkNull(oldDTO.getServiceTypes(), newDTO.getServiceTypes()),
             checkNull(oldDTO.getRooms(), newDTO.getRooms())
     );
