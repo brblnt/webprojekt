@@ -271,7 +271,7 @@ export const ButtonLayoutMobile: FC<ButtonLayoutMobileProps> = ({
 
   return (
     <Box>
-      {(user.authenticationData.role === Role.ACCOMMODATION ||
+      {(user && user.authenticationData.role === Role.ACCOMMODATION || user &&
         user.authenticationData.role === Role.ADMIN) && (
         <Center>
           <Flex
