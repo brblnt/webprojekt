@@ -12,9 +12,9 @@ const initialState = {
 
 export const remove = createAsyncThunk(
   "user/remove",
-  async (accommodationId: string, thunkAPI) => {
+  async (userData: any, thunkAPI) => {
     try {
-      return await userService.remove(accommodationId);
+      return await userService.remove(userData);
     } catch (error: any) {
       const message =
         (error.response &&
