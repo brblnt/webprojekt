@@ -34,6 +34,8 @@ export const AccommodationCreatePage = () => {
     cityName: "",
     addressName: "",
     addressDetail: "",
+    imagePath: "",
+    description: "",
     accommodationType: "",
     serviceType: [],
     rooms: [],
@@ -48,6 +50,8 @@ export const AccommodationCreatePage = () => {
     cityName,
     addressName,
     addressDetail,
+    imagePath,
+    description,
     accommodationType,
     serviceType,
     rooms,
@@ -82,6 +86,8 @@ export const AccommodationCreatePage = () => {
         addressDetail,
       },
       emailAddress,
+      imagePath,
+      description,
       phoneNumber,
       accommodationType,
       serviceTypes: [serviceType],
@@ -132,6 +138,16 @@ export const AccommodationCreatePage = () => {
                       borderBottomLeftRadius="0"
                       borderBottomRightRadius="0"
                       name="accommodationName"
+                      onChange={onChange}
+                      w={{ base: "250px", md: "464px" }}
+                    />
+                    <Input
+                      type="text"
+                      focusBorderColor="pink.300"
+                      placeholder="Description"
+                      value={description}
+                      rounded="none"
+                      name="description"
                       onChange={onChange}
                       w={{ base: "250px", md: "464px" }}
                     />

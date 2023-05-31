@@ -57,16 +57,13 @@ export const NavBar = () => {
               {user && user.authenticationData.role === Role.ADMIN && (
                 <AdminNav />
               )}
-              {
-                user &&
-                  user.authenticationData.role === Role.ACCOMMODATION &&
-                  <AccommodationNav />
-              }
-              {
-                user &&
-                  user.authenticationData.role === Role.APPLICATION_USER &&
+              {user && user.authenticationData.role === Role.ACCOMMODATION && (
+                <AccommodationNav />
+              )}
+              {user &&
+                user.authenticationData.role === Role.APPLICATION_USER && (
                   <UserNav />
-              }
+                )}
             </HStack>
           </HStack>
           <Flex alignItems={"center"}>
@@ -81,16 +78,13 @@ export const NavBar = () => {
               {user && user.authenticationData.role === Role.ADMIN && (
                 <AdminNav />
               )}
-              {
-                user &&
-                  user.authenticationData.role === Role.ACCOMMODATION &&
-                  <AccommodationNav />
-              }
-              {
-                user &&
-                  user.authenticationData.role === Role.APPLICATION_USER &&
+              {user && user.authenticationData.role === Role.ACCOMMODATION && (
+                <AccommodationNav />
+              )}
+              {user &&
+                user.authenticationData.role === Role.APPLICATION_USER && (
                   <UserNav />
-              }
+                )}
             </Stack>
           </Box>
         ) : null}
@@ -268,7 +262,9 @@ const UserLoggedIn = () => {
   return (
     <Menu>
       <MenuButton>
-        <Avatar></Avatar>
+        <Avatar
+          src={`http://localhost:3010/images/${user.authenticationData.imgPath}`}
+        ></Avatar>
       </MenuButton>
       <MenuList>
         <MenuItem as="a" href={`/profile/${user.authenticationData.userName}`}>
