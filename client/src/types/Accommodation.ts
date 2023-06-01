@@ -9,6 +9,8 @@ export type Accommodation = {
   authenticationData: AuthenticationData;
   accommodationName: string;
   address: Address;
+  imagePath: string;
+  description: string;
   emailAddress: string;
   phoneNumber: string;
   accommodationType: AccommodationType;

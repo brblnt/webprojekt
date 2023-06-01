@@ -22,9 +22,6 @@ export const ProfilePage = () => {
     const loadUser = async (userId: any) => {
       const users = await getApplicationUserById(userId);
       setUser(users);
-      console.log(
-        users.authenticationData.imgPath && users.authenticationData.imgPath[0]
-      );
     };
     loadUser(user.id);
   }, [user.id]);
