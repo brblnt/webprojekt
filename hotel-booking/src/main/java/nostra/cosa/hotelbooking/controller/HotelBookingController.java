@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.auth.exception.InvalidLoginDetailsException;
 import nostra.cosa.hotelbooking.auth.exception.RegistrationDataNotValidException;
 import nostra.cosa.hotelbooking.auth.validation.RegistrationValidationError;
+import nostra.cosa.hotelbooking.service.exceptions.ImageIOException;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -33,5 +34,11 @@ public class HotelBookingController {
     public ResponseEntity<String> handleRegistrationDataNotValidException(InvalidLoginDetailsException e) {
         log.warn("Login: {}", e.getMessage());
         return ResponseEntity.status(401).body(e.getMessage());
+    }
+
+    @ExceptionHandler(ImageIOException.class)
+    public ResponseEntity<String> handleImageIOException(ImageIOException e) {
+        log.warn(e.getMessage());
+        return ResponseEntity.internalServerError().body(e.getMessage());
     }
 }
