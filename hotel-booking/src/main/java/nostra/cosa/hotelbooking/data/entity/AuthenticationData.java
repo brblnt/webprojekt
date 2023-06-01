@@ -7,8 +7,6 @@ import lombok.*;
 import nostra.cosa.hotelbooking.auth.dto.enums.Role;
 import nostra.cosa.hotelbooking.auth.entity.Permission;
 
-import java.util.List;
-
 /**
  * Authentication data layer representation.
  */
@@ -33,7 +31,7 @@ public class AuthenticationData {
   private Role role;
 
   @Column(name = "img_path", nullable = false)
-  @ElementCollection
+  @ElementCollection(targetClass = String.class, fetch = FetchType.EAGER)
   private List<String> imgPath;
 
   @Column(name = "registration_date", nullable = false)
