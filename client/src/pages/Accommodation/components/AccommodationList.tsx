@@ -4,6 +4,8 @@ import { SearchQuery } from "../../../types/SearchQuery";
 import { AccommodationItem } from "./AccommodationItem";
 import { getAllAccommodations } from "../../../services/apiRequests";
 import { Accommodation } from "../../../types/Accommodation";
+import { remove } from "../../../features/accommodation/accommodationSlice";
+import { useDispatch } from "react-redux";
 
 export interface AccommodationItemProps {
   query: SearchQuery;
@@ -11,9 +13,15 @@ export interface AccommodationItemProps {
 
 export const AccommodationList: FC<AccommodationItemProps> = ({ query }) => {
 
+  const dispatch = useDispatch();
+
   const [accommodation, setAccommodation] = useState<Accommodation[] | null>(
     null
   );
+
+  const removeAccommodation = (accommodationId: any) => {
+    dispatch(remove(accommodationId) as any);
+  };
   
 
   useEffect(() => {
@@ -92,7 +100,7 @@ export const AccommodationList: FC<AccommodationItemProps> = ({ query }) => {
             margin="0 auto"
           >
             <VStack spacing={4}>
-              <AccommodationItem accommodation={accommodation} />
+              <AccommodationItem accommodation={accommodation}/>
             </VStack>
           </Container>
         );
