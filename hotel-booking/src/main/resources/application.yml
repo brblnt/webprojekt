@@ -6,6 +6,10 @@ spring:
     h2:
         console:
             enabled: true
+    servlet:
+        multipart:
+            max-file-size: 10MB
+
 server:
     port : 3010
 

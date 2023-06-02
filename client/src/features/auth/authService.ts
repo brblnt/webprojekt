@@ -94,12 +94,29 @@ const remove = async (authId: string) => {
   }
 };
 
+const uploadFile = async (file: FormData) => {
+  try {
+    const response = await axios.post(`/images/upload`, file, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
+    toast.success('File Uploaded');
+    return response.data;
+  } catch (error: any) {
+    const message = error.response.data.message || error.message || error.toString();
+    toast.error('Error during file upload!');
+    throw new Error(message);
+  }
+}
+
 const authService = {
     login,
     logout,
     register,
     update,
-    remove
+    remove,
+    uploadFile
 }
 
 export default authService

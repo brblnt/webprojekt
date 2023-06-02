@@ -62,7 +62,7 @@ export const BookingCreatePage = () => {
   const onSubmit = (e: any) => {
     e.preventDefault();
     const bookData ={
-      user: {
+      user: { 
         id: user.id
       },
       accommodation: {

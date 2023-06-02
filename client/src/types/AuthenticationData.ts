@@ -6,7 +6,7 @@ export type AuthenticationData = {
   userName: string;
   password: string;
   role: Role;
-  imgPath?: string;
+  imgPath?: string[];
   registrationDate: string;
   accountNonExpired: boolean;
   accountNonLocked: boolean;
