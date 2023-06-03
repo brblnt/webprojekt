@@ -56,7 +56,7 @@ export const AccommodationItem: FC<AccommodationItemProps> = ({
           w={{ base: "100%", md: "45rem" }}
           h="auto"
           objectFit="cover"
-          src={`http://localhost:3010/images/${accommodation.imagePath}`}
+          src={`http://localhost:3010/hotel-booking/images/${accommodation.imagePath}`}
           alt={`${accommodation.accommodationName} Picture`}
         />
       </Flex>
