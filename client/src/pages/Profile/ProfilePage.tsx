@@ -38,7 +38,7 @@ export const ProfilePage = () => {
         >
           <Avatar
             size={"xl"}
-            src={`http://localhost:3010/images/${userP?.authenticationData.imgPath && userP?.authenticationData.imgPath[0]}`}
+            src={`http://localhost:3010/hotel-booking/images/${userP?.authenticationData.imgPath && userP?.authenticationData.imgPath[0]}`}
             mb={4}
             pos={"relative"}
           />
