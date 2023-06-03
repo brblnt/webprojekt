@@ -10,7 +10,7 @@ const initialState = {
   message: "",
 };
 
-export const remove = createAsyncThunk(
+export const removeRoom = createAsyncThunk(
   "room/remove",
   async (accommodationId: string, thunkAPI) => {
     try {
@@ -27,7 +27,7 @@ export const remove = createAsyncThunk(
   }
 );
 
-export const update = createAsyncThunk(
+export const updateRoom = createAsyncThunk(
   "room/update",
   async (room: Room, thunkAPI) => {
     try {
@@ -57,26 +57,26 @@ export const roomSlice: any = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(remove.pending, (state) => {
+      .addCase(removeRoom.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(remove.fulfilled, (state) => {
+      .addCase(removeRoom.fulfilled, (state) => {
         state.isLoading = false;
         state.isSuccess = true;
       })
-      .addCase(remove.rejected, (state, action) => {
+      .addCase(removeRoom.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload as string;
       })
-      .addCase(update.pending, (state) => {
+      .addCase(updateRoom.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(update.fulfilled, (state) => {
+      .addCase(updateRoom.fulfilled, (state) => {
         state.isLoading = false;
         state.isSuccess = true;
       })
-      .addCase(update.rejected, (state, action) => {
+      .addCase(updateRoom.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload as string;

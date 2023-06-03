@@ -96,7 +96,7 @@ const remove = async (authId: string) => {
 
 const uploadFile = async (file: FormData) => {
   try {
-    const response = await axios.post(`/images/upload`, file, {
+    const response = await axios.post(`/hotel-booking/images/upload`, file, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

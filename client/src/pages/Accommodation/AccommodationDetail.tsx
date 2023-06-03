@@ -29,10 +29,6 @@ import { getAccommodationById, getAllRooms } from "../../services/apiRequests";
 import { Link } from "react-router-dom";
 import { Room } from "../../types/Room";
 import { BookingCreatePage } from "../Booking/BookingCreatePage";
-import { Role } from "../../types/enums/Role";
-import { useDispatch, useSelector } from "react-redux";
-import { RoomEditForm } from "../Dashboard/components/RoomEditForm";
-import { remove, update } from "../../features/room/roomSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { ApplicationUser } from "../../types/ApplicationUser";
 import { Role } from "../../types/enums/Role";
@@ -42,6 +38,8 @@ import { AuthenticationData } from "../../types/AuthenticationData";
 import { Address } from "../../types/Address";
 import { AccommodationType } from "../../types/enums/AccommodationType";
 import { ServiceType } from "../../types/enums/ServiceType";
+import { RoomEditForm } from "../Dashboard/components/RoomEditForm";
+import { removeRoom, updateRoom } from "../../features/room/roomSlice";
 
 export const AccommodationDetail = () => {
   const { accommodationId } = useParams();
@@ -55,10 +53,6 @@ export const AccommodationDetail = () => {
   const { user } = useSelector(
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
-
-    const dispatch = useDispatch();
-
-  const { user } = useSelector((state: { auth: { user: any } }) => state.auth);
 
   useEffect(() => {
     const loadAccommodation = async (accommodation_id: number) => {
@@ -126,7 +120,7 @@ export const AccommodationDetail = () => {
 
   const [roomModals, setRoomModals] = useState<{ [roomId: number]: boolean }>({});
 
-  const openUpdateModal = (roomId: number) => {
+  const openUpdateRoomModal = (roomId: number) => {
     setRoomModals((prevModals) => ({
       ...prevModals,
       [roomId]: true,
@@ -143,13 +137,13 @@ export const AccommodationDetail = () => {
   const isRoomModalOpen = (roomId: number) => roomModals[roomId] || false;
 
   const handleUpdate = async (updatedRoom: Room) => {
-    await dispatch(update(updatedRoom) as any);
+    await dispatch(updateRoom(updatedRoom) as any);
     loadRooms();
   };
 
   const handleDelete = async (roomid: number) => {
     const roomId = roomid.toString();
-    await dispatch(remove(roomId) as any);
+    await dispatch(removeRoom(roomId) as any);
     //onDelete();
   };
 
@@ -162,7 +156,7 @@ export const AccommodationDetail = () => {
               <Image
                 rounded={"md"}
                 alt={`${accommodation.accommodationName} Image`}
-                src={`http://localhost:3010/images/${accommodation.imagePath}`}
+                src={`http://localhost:3010/hotel-booking/images/${accommodation.imagePath}`}
                 fit={"cover"}
                 align={"center"}
                 w={"100%"}
@@ -186,7 +180,6 @@ export const AccommodationDetail = () => {
                 direction={"column"}
                 divider={<StackDivider borderColor={"gray.200"} />}
               >
-                <Text fontSize={"lg"}>{accommodation.address.addressDetail}</Text>
                 <Text fontSize={"lg"}>{accommodation.description}</Text>
                 <Box>
                   <Center>
@@ -279,7 +272,7 @@ export const AccommodationDetail = () => {
                         </List>
                         <Flex>
                         <Button
-                          onClick={() => openUpdateModal(room.id)}
+                          onClick={() => openUpdateRoomModal(room.id)}
                           bg="pink.400"
                           color="white"
                           _hover={{
@@ -317,8 +310,6 @@ export const AccommodationDetail = () => {
                   );
                 })}
                 </Box>
-                {(user && user.authenticationData.role === Role.APPLICATION_USER || user && 
-        user.authenticationData.role === Role.ADMIN) && (<VStack w="100%">
                 <VStack w="100%">
                   {accommodation.authenticationData.id ===
                   user.authenticationData.id ? (
@@ -336,17 +327,6 @@ export const AccommodationDetail = () => {
                     >
                       Book Room
                     </Button>
-                    <Modal isOpen={isOpen} onClose={onClose}>
-                      <ModalOverlay />
-                      <ModalContent>
-                        <ModalHeader>Book Room</ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
-                          <BookingCreatePage />
-                        </ModalBody>
-                      </ModalContent>
-                    </Modal>
-                  </VStack>)}
                   )}
                   <Modal isOpen={isBookingOpen} onClose={onBookingClose}>
                     <ModalOverlay />
