@@ -193,7 +193,7 @@ export const AccommodationDetail = () => {
                       Contacts
                     </Text>
                   </Center>
-
+  
                   <SimpleGrid columns={2} spacing={10}>
                     <List spacing={2}>
                       <ListItem>Email</ListItem>
@@ -252,64 +252,80 @@ export const AccommodationDetail = () => {
                   </SimpleGrid>
                   {accommodation.rooms.map((room) => {
                     return (
-                <Box key={room.id}>
-                      <SimpleGrid columns={3} spacing={10} marginBottom={3}>
-                        <List spacing={2}>
-                          <ListItem>
-                            <Link to={`${room.id}`}>
-                              <Text
-                                _hover={{
-                                  color: "pink.300",
-                                }}
-                              >
-                                {room.roomType} {room.roomNumber}
-                              </Text>
-                            </Link>
-                          </ListItem>
-                        </List>
-                        <List spacing={2}>
-                          <ListItem>${room.priceOfADay}</ListItem>
-                        </List>
-                        <Flex>
-                        <Button
-                          onClick={() => openUpdateRoomModal(room.id)}
-                          bg="pink.400"
-                          color="white"
-                          _hover={{
-                            bg: "pink.300",
-                          }}
-                          rounded="md"
+                      <Box key={room.id}>
+                        <SimpleGrid columns={3} spacing={10} marginBottom={3}>
+                          <List spacing={2}>
+                            <ListItem>
+                              <Link to={`${room.id}`}>
+                                <Text
+                                  _hover={{
+                                    color: "pink.300",
+                                  }}
+                                >
+                                  {room.roomType} {room.roomNumber}
+                                </Text>
+                              </Link>
+                            </ListItem>
+                          </List>
+                          <List spacing={2}>
+                            <ListItem>${room.priceOfADay}</ListItem>
+                          </List>
+                          <Flex>
+                            {accommodation.authenticationData.id === user.authenticationData.id && (
+                              <>
+                                <Button
+                                  onClick={() => openUpdateRoomModal(room.id)}
+                                  bg="pink.400"
+                                  color="white"
+                                  _hover={{
+                                    bg: "pink.300",
+                                  }}
+                                  rounded="md"
+                                >
+                                  Update Room
+                                </Button>
+                                <Button
+                                  bg="red.400"
+                                  color="white"
+                                  _hover={{
+                                    bg: "red.300",
+                                  }}
+                                  onClick={() => handleDelete(room.id)}
+                                  rounded="md"
+                                  marginLeft={5}
+                                >
+                                  Delete Room
+                                </Button>
+                              </>
+                            )}
+                          </Flex>
+                        </SimpleGrid>
+                        <Modal
+                          isOpen={isRoomModalOpen(room.id)}
+                          onClose={() =>
+                            setRoomModals((prevModals) => ({
+                              ...prevModals,
+                              [room.id]: false,
+                            }))
+                          }
                         >
-                          Update Room
-                        </Button>
-                        <Button
-                          bg="red.400"
-                          color="white"
-                          _hover={{
-                            bg: "red.300",
-                          }}
-                           onClick={() => handleDelete(room.id)}
-                          rounded="md"
-                          marginLeft={5}
-                        >
-                          Delete Room
-                        </Button>
-                        </Flex>
-                      </SimpleGrid>
-                      <Modal isOpen={isRoomModalOpen(room.id)} onClose={() => setRoomModals((prevModals) => ({ ...prevModals, [room.id]: false }))}>
-                        <ModalOverlay />
-                        <ModalContent>
-                          <ModalHeader>Update Room</ModalHeader>
-                          <ModalCloseButton />
-                          <ModalBody>
-                            <RoomEditForm room={room} onUpdate={handleUpdate} />
-                          </ModalBody>
-                        </ModalContent>
-                      </Modal>
-                    </Box>
-                  );
-                })}
+                          <ModalOverlay />
+                          <ModalContent>
+                            <ModalHeader>Update Room</ModalHeader>
+                            <ModalCloseButton />
+                            <ModalBody>
+                              <RoomEditForm
+                                room={room}
+                                onUpdate={handleUpdate}
+                              />
+                            </ModalBody>
+                          </ModalContent>
+                        </Modal>
+                      </Box>
+                    );
+                  })}
                 </Box>
+  
                 <VStack w="100%">
                   {accommodation.authenticationData.id ===
                   user.authenticationData.id ? (
@@ -368,5 +384,5 @@ export const AccommodationDetail = () => {
         </Container>
       )}
     </>
-  );
+  );  
 };

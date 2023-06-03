@@ -42,13 +42,13 @@ export const BookingItem: FC<BookingItemProps> = ({ booking }) => {
       mt={3}
     >
       <Flex ml="0">
-        <Image
+      <Image
           rounded="md"
           w={{ base: "100%", md: "45rem" }}
           h="auto"
           objectFit="cover"
-          src={`https://www.fairmont.com/assets/0/104/3225/3230/3231/28b9e2d3-55ca-4007-9c8a-391d34d0bce0.jpeg`}
-          alt={`Booking Picture`}
+          src={`http://localhost:3010/hotel-booking/images/${booking.accommodation.imagePath}`}
+          alt={`${booking.accommodation.accommodationName} Picture`}
         />
       </Flex>
       <Stack
