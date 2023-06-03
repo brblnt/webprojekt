@@ -5,5 +5,5 @@ export type Address = {
   country: string;
   city: City;
   addressName: string;
-  other: string;
+  addressDetail: string;
 }

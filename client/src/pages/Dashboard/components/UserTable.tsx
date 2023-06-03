@@ -45,9 +45,10 @@ const UserTableRow = ({
   const dispatch = useDispatch();
 
   const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    const userId = user.id.toString();
-    await dispatch(remove(userId) as any);
-    onDelete();
+    const userData = user;
+    console.log(userData)
+    await dispatch(remove(userData) as any);
+    /*onDelete();*/
   };
 
   return (

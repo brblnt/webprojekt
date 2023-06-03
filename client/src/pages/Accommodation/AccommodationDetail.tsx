@@ -25,10 +25,14 @@ import {
   useDisclosure,
   Input,
 } from "@chakra-ui/react";
-import { getAccommodationById } from "../../services/apiRequests";
+import { getAccommodationById, getAllRooms } from "../../services/apiRequests";
 import { Link } from "react-router-dom";
 import { Room } from "../../types/Room";
 import { BookingCreatePage } from "../Booking/BookingCreatePage";
+import { Role } from "../../types/enums/Role";
+import { useDispatch, useSelector } from "react-redux";
+import { RoomEditForm } from "../Dashboard/components/RoomEditForm";
+import { remove, update } from "../../features/room/roomSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { ApplicationUser } from "../../types/ApplicationUser";
 import { Role } from "../../types/enums/Role";
@@ -51,6 +55,10 @@ export const AccommodationDetail = () => {
   const { user } = useSelector(
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
+
+    const dispatch = useDispatch();
+
+  const { user } = useSelector((state: { auth: { user: any } }) => state.auth);
 
   useEffect(() => {
     const loadAccommodation = async (accommodation_id: number) => {
@@ -115,6 +123,36 @@ export const AccommodationDetail = () => {
       }
     }
   };
+
+  const [roomModals, setRoomModals] = useState<{ [roomId: number]: boolean }>({});
+
+  const openUpdateModal = (roomId: number) => {
+    setRoomModals((prevModals) => ({
+      ...prevModals,
+      [roomId]: true,
+    }));
+  };
+
+  const [rooms, setRooms] = useState<Room[] | null>(null);
+
+  const loadRooms = async () => {
+    const rooms = await getAllRooms();
+    setRooms(rooms);
+  };
+
+  const isRoomModalOpen = (roomId: number) => roomModals[roomId] || false;
+
+  const handleUpdate = async (updatedRoom: Room) => {
+    await dispatch(update(updatedRoom) as any);
+    loadRooms();
+  };
+
+  const handleDelete = async (roomid: number) => {
+    const roomId = roomid.toString();
+    await dispatch(remove(roomId) as any);
+    //onDelete();
+  };
+
   return (
     <>
       {accommodation && (
@@ -148,6 +186,7 @@ export const AccommodationDetail = () => {
                 direction={"column"}
                 divider={<StackDivider borderColor={"gray.200"} />}
               >
+                <Text fontSize={"lg"}>{accommodation.address.addressDetail}</Text>
                 <Text fontSize={"lg"}>{accommodation.description}</Text>
                 <Box>
                   <Center>
@@ -220,29 +259,66 @@ export const AccommodationDetail = () => {
                   </SimpleGrid>
                   {accommodation.rooms.map((room) => {
                     return (
-                      <Box key={room.id}>
-                        <SimpleGrid columns={2} spacing={10} marginBottom={3}>
-                          <List spacing={2}>
-                            <ListItem>
-                              <Link to={`${room.id}`}>
-                                <Text
-                                  _hover={{
-                                    color: "pink.300",
-                                  }}
-                                >
-                                  {room.roomType} {room.roomNumber}
-                                </Text>
-                              </Link>
-                            </ListItem>
-                          </List>
-                          <List spacing={2}>
-                            <ListItem>${room.priceOfADay}</ListItem>
-                          </List>
-                        </SimpleGrid>
-                      </Box>
-                    );
-                  })}
+                <Box key={room.id}>
+                      <SimpleGrid columns={3} spacing={10} marginBottom={3}>
+                        <List spacing={2}>
+                          <ListItem>
+                            <Link to={`${room.id}`}>
+                              <Text
+                                _hover={{
+                                  color: "pink.300",
+                                }}
+                              >
+                                {room.roomType} {room.roomNumber}
+                              </Text>
+                            </Link>
+                          </ListItem>
+                        </List>
+                        <List spacing={2}>
+                          <ListItem>${room.priceOfADay}</ListItem>
+                        </List>
+                        <Flex>
+                        <Button
+                          onClick={() => openUpdateModal(room.id)}
+                          bg="pink.400"
+                          color="white"
+                          _hover={{
+                            bg: "pink.300",
+                          }}
+                          rounded="md"
+                        >
+                          Update Room
+                        </Button>
+                        <Button
+                          bg="red.400"
+                          color="white"
+                          _hover={{
+                            bg: "red.300",
+                          }}
+                           onClick={() => handleDelete(room.id)}
+                          rounded="md"
+                          marginLeft={5}
+                        >
+                          Delete Room
+                        </Button>
+                        </Flex>
+                      </SimpleGrid>
+                      <Modal isOpen={isRoomModalOpen(room.id)} onClose={() => setRoomModals((prevModals) => ({ ...prevModals, [room.id]: false }))}>
+                        <ModalOverlay />
+                        <ModalContent>
+                          <ModalHeader>Update Room</ModalHeader>
+                          <ModalCloseButton />
+                          <ModalBody>
+                            <RoomEditForm room={room} onUpdate={handleUpdate} />
+                          </ModalBody>
+                        </ModalContent>
+                      </Modal>
+                    </Box>
+                  );
+                })}
                 </Box>
+                {(user && user.authenticationData.role === Role.APPLICATION_USER || user && 
+        user.authenticationData.role === Role.ADMIN) && (<VStack w="100%">
                 <VStack w="100%">
                   {accommodation.authenticationData.id ===
                   user.authenticationData.id ? (
@@ -260,6 +336,17 @@ export const AccommodationDetail = () => {
                     >
                       Book Room
                     </Button>
+                    <Modal isOpen={isOpen} onClose={onClose}>
+                      <ModalOverlay />
+                      <ModalContent>
+                        <ModalHeader>Book Room</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                          <BookingCreatePage />
+                        </ModalBody>
+                      </ModalContent>
+                    </Modal>
+                  </VStack>)}
                   )}
                   <Modal isOpen={isBookingOpen} onClose={onBookingClose}>
                     <ModalOverlay />
