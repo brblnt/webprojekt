@@ -1,10 +1,11 @@
-package nostra.cosa.hotelbooking.service.service;
+package nostra.cosa.hotelbooking.service.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.service.exceptions.ImageIOException;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 @Slf4j
+@Service
 public class ImageService {
 
     public String saveImage(final MultipartFile file) throws ImageIOException {
