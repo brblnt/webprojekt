@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
   chakra,
   Box,
@@ -18,9 +18,13 @@ import {
 } from "@chakra-ui/react";
 import { Booking } from "../../../types/Booking";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ApplicationUser } from "../../../types/ApplicationUser";
 import { Role } from "../../../types/enums/Role";
+import { BookingEditForm } from "../../Dashboard/components/BookingEditForm";
+import { remove, update } from "../../../features/booking/bookingSlice";
+import { getAllBookings } from "../../../services/apiRequests";
+import { BookingUpdateForm } from "./BookingUpdateForm";
 
 export interface BookingItemProps {
   booking: Booking;
@@ -58,7 +62,7 @@ export const BookingItem: FC<BookingItemProps> = ({ booking }) => {
         mt={{ base: "5px !important", sm: 0 }}
       >
         <Flex justify="space-between">
-          <Link to={`/booking/${booking.id}`}>
+          <Link to={`/accommodation/${booking.accommodation.id}`}>
             <chakra.h3
               fontSize={{ base: "lg", md: "xl" }}
               fontWeight="bold"
@@ -121,6 +125,25 @@ export const ButtonLayoutDesktop: FC<ButtonLayoutDesktopProps> = ({
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
 
+  const [bookings, setBookings] = useState<Booking[] | null>(null);
+
+  const dispatch = useDispatch();
+
+  const loadBookings = async () => {
+    const bookings = await getAllBookings();
+    setBookings(bookings);
+  };
+
+  const handleUpdate = async (updatedBooking: Booking) => {
+    await dispatch(update(updatedBooking) as any);
+    loadBookings();
+  };
+
+  const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    const bookingId = booking.id.toString();
+    await dispatch(remove(bookingId) as any);
+  };
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const openModal = () => {
     onOpen();
@@ -135,7 +158,7 @@ export const ButtonLayoutDesktop: FC<ButtonLayoutDesktopProps> = ({
           <Button onClick={openModal} w={"256px"} boxShadow={"dark-lg"}>
             Update
           </Button>
-          <Button w={"256px"} colorScheme={"red"} boxShadow={"dark-lg"}>
+          <Button w={"256px"} colorScheme={"red"} boxShadow={"dark-lg"} onClick={handleDelete}>
             Cancel
           </Button>
         </Flex>
@@ -146,7 +169,7 @@ export const ButtonLayoutDesktop: FC<ButtonLayoutDesktopProps> = ({
           <ModalHeader>Update Booking</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {/* Add the form or component for updating the booking */}
+            <BookingUpdateForm booking={booking} onUpdate={handleUpdate}/>
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -164,6 +187,20 @@ export const ButtonLayoutMobile: FC<ButtonLayoutMobileProps> = ({
   const { user } = useSelector(
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
+
+  const [bookings, setBookings] = useState<Booking[] | null>(null);
+
+  const dispatch = useDispatch();
+
+  const loadBookings = async () => {
+    const bookings = await getAllBookings();
+    setBookings(bookings);
+  };
+
+  const handleUpdate = async (updatedBooking: Booking) => {
+    await dispatch(update(updatedBooking) as any);
+    loadBookings();
+  };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const openModal = () => {
@@ -200,7 +237,7 @@ export const ButtonLayoutMobile: FC<ButtonLayoutMobileProps> = ({
           <ModalHeader>Update Booking</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {/* Add the form or component for updating the booking */}
+          <BookingUpdateForm booking={booking} onUpdate={handleUpdate}/>
           </ModalBody>
         </ModalContent>
       </Modal>

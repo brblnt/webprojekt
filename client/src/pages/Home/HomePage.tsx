@@ -48,10 +48,10 @@ export const HomePage = () => {
     if (!user) {
       navigate("/login");
       dispatch(logout() as any);
-    } else if (user.authenticationData.role === "APPLICATION_USER"){
+    } else if (user.authenticationData.role === Role.APPLICATION_USER){
       const bookUserId = user.id
       dispatch(getbookings(bookUserId) as any);
-    } else if (user.authenticationData.role === "ACCOMMODATION"){
+    } else if (user.authenticationData.role === Role.ACCOMMODATION){
       const authId = user.authenticationData.id;
       dispatch(getaccomms(authId) as any);
     } else {

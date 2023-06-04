@@ -48,7 +48,7 @@ const UserTableRow = ({
     const userData = user;
     console.log(userData)
     await dispatch(remove(userData) as any);
-    /*onDelete();*/
+    onDelete();
   };
 
   return (

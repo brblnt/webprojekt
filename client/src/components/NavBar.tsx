@@ -19,6 +19,9 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import { ColorModeSwitcher } from "../ColorModeSwitcher";
+import { useEffect, useState } from "react";
+import { ApplicationUser } from "../types/ApplicationUser";
+import { getApplicationUserById } from "../services/apiRequests";
 
 export const NavBar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -250,7 +253,19 @@ const AdminNav = () => {
 };
 
 const UserLoggedIn = () => {
-  const { user } = useSelector((state: any) => state.auth);
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
+
+  const [userP, setUser] = useState<ApplicationUser | null>(null);
+
+  useEffect(() => {
+    const loadUser = async (userId: any) => {
+      const users = await getApplicationUserById(userId);
+      setUser(users);
+    };
+    loadUser(user.id);
+  }, [user.id]);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -263,8 +278,8 @@ const UserLoggedIn = () => {
     <Menu>
       <MenuButton>
         <Avatar
-          src={`http://localhost:3010/hotel-booking/images/${user.authenticationData.imgPath}`}
-        ></Avatar>
+            src={`http://localhost:3010/hotel-booking/images/${userP?.authenticationData.imgPath && userP?.authenticationData.imgPath[0]}`}
+            ></Avatar>
       </MenuButton>
       <MenuList>
         <MenuItem as="a" href={`/profile/${user.authenticationData.userName}`}>
