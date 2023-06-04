@@ -25,7 +25,7 @@ import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { Room } from "../../../types/Room";
 import { RoomEditForm } from "./RoomEditForm";
 import { useDispatch } from "react-redux";
-import { remove, update } from "../../../features/room/roomSlice";
+import { removeRoom, updateRoom } from "../../../features/room/roomSlice";
 
 export const RoomTableRow = ({
   room,
@@ -50,7 +50,7 @@ export const RoomTableRow = ({
 
   const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
     const roomId = room.id.toString();
-    await dispatch(remove(roomId) as any);
+    await dispatch(removeRoom(roomId) as any);
     onDelete();
   };
 
@@ -103,7 +103,7 @@ export const RoomTable = () => {
   const dispatch = useDispatch();
 
   const handleUpdate = async (updatedRoom: Room) => {
-    await dispatch(update(updatedRoom) as any);
+    await dispatch(updateRoom(updatedRoom) as any);
     loadRooms();
   };
 

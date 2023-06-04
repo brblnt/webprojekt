@@ -263,7 +263,7 @@ const UserLoggedIn = () => {
     <Menu>
       <MenuButton>
         <Avatar
-          src={`http://localhost:3010/images/${user.authenticationData.imgPath}`}
+          src={`http://localhost:3010/hotel-booking/images/${user.authenticationData.imgPath}`}
         ></Avatar>
       </MenuButton>
       <MenuList>
