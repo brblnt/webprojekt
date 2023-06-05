@@ -10,21 +10,17 @@ import {
 } from "@chakra-ui/react";
 
 export interface BookingEditFormProps {
-  booking: Booking;
+  booking: any;
   onUpdate: (updatedBooking: Booking) => void;
 }
 
-export const BookingEditForm: FC<BookingEditFormProps> = ({
+export const BookingUpdateForm: FC<BookingEditFormProps> = ({
   booking,
   onUpdate,
 }) => {
   const [dateStart, setDateStart] = useState(booking.dateStart);
   const [dateFinish, setDateFinish] = useState(booking.dateFinish);
   const [serviceType, setServiceType] = useState(booking.serviceType);
-  const [archived, setArchived] = useState(booking.archived);
-  const [resigned, setResigned] = useState(booking.resigned);
-  const [paid, setPaid] = useState(booking.paid);
-
 
   const dateStartChange = (e: any) => {
     setDateStart(e.target.value);
@@ -38,27 +34,13 @@ export const BookingEditForm: FC<BookingEditFormProps> = ({
     setServiceType(e.target.value);
   };
 
-  const archivedChange = (e: any) => {
-    setArchived(e.target.value);
-  };
-
-  const resignedChange = (e: any) => {
-    setResigned(e.target.value);
-  };
-
-  const paidChange = (e: any) => {
-    setPaid(e.target.value);
-  };
-
   const handleUpdate = () => {
     const updatedBooking: Booking = {
       ...booking,
+
       dateStart: dateStart,
       dateFinish: dateFinish,
       serviceType: serviceType,
-      archived: archived,
-      resigned: resigned,
-      paid: paid,
     };
 
     onUpdate(updatedBooking);
@@ -96,30 +78,6 @@ export const BookingEditForm: FC<BookingEditFormProps> = ({
           <option value="FEL_PANZIO">Fél Panzió</option>
           <option value="TELJES_PANZIO">Teljes Panzió</option>
           <option value="NINCS_ELLATAS">Nincs Ellátás</option>
-        </Select>
-      </FormControl>
-
-      <FormControl id="archived">
-        <FormLabel mb={0}>Archived</FormLabel>
-        <Select value={archived.toString()} onChange={archivedChange}>
-          <option value={true.toString()}>True</option>
-          <option value={false.toString()}>False</option>
-        </Select>
-      </FormControl>
-
-      <FormControl id="resigned">
-        <FormLabel mb={0}>Resigned</FormLabel>
-        <Select value={resigned.toString()} onChange={resignedChange}>
-          <option value={true.toString()}>True</option>
-          <option value={false.toString()}>False</option>
-        </Select>
-      </FormControl>
-
-      <FormControl id="paid">
-        <FormLabel mb={0}>Paid</FormLabel>
-        <Select value={paid.toString()} onChange={paidChange}>
-          <option value={true.toString()}>True</option>
-          <option value={false.toString()}>False</option>
         </Select>
       </FormControl>
       <Center>
