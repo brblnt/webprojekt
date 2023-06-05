@@ -21,6 +21,7 @@ public class RoomController extends HotelBookingController {
 
     private final RoomServiceImpl roomService;
 
+    @PreAuthorize(GET_ALL_PERMISSION_ALL)
     @GetMapping
     public ResponseEntity<List<RoomDTO>> getAll() {
         final List<RoomDTO> result = roomService.getAll();
@@ -28,6 +29,7 @@ public class RoomController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
+    @PreAuthorize(GET_BY_ID_PERMISSION_ALL)
     @GetMapping("/{id}")
     public ResponseEntity<RoomDTO> getById(final @PathVariable("id") Long id) throws NotFoundException {
         final RoomDTO result = roomService.getById(id);

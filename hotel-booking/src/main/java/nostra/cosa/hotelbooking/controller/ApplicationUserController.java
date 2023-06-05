@@ -21,7 +21,7 @@ public class ApplicationUserController extends HotelBookingController {
 
     private final ApplicationUserServiceImpl applicationUserService;
 
-    @PreAuthorize(GET_ALL_PERMISSION_ADMIN_APPLICATION_USER)
+    @PreAuthorize(GET_ALL_PERMISSION_ALL)
     @GetMapping
     public ResponseEntity<List<ApplicationUserDTO>> getAll() {
         final List<ApplicationUserDTO> result = applicationUserService.getAll();
@@ -29,7 +29,7 @@ public class ApplicationUserController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(GET_BY_ID_PERMISSION_ADMIN_APPLICATION_USER)
+    @PreAuthorize(GET_BY_ID_PERMISSION_ALL)
     @GetMapping("/{id}")
     public ResponseEntity<ApplicationUserDTO> getById(final @PathVariable("id") Long id) throws NotFoundException {
         final ApplicationUserDTO result = applicationUserService.getById(id);
@@ -37,7 +37,7 @@ public class ApplicationUserController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(GET_BY_ID_PERMISSION_ADMIN_APPLICATION_USER)
+    @PreAuthorize(GET_BY_ID_PERMISSION_ALL)
     @GetMapping("/{id}/all")
     public ResponseEntity<ApplicationUserDTO> getAllByAuthenticationId(final @PathVariable("id") Long id) throws NotFoundException {
         final ApplicationUserDTO result = applicationUserService.getUserByAuthId(id);
@@ -45,7 +45,7 @@ public class ApplicationUserController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(CREATE_PERMISSION_ADMIN_APPLICATION_USER)
+    @PreAuthorize(CREATE_PERMISSION_ALL)
     @PostMapping
     public ResponseEntity<ApplicationUserDTO> create(final @RequestBody ApplicationUserDTO applicationUserDTO) {
         final ApplicationUserDTO result = applicationUserService.create(applicationUserDTO);
@@ -53,7 +53,7 @@ public class ApplicationUserController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(UPDATE_PERMISSION_ADMIN_APPLICATION_USER)
+    @PreAuthorize(UPDATE_PERMISSION_ALL)
     @PutMapping("/{id}")
     public ResponseEntity<ApplicationUserDTO> update(final @PathVariable("id") Long id, @RequestBody ApplicationUserDTO applicationUserDTO) throws NotFoundException {
         applicationUserDTO.setId(id);
@@ -62,7 +62,7 @@ public class ApplicationUserController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PreAuthorize(DELETE_PERMISSION_ADMIN_APPLICATION_USER)
+    @PreAuthorize(DELETE_PERMISSION_ALL)
     @DeleteMapping("/{id}")
     public ResponseEntity<Boolean> delete(final @PathVariable("id") Long id) {
         final Boolean result = applicationUserService.delete(id);
