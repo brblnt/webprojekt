@@ -59,6 +59,7 @@ public class HotelBookingAuthenticationService {
         }
         registrationDTO.setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
         final AuthenticationDataDTO authenticationDataDTO = authenticationService.toAuthenticationDataDTO(registrationDTO, generateToken());
+        saveUser(authenticationDataDTO);
         return ResponseEntity.ok().body(authenticationService.create(authenticationDataDTO));
     }
 

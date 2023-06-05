@@ -75,7 +75,7 @@ public class AuthenticationServiceImpl implements BookingService<AuthenticationD
   public AuthenticationDataDTO toAuthenticationDataDTO(final RegistrationDTO registrationDTO, final String token) {
     final Role role = Role.valueOf(registrationDTO.getRole());
     return new AuthenticationDataDTO(null, registrationDTO.getUserName(),
-            registrationDTO.getPassword(), role, new ArrayList<String>(), LocalDateTime.now().toString(),
+            registrationDTO.getPassword(), role, new ArrayList<>(), LocalDateTime.now().toString(),
             true, true, true, true, getPermissionsByRole(role), token);
   }
 
