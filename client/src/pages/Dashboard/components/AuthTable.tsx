@@ -24,10 +24,11 @@ import {
   getAllAuthentications,
 } from "../../../services/apiRequests";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { remove, update } from "../../../features/auth/authSlice";
 import { AuthenticationData } from "../../../types/AuthenticationData";
 import { AuthEditForm } from "./AuthEditForm";
+import { ApplicationUser } from "../../../types/ApplicationUser";
 
 const AuthTableRow = ({
   auth,
@@ -94,11 +95,18 @@ const AuthTableRow = ({
 };
 
 export const AuthTable = () => {
+
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
+
   const [auths, setAuths] = useState<AuthenticationData[] | null>(null);
   const dispatch = useDispatch();
 
+    const token = user.authenticationData.token
+
   const loadAuths = async () => {
-    const auths = await getAllAuthentications();
+    const auths = await getAllAuthentications(token);
     setAuths(auths);
   };
 

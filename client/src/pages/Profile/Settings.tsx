@@ -34,6 +34,8 @@ export const Settings = () => {
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
 
+  const token = user.authenticationData.token
+
   const dispatch = useDispatch();
   const [file, setFile] = useState<File>();
   const [pic, setPic] = useState(user.authenticationData.imgPath);
@@ -122,7 +124,7 @@ export const Settings = () => {
 
   const handleDelete = async () => {
     const userData = user
-    dispatch(remove(userData) as any);
+    dispatch(remove({userData, token}) as any);
     dispatch(logout() as any)
     navigate("/login");
   };

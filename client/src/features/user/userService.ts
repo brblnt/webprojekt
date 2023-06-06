@@ -2,9 +2,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify';
 
 // Delete user by ID
-const remove = async (userData: any) => {
-
-  const token = userData.authenticationData.token
+const remove = async (userData: any, token: any) => {
 
   const config = {
     headers: {

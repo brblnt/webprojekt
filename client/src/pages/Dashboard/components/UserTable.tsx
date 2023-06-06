@@ -20,19 +20,20 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import { getAllApplicationUsers } from "../../../services/apiRequests";
+import { getAllApplicationUsers, getAllAuthentications } from "../../../services/apiRequests";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { ApplicationUser } from "../../../types/ApplicationUser";
 import { UserEditForm } from "./UserEditForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { remove, update } from "../../../features/user/userSlice";
+import { AuthenticationData } from "../../../types/AuthenticationData";
 
 const UserTableRow = ({
-  user,
+  appUser,
   onDelete,
   onUpdate,
 }: {
-  user: ApplicationUser;
+  appUser: ApplicationUser;
   onDelete: () => void;
   onUpdate: (updatedUser: ApplicationUser) => void;
 }) => {
@@ -44,21 +45,27 @@ const UserTableRow = ({
 
   const dispatch = useDispatch();
 
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
+
+  const token = user.authenticationData.token
+
   const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    const userData = user;
+    const userData = appUser;
     console.log(userData)
-    await dispatch(remove(userData) as any);
+    await dispatch(remove({userData, token}) as any);
     onDelete();
   };
 
   return (
     <>
       <Tr>
-        <Td>{user.id}</Td>
-        <Td>{user.firstName}</Td>
-        <Td>{user.lastName}</Td>
-        <Td>{user.emailAddress}</Td>
-        <Td>{user.phoneNumber}</Td>
+        <Td>{appUser.id}</Td>
+        <Td>{appUser.firstName}</Td>
+        <Td>{appUser.lastName}</Td>
+        <Td>{appUser.emailAddress}</Td>
+        <Td>{appUser.phoneNumber}</Td>
         <Td>
           <Button colorScheme={"red"} onClick={handleDelete}>
             <DeleteIcon />
@@ -77,7 +84,7 @@ const UserTableRow = ({
           <ModalHeader>Update User</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <UserEditForm user={user} onUpdate={onUpdate} />
+            <UserEditForm user={appUser} onUpdate={onUpdate} />
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -89,8 +96,14 @@ export const UserTable = () => {
   const [users, setUsers] = useState<ApplicationUser[] | null>(null);
   const dispatch = useDispatch();
 
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
+
+  const token = user.authenticationData.token
+
   const loadUsers = async () => {
-    const users = await getAllApplicationUsers();
+    const users = await getAllApplicationUsers(token);
     setUsers(users);
   };
 
@@ -131,7 +144,7 @@ export const UserTable = () => {
             {users?.map((user) => (
               <UserTableRow
                 key={user.id}
-                user={user}
+                appUser={user}
                 onDelete={() => loadUsers()}
                 onUpdate={handleUpdate}
               />
