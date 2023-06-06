@@ -48,6 +48,10 @@ public class HotelBookingAuthenticationService {
     }
 
     @Bean
+    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
+        return this.userDetailsManager;
+    }
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return this.passwordEncoder;
     }

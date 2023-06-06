@@ -4,18 +4,14 @@ import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
-import nostra.cosa.hotelbooking.data.entity.Accommodation;
 import nostra.cosa.hotelbooking.data.entity.ApplicationUser;
-import nostra.cosa.hotelbooking.data.entity.AuthenticationData;
-import nostra.cosa.hotelbooking.data.repository.AccommodationRepository;
 import nostra.cosa.hotelbooking.data.repository.ApplicationUserRepository;
-import nostra.cosa.hotelbooking.service.dto.AccommodationDTO;
 import nostra.cosa.hotelbooking.service.dto.ApplicationUserDTO;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.BookingService;
 import nostra.cosa.hotelbooking.service.util.service.impl.ApplicationUserUtilities;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,6 +27,8 @@ public class ApplicationUserServiceImpl implements BookingService<ApplicationUse
   private final ApplicationUserUtilities applicationUserUtilities;
   private final Converter<ApplicationUser, ApplicationUserDTO> convertApplicationUserEntityToDTO;
   private final Converter<ApplicationUserDTO, ApplicationUser> convertApplicationUserDTOToEntity;
+
+  private final InMemoryUserDetailsManager inMemoryUserDetailsManager;
 
   @Override
   public List<ApplicationUserDTO> getAll() {
@@ -72,9 +70,11 @@ public class ApplicationUserServiceImpl implements BookingService<ApplicationUse
   @Override
   public Boolean delete(Long id) {
     try {
+      final ApplicationUserDTO applicationUser = getById(id);
+      inMemoryUserDetailsManager.deleteUser(applicationUser.getAuthenticationData().getUserName());
       applicationUserRepository.deleteById(id);
       return true;
-    } catch (IllegalArgumentException e) {
+    } catch (IllegalArgumentException | NotFoundException e) {
       log.warn("Data integrity violation [DELETE]");
       return false;
     }
