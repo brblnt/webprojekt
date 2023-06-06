@@ -48,9 +48,13 @@ const getaccomm = async (userData: any) => {
 }
 
 const room = async (roomData: any, accommData: any) => {
+
+  const token = accommData.accommodation.authenticationData.token
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
+      'AuthToken': token
     },
   };
 

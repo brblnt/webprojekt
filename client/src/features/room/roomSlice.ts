@@ -12,9 +12,9 @@ const initialState = {
 
 export const removeRoom = createAsyncThunk(
   "room/remove",
-  async (accommodationId: string, thunkAPI) => {
+  async ({roomId,  accommodation}: any) => {
     try {
-      return await roomService.remove(accommodationId);
+      return await roomService.remove(roomId, accommodation);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -22,16 +22,18 @@ export const removeRoom = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      return thunkAPI.rejectWithValue(message);
+      return message;
     }
   }
 );
 
 export const updateRoom = createAsyncThunk(
   "room/update",
-  async (room: Room, thunkAPI) => {
+  async ({updatedRoom, accommodation}: any) => {
     try {
-      return await roomService.update(room);
+      console.log(updatedRoom)
+      console.log(accommodation)
+      return await roomService.update(updatedRoom, accommodation);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -39,7 +41,7 @@ export const updateRoom = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      return thunkAPI.rejectWithValue(message);
+      return message;
     }
   }
 );

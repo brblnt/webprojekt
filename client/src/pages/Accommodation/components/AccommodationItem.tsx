@@ -180,12 +180,12 @@ export const ButtonLayoutDesktop: FC<ButtonLayoutDesktopProps> = ({
 
   const handleUpdate = async (updatedAccommodation: Accommodation) => {
     await dispatch(update(updatedAccommodation) as any);
-    dispatch(getaccomms(userData) as any)
+    await dispatch(getaccomms(userData) as any)
   };
 
   const handleDelete = async () => {
-    dispatch(remove(accommodation) as any)
-    dispatch(getaccomms(userData) as any)
+    await dispatch(remove(accommodation) as any)
+    await dispatch(getaccomms(userData) as any)
   };
 
   return (

@@ -2,9 +2,18 @@ import axios from 'axios'
 import { toast } from 'react-toastify';
 
 // Delete room by ID
-const remove = async (roomId: string) => {
+const remove = async (roomId: string, accommodation: any) => {
+
+  const token = accommodation.authenticationData.token
+
+  const config = {
+    headers: {
+      'AuthToken': token,
+    },
+  }; 
+
   try {
-    const response = await axios.delete(`/hotel-booking/room/${roomId}`);
+    const response = await axios.delete(`/hotel-booking/room/${roomId}`, config);
     toast.success('Room Deleted!');
     return response.data;
   } catch (error: any) {
@@ -16,9 +25,21 @@ const remove = async (roomId: string) => {
 
 
 // Update room by ID
-const update = async (room: any) => {
+const update = async (room: any, accommodation: any) => {
+
+  const token = accommodation.authenticationData.token
+
+  console.log(room)
+
+  const config = {
+    headers: {
+      'AuthToken': token,
+      'Content-Type': 'application/json',
+    },
+  }; 
+
   try {
-    const response = await axios.put(`/hotel-booking/room/${room.id}`, room);
+    const response = await axios.put(`/hotel-booking/room/${room.id}`, room, config);
     toast.success('Room Updated!');
     return response.data;
   } catch (error: any) {

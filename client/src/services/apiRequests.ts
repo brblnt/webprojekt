@@ -19,12 +19,17 @@ export const getAccommodationById = async (
   );
 };
 
-export const getAllRooms = async (): Promise<Room[]> => {
-  return apiClient<Room[]>(`/hotel-booking/room`);
+export const getAllRooms = async (
+  token?: string
+): Promise<Room[]> => {
+  return apiClient<Room[]>(`/hotel-booking/room`, token);
 };
 
-export const getRoomById = async (room_id: number): Promise<Room> => {
-  return apiClient<Room>(`/hotel-booking/room/${room_id}`);
+export const getRoomById = async (
+  room_id: number,
+  token?: string
+): Promise<Room> => {
+  return apiClient<Room>(`/hotel-booking/room/${room_id}`, token);
 };
 
 export const getAllApplicationUsers = async (): Promise<ApplicationUser[]> => {
