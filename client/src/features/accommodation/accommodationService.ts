@@ -2,9 +2,13 @@ import axios from 'axios'
 import { toast } from 'react-toastify';
 
 
-const create = async (accommodationData: any) => {
+const create = async (accommodationData: any,) => {
+
+  const token = accommodationData.authenticationData.token
+
   const config = {
     headers: {
+      'AuthToken': token, 
       'Content-Type': 'application/json',
     },
   };
@@ -20,11 +24,21 @@ const create = async (accommodationData: any) => {
   }
 };
 
-const getaccomm = async (authId: any) => {
+const getaccomm = async (userData: any) => {
+
+  const token = userData.authenticationData.token;
+
+  const authId = userData.authenticationData.id
+
+  const config = {
+    headers: {
+      'AuthToken': token
+    },
+  };
 
   try{
-    console.log(authId)
-    const response = await axios.get('/hotel-booking/accommodation/' + authId + '/all')
+    console.log(userData)
+    const response = await axios.get('/hotel-booking/accommodation/' + authId + '/all', config)
     return response.data
   }catch(error: any){
     const message = error.response.data.message || error.message || error.toString();
@@ -75,9 +89,19 @@ const room = async (roomData: any, accommData: any) => {
 };
 
 // Delete accommodation by ID
-const remove = async (accommodationId: string) => {
+const remove = async (accommodation: any) => {
+
+  const accommodationId = accommodation.id
+  const token = accommodation.authenticationData.token
+
+  const config = {
+    headers: {
+      'AuthToken': token,
+    },
+  }; 
+
   try {
-    const response = await axios.delete(`/hotel-booking/accommodation/${accommodationId}`);
+    const response = await axios.delete(`/hotel-booking/accommodation/${accommodationId}`, config);
     toast.success('Accommodation Deleted! Please refresh the page!');
     return response.data;
   } catch (error: any) {
@@ -89,8 +113,18 @@ const remove = async (accommodationId: string) => {
 
 // Update accommodation by ID
 const update = async (accommodation: any) => {
+
+  const token = accommodation.authenticationData.token
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      'AuthToken': token,
+    },
+  };
+
   try {
-    const response = await axios.put(`/hotel-booking/accommodation/${accommodation.id}`, accommodation);
+    const response = await axios.put(`/hotel-booking/accommodation/${accommodation.id}`, accommodation, config);
     toast.success('Accommodation Updated!');
     return response.data;
   } catch (error: any) {

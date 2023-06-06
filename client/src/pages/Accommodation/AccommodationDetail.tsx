@@ -54,12 +54,14 @@ export const AccommodationDetail = () => {
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
 
+  const token = user.authenticationData.token
+
   useEffect(() => {
-    const loadAccommodation = async (accommodation_id: number) => {
-      const accommodation = await getAccommodationById(accommodation_id);
+    const loadAccommodation = async (accommodation_id: number, token: any) => {
+      const accommodation = await getAccommodationById(accommodation_id, token);
       setAccommodation(accommodation);
     };
-    loadAccommodation(Number(accommodationId));
+    loadAccommodation(Number(accommodationId),token);
   }, [accommodationId]);
 
   const activeRoomCount =
@@ -110,8 +112,8 @@ export const AccommodationDetail = () => {
         rooms: accommodation?.rooms as Room[],
       };
       try {
-        await dispatch(uploadFile(formData) as any);
-        await dispatch(update(updatedAccom) as any);
+        await dispatch(uploadFile({formData, token}) as any);
+        await dispatch(update({updatedAccom, token}) as any);
       } catch (error) {
         console.log(error);
       }

@@ -52,8 +52,8 @@ export const HomePage = () => {
       const bookUserId = user.id
       dispatch(getbookings(bookUserId) as any);
     } else if (user.authenticationData.role === Role.ACCOMMODATION){
-      const authId = user.authenticationData.id;
-      dispatch(getaccomms(authId) as any);
+      const userData = user
+      dispatch(getaccomms(userData) as any);
     } else {
       const authId = user.authenticationData.id;
       dispatch(getaccomms(authId) as any);

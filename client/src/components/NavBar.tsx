@@ -259,13 +259,13 @@ const UserLoggedIn = () => {
 
   const [userP, setUser] = useState<ApplicationUser | null>(null);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const loadUser = async (userId: any) => {
       const users = await getApplicationUserById(userId);
       setUser(users);
     };
     loadUser(user.id);
-  }, [user.id]);
+  }, [user.id]);*/
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -278,7 +278,7 @@ const UserLoggedIn = () => {
     <Menu>
       <MenuButton>
         <Avatar
-            src={`http://localhost:3010/hotel-booking/images/${userP?.authenticationData.imgPath && userP?.authenticationData.imgPath[0]}`}
+            src={`http://localhost:3010/hotel-booking/images/${user.authenticationData.imgPath}`}
             ></Avatar>
       </MenuButton>
       <MenuList>

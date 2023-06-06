@@ -22,7 +22,19 @@ const register = async (userData: any) => {
       phoneNumber: "",
     };
 
-    const response = await axios.post('/hotel-booking/application-user', JSON.stringify(user), config);
+    console.log(registering.data)
+    console.log(registering.data.token)
+
+    const token = registering.data.token
+
+    const authToken = {
+      headers: {
+        'AuthToken': token,
+        'Content-Type': 'application/json',
+      },
+    };
+    
+    const response = await axios.post('/hotel-booking/application-user', JSON.stringify(user), authToken);
 
     const updatedUser = {
       ...user,
@@ -35,8 +47,6 @@ const register = async (userData: any) => {
   }
 };
 
-
-
 //Login user
 const login = async (userData: any) => {
     try {
@@ -48,8 +58,17 @@ const login = async (userData: any) => {
       });
 
       if(logging.data) {
+
+      const token = logging.data.token
+
+      const config = {
+        headers: {
+          'AuthToken': token,
+        },
+      };
+
         const logId = logging.data.id;
-        const response = await axios.get(`/hotel-booking/application-user/${logId}/all`);
+        const response = await axios.get(`/hotel-booking/application-user/${logId}/all`, config);
 
         if(response.data){
           let user = response.data;
@@ -94,13 +113,19 @@ const remove = async (authId: string) => {
   }
 };
 
-const uploadFile = async (file: FormData) => {
+const uploadFile = async (image: File, token: string) => {
+  const config = {
+    headers: {
+      'AuthToken': token,
+      'Content-Type': 'multipart/form-data',
+    },
+    params: {
+      file: image,
+    },
+  };
+
   try {
-    const response = await axios.post(`/hotel-booking/images/upload`, file, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
+    const response = await axios.post(`/hotel-booking/images/upload`, null, config);
     toast.success('File Uploaded');
     return response.data;
   } catch (error: any) {
@@ -108,7 +133,7 @@ const uploadFile = async (file: FormData) => {
     toast.error('Error during file upload!');
     throw new Error(message);
   }
-}
+};
 
 const authService = {
     login,
