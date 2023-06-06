@@ -21,7 +21,7 @@ public class ImageController extends HotelBookingController {
 
     private final ImageService imageService;
 
-    @PreAuthorize(GET_BY_ID_PERMISSION_ALL)
+
     @GetMapping("/{fileName}")
     public ResponseEntity<Resource> getImage(final @PathVariable("fileName") String fileName) throws NotFoundException, ImageIOException {
         final Resource resource = imageService.getImage(fileName);
