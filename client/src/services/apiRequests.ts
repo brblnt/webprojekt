@@ -40,8 +40,11 @@ export const getAllApplicationUsers = async (): Promise<ApplicationUser[]> => {
   return apiClient<ApplicationUser[]>(`/hotel-booking/application-user`);
 };
 
-export const getApplicationUserById = async (applicationUser_id: number): Promise<ApplicationUser> => {
-  return apiClient<ApplicationUser>(`/hotel-booking/application-user/${applicationUser_id}`);
+export const getApplicationUserById = async (
+  applicationUser_id: number,
+  token?: string
+  ): Promise<ApplicationUser> => {
+  return apiClient<ApplicationUser>(`/hotel-booking/application-user/${applicationUser_id}`, token);
 };
 
 export const getAllAuthentications = async (): Promise<AuthenticationData[]> => {

@@ -22,6 +22,8 @@ import { ColorModeSwitcher } from "../ColorModeSwitcher";
 import { useEffect, useState } from "react";
 import { ApplicationUser } from "../types/ApplicationUser";
 import { getApplicationUserById } from "../services/apiRequests";
+import axios from "axios";
+import { url } from "inspector";
 
 export const NavBar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -257,29 +259,23 @@ const UserLoggedIn = () => {
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
 
+    const token = user.authenticationData.token
+
   const [userP, setUser] = useState<ApplicationUser | null>(null);
-
-  /*useEffect(() => {
-    const loadUser = async (userId: any) => {
-      const users = await getApplicationUserById(userId);
-      setUser(users);
-    };
-    loadUser(user.id);
-  }, [user.id]);*/
-
+    
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
 
   const onLogout = () => {
     dispatch(logout() as any);
     navigate("/login");
   };
+
   return (
     <Menu>
       <MenuButton>
-        <Avatar
-            src={`http://localhost:3010/hotel-booking/images/${user.authenticationData.imgPath}`}
-            ></Avatar>
+        <Avatar/>
       </MenuButton>
       <MenuList>
         <MenuItem as="a" href={`/profile/${user.authenticationData.userName}`}>

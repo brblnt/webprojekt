@@ -3,48 +3,56 @@ import { toast } from 'react-toastify';
 
 // Register user
 const register = async (userData: any) => {
-  const config = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
-
-  const registering = await axios.post('/user/register', JSON.stringify(userData), config);
-
-  if (registering.data) {
-    const user = {
-      authenticationData: {
-        id: registering.data.id,
-      },
-      firstName: "",
-      lastName: "",
-      emailAddress: "",
-      phoneNumber: "",
-    };
-
-    console.log(registering.data)
-    console.log(registering.data.token)
-
-    const token = registering.data.token
-
-    const authToken = {
+  
+  try{
+    const config = {
       headers: {
-        'AuthToken': token,
         'Content-Type': 'application/json',
       },
     };
-    
-    const response = await axios.post('/hotel-booking/application-user', JSON.stringify(user), authToken);
-
-    const updatedUser = {
-      ...user,
-      ...response.data,
-    };
-
-    localStorage.setItem('user', JSON.stringify(updatedUser));
-    console.log(updatedUser)
-    return updatedUser;
+  
+    const registering = await axios.post('/user/register', JSON.stringify(userData), config);
+  
+    if (registering.data) {
+      const user = {
+        authenticationData: {
+          id: registering.data.id,
+        },
+        firstName: "",
+        lastName: "",
+        emailAddress: "",
+        phoneNumber: "",
+      };
+  
+      console.log(registering.data)
+      console.log(registering.data.token)
+  
+      const token = registering.data.token
+  
+      const authToken = {
+        headers: {
+          'AuthToken': token,
+          'Content-Type': 'application/json',
+        },
+      };
+      
+      const response = await axios.post('/hotel-booking/application-user', JSON.stringify(user), authToken);
+  
+      const updatedUser = {
+        ...user,
+        ...response.data,
+      };
+  
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+      console.log(updatedUser)
+      return updatedUser;
+    }
+  }catch(error: any){
+    const message = error.response?.data?.message || error.message || error.toString();
+    toast.error('Wrong credentials!');
+    throw new Error(message);
   }
+
 };
 
 //Login user
@@ -77,9 +85,10 @@ const login = async (userData: any) => {
           return user;
         }
       }
-    } catch (error) {
-      console.log(error);
-      throw error;
+    } catch (error: any) {
+      const message = error.response?.data?.message || error.message || error.toString();
+      toast.error('Wrong credentials!');
+      throw new Error(message);
     }
   };
 
@@ -90,9 +99,18 @@ const logout = () => {
 
 // Update authData by ID
 const update = async (auth: any) => {
+
+  const token = auth.token
+
+  const config = {
+    headers: {
+      'AuthToken': token,
+    },
+  }; 
+
   try {
-    const response = await axios.put(`/hotel-booking/authentication/${auth.id}`, auth);
-    toast.success('User Updated!');
+    const response = await axios.put(`/hotel-booking/authentication/${auth.id}`, auth, config);
+    toast.success('User Updated! Please log in again with your new credentials!');
     return response.data;
   } catch (error: any) {
     const message = error.response?.data?.message || error.message || error.toString();

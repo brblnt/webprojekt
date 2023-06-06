@@ -55,10 +55,10 @@ export const HomePage = () => {
       const userData = user
       dispatch(getaccomms(userData) as any);
     } else {
-      const authId = user.authenticationData.id;
-      dispatch(getaccomms(authId) as any);
-      const bookUserId = user.id
-      dispatch(getbookings(bookUserId) as any);
+      const userData = user
+      dispatch(getaccomms(userData) as any);
+      const bookUser = user
+      dispatch(getbookings(bookUser) as any);
     }
   }, [user, navigate, isError, message, dispatch]);
 
