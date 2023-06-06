@@ -71,6 +71,7 @@ public class ApplicationUserServiceImpl implements BookingService<ApplicationUse
   public Boolean delete(Long id) {
     try {
       ApplicationUserDTO applicationUserDTO = getById(id);
+      // We need these deletions, because if we delete the applicationUser, the token is deleted -> 403 code.
       authenticationService.delete(id);
       applicationUserRepository.deleteById(id);
       hotelBookingAuthenticationService.deleteUser(applicationUserDTO.getAuthenticationData());
