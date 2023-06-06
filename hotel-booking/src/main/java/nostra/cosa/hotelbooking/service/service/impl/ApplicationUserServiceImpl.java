@@ -75,7 +75,10 @@ public class ApplicationUserServiceImpl implements BookingService<ApplicationUse
       applicationUserRepository.deleteById(id);
       hotelBookingAuthenticationService.deleteUser(applicationUserDTO.getAuthenticationData());
       return true;
-    } catch (IllegalArgumentException | NotFoundException e) {
+    } catch (NotFoundException e) {
+      log.warn("Data not found for [DELETE]");
+      return false;
+    } catch (IllegalArgumentException e) {
       log.warn("Data integrity violation [DELETE]");
       return false;
     }
