@@ -101,7 +101,7 @@ export const BookingCreatePage = () => {
     <>
       <FormControl id="bookingDateStart">
         <FormLabel>Choose Room</FormLabel>
-        <Select id="sortBy" focusBorderColor="pink.300"
+        <Select placeholder="Choose Room" id="sortBy" focusBorderColor="pink.300"
           onChange={onChange}
           name="roomId"
           value={roomId}

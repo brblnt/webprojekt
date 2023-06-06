@@ -15,6 +15,7 @@ import { BookingCreatePage } from "./pages/Booking/BookingCreatePage";
 import { Settings } from "./pages/Profile/Settings";
 import { Dashboard } from "./pages/Dashboard/Dashboard";
 import theme from "./utils/theme";
+import { RoomDetail } from "./pages/Room/RoomDetail";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
@@ -34,6 +35,10 @@ export const App = () => (
         <Route
           path={`/accommodation/:accommodationId/room/booking`}
           element={<BookingCreatePage />}
+        />
+        <Route
+          path={`/accommodation/:accommodationId/:roomId/`}
+          element={<RoomDetail />}
         />
         <Route path={`/login`} element={<LoginPage />} />
         <Route path={`/register`} element={<RegisterPage />} />

@@ -114,7 +114,7 @@ export const AccommodationDetail = () => {
       };
       try {
         await dispatch(uploadFile(formData) as any);
-        await dispatch(update({updatedAccom, token}) as any);
+        await dispatch(update(updatedAccom) as any);
       } catch (error) {
         console.log(error);
       }
