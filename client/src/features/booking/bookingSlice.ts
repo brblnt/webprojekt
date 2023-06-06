@@ -46,9 +46,9 @@ export const getbookings = createAsyncThunk(
 
 export const remove = createAsyncThunk(
   "booking/remove",
-  async (accommodationId: string, thunkAPI) => {
+  async ({bookingId, token}: any, thunkAPI) => {
     try {
-      return await bookingService.remove(accommodationId);
+      return await bookingService.remove(bookingId, token);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -63,9 +63,9 @@ export const remove = createAsyncThunk(
 
 export const update = createAsyncThunk(
   "booking/update",
-  async (booking: Booking, thunkAPI) => {
+  async ({updatedBooking, token }: any, thunkAPI) => {
     try {
-      return await bookingService.update(booking);
+      return await bookingService.update(updatedBooking, token);
     } catch (error: any) {
       const message =
         (error.response &&

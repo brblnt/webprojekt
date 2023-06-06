@@ -52,8 +52,12 @@ export const getAuthenticationById = async (authentication_id: number): Promise<
   return apiClient<AuthenticationData>(`/hotel-booking/authentication/${authentication_id}`);
 };
 
-export const getAllBookings = async (): Promise<Booking[]> => {
-  return apiClient<Booking[]>(`/hotel-booking/booking`);
+export const getAllBookings = async (
+  token?: string
+): Promise<Booking[]> => {
+  return apiClient<Booking[]>(`/hotel-booking/booking`,
+  token
+  );
 }
 
 /*export const getBookingById = async (booking_id: number): Promise<Booking> => {
