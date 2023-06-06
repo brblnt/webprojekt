@@ -93,7 +93,7 @@ export const BookingItem: FC<BookingItemProps> = ({ booking }) => {
             {booking.room.roomDetail}
           </Text>
           <Text fontSize="lg" fontWeight="500">
-            {booking.accommodation.serviceTypes}
+            {booking.serviceType}
           </Text>
         </Box>
 
