@@ -48,10 +48,6 @@ public class HotelBookingAuthenticationService {
     }
 
     @Bean
-    public InMemoryUserDetailsManager inMemoryUserDetailsManager() {
-        return this.userDetailsManager;
-    }
-    @Bean
     public PasswordEncoder passwordEncoder() {
         return this.passwordEncoder;
     }
@@ -119,6 +115,10 @@ public class HotelBookingAuthenticationService {
         final Authentication authentication = UsernamePasswordAuthenticationToken.authenticated(authData.getUserName(), authData.getPassword(), user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         log.info("User: {} logged in", authData.getUserName());
+    }
+
+    public void deleteUser(final AuthenticationDataDTO authData) {
+        userDetailsManager.deleteUser(authData.getUserName());
     }
 
     private void clearSession(final HttpServletRequest request) {
