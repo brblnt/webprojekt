@@ -2,9 +2,13 @@ import axios from 'axios'
 import { toast } from 'react-toastify';
 
 const create = async(bookData: any) => {
+
+  const token = bookData.user.token
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
+      'AuthToken': token
     },}
   try{
 
@@ -18,11 +22,19 @@ const create = async(bookData: any) => {
   }
 };
 
-const getbook = async (bookUserId: any) => {
+const getbook = async (bookUser: any) => {
+
+  const token = bookUser.authenticationData.token
+  const bookUserId = bookUser.id
+
+  const config = {
+    headers: {
+      'AuthToken': token
+    },}
 
   try{
     console.log(bookUserId)
-    const response = await axios.get('/hotel-booking/booking/application-user/' + bookUserId)
+    const response = await axios.get('/hotel-booking/booking/application-user/' + bookUserId, config)
     return response.data
   }catch(error: any){
     const message = error.response.data.message || error.message || error.toString();
@@ -32,9 +44,15 @@ const getbook = async (bookUserId: any) => {
 }
 
 // Delete booking by ID
-const remove = async (bookingId: string) => {
+const remove = async (bookingId: string, token: any)=> {
+
+  const config = {
+    headers: {
+      'AuthToken': token
+    },}
+
   try {
-    const response = await axios.delete(`/hotel-booking/booking/${bookingId}`);
+    const response = await axios.delete(`/hotel-booking/booking/${bookingId}`, config);
     toast.success('Booking Deleted!');
     return response.data;
   } catch (error: any) {
@@ -45,9 +63,15 @@ const remove = async (bookingId: string) => {
 };
 
 // Update booking by ID
-const update = async (booking: any) => {
+const update = async (booking: any, token: any) => {
+
+  const config = {
+    headers: {
+      'AuthToken': token
+    },}
+
   try {
-    const response = await axios.put(`/hotel-booking/booking/${booking.id}`, booking);
+    const response = await axios.put(`/hotel-booking/booking/${booking.id}`, booking, config);
     toast.success('Booking Updated!');
     return response.data;
   } catch (error: any) {

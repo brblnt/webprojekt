@@ -35,7 +35,7 @@ export const register = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      return thunkAPI.rejectWithValue(message);
+      return console.log(message);
     }
   }
 );
@@ -53,7 +53,7 @@ export const login = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      return thunkAPI.rejectWithValue(message);
+        return console.log(message);
     }
   }
 );
@@ -98,9 +98,9 @@ export const remove = createAsyncThunk(
 
 export const uploadFile = createAsyncThunk(
   "auth/upload",
-  async (file: FormData, thunkAPI) => {
+  async ({image, token}: any, thunkAPI) => {
     try {
-      return await authService.uploadFile(file);
+      return await authService.uploadFile(image, token);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -108,7 +108,7 @@ export const uploadFile = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      return thunkAPI.rejectWithValue(message);
+        return thunkAPI.rejectWithValue(message);
     }
   }
 );

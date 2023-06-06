@@ -18,9 +18,11 @@ export const ProfilePage = () => {
   );
   const [userP, setUser] = useState<ApplicationUser | null>(null);
 
+  const token = user.authenticationData.token;
+
   useEffect(() => {
     const loadUser = async (userId: any) => {
-      const users = await getApplicationUserById(userId);
+      const users = await getApplicationUserById(userId, token);
       setUser(users);
     };
     loadUser(user.id);

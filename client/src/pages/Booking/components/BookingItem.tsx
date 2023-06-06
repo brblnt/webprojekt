@@ -22,15 +22,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { ApplicationUser } from "../../../types/ApplicationUser";
 import { Role } from "../../../types/enums/Role";
 import { BookingEditForm } from "../../Dashboard/components/BookingEditForm";
-import { remove, update } from "../../../features/booking/bookingSlice";
+import { getbookings, remove, update } from "../../../features/booking/bookingSlice";
 import { getAllBookings } from "../../../services/apiRequests";
 import { BookingUpdateForm } from "./BookingUpdateForm";
+import { ServiceType } from "../../../types/enums/ServiceType";
 
 export interface BookingItemProps {
   booking: Booking;
 }
 
 export const BookingItem: FC<BookingItemProps> = ({ booking }) => {
+
   return (
     <Stack
       spacing={{ base: 0, md: 4 }}
@@ -88,7 +90,10 @@ export const BookingItem: FC<BookingItemProps> = ({ booking }) => {
         </Box>
         <Box>
           <Text fontSize="lg" fontWeight="500">
-            RoomNumber: {booking.room.roomNumber}
+            {booking.room.roomDetail}
+          </Text>
+          <Text fontSize="lg" fontWeight="500">
+            {booking.accommodation.serviceTypes}
           </Text>
         </Box>
 
@@ -125,23 +130,29 @@ export const ButtonLayoutDesktop: FC<ButtonLayoutDesktopProps> = ({
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
 
+  const token = user.authenticationData.token
+
   const [bookings, setBookings] = useState<Booking[] | null>(null);
 
   const dispatch = useDispatch();
 
   const loadBookings = async () => {
-    const bookings = await getAllBookings();
+    const bookings = await getAllBookings(token);
     setBookings(bookings);
   };
 
   const handleUpdate = async (updatedBooking: Booking) => {
-    await dispatch(update(updatedBooking) as any);
+    dispatch(update({updatedBooking, token}) as any);
+    const bookUser = user
+    await dispatch(getbookings(bookUser) as any);
     loadBookings();
   };
 
-  const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleDelete = async () => {
     const bookingId = booking.id.toString();
-    await dispatch(remove(bookingId) as any);
+    dispatch(remove({bookingId, token}) as any);
+    const bookUser = user
+    await dispatch(getbookings(bookUser) as any);
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -188,6 +199,8 @@ export const ButtonLayoutMobile: FC<ButtonLayoutMobileProps> = ({
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
 
+  const token = user.authenticationData.token
+
   const [bookings, setBookings] = useState<Booking[] | null>(null);
 
   const dispatch = useDispatch();
@@ -198,8 +211,17 @@ export const ButtonLayoutMobile: FC<ButtonLayoutMobileProps> = ({
   };
 
   const handleUpdate = async (updatedBooking: Booking) => {
-    await dispatch(update(updatedBooking) as any);
+    dispatch(update({updatedBooking, token}) as any);
+    const bookUser = user
+    await dispatch(getbookings(bookUser) as any);
     loadBookings();
+  };
+
+  const handleDelete = async () => {
+    const bookingId = booking.id.toString();
+    dispatch(remove({bookingId, token}) as any);
+    const bookUser = user
+    await dispatch(getbookings(bookUser) as any);
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -226,6 +248,7 @@ export const ButtonLayoutMobile: FC<ButtonLayoutMobileProps> = ({
             colorScheme={"red"}
             boxShadow={"dark-lg"}
             mb={3}
+            onClick={handleDelete}
           >
             Cancel
           </Button>

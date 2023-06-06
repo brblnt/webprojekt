@@ -43,6 +43,7 @@ export const Settings = () => {
   const [lastName, setLastName] = useState(user.lastName);
   const [emailAddress, setEmailAddress] = useState(user.emailAddress);
   const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
+
   const navigate = useNavigate();
 
   const fileChange = (e: any) => {
@@ -119,10 +120,10 @@ export const Settings = () => {
     onOpen();
   };
 
-  const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    const userId = user.id.toString();
-    await dispatch(remove(userId) as any);
-    dispatch(logout() as any);
+  const handleDelete = async () => {
+    const userData = user
+    dispatch(remove(userData) as any);
+    dispatch(logout() as any)
     navigate("/login");
   };
 
