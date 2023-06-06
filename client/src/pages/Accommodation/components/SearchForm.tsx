@@ -9,6 +9,7 @@ import { AccommodationType } from "../../../types/enums/AccommodationType";
 import { ServiceType } from "../../../types/enums/ServiceType";
 import { getAllAccommodations } from "../../../services/apiRequests";
 import { Accommodation } from "../../../types/Accommodation";
+import { useSelector } from "react-redux";
 
 export const SearchForm: FC = () => {
   const [search, setSearch] = useState("");
@@ -23,9 +24,16 @@ export const SearchForm: FC = () => {
     null
   );
 
+  const { user } = useSelector((state: any) => {
+    return state.auth;
+  });
+
+  const token = user.authenticationData.token
+
   useEffect(() => {
     const loadAccommodation = async () => {
-      const accommodation = await getAllAccommodations();
+      console.log(token)
+      const accommodation = await getAllAccommodations(token);
       setAccommodation(accommodation);
     };
     loadAccommodation();

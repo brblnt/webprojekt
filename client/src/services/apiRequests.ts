@@ -5,8 +5,12 @@ import { Booking } from "../types/Booking";
 import { Room } from "../types/Room";
 import { apiClient } from "./apiClient";
 
-export const getAllAccommodations = async (): Promise<Accommodation[]> => {
-  return apiClient<Accommodation[]>(`/hotel-booking/accommodation`);
+export const getAllAccommodations = async (
+  token?: string
+): Promise<Accommodation[]> => {
+  return apiClient<Accommodation[]>(`/hotel-booking/accommodation`,
+  token
+  );
 };
 
 export const getAccommodationById = async (

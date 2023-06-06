@@ -49,8 +49,8 @@ export const HomePage = () => {
       navigate("/login");
       dispatch(logout() as any);
     } else if (user.authenticationData.role === Role.APPLICATION_USER){
-      const bookUserId = user.id
-      dispatch(getbookings(bookUserId) as any);
+      const bookUser = user
+      dispatch(getbookings(bookUser) as any);
     } else if (user.authenticationData.role === Role.ACCOMMODATION){
       const userData = user
       dispatch(getaccomms(userData) as any);

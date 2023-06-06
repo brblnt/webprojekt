@@ -18,11 +18,19 @@ const create = async(bookData: any) => {
   }
 };
 
-const getbook = async (bookUserId: any) => {
+const getbook = async (bookUser: any) => {
+
+  const token = bookUser.authenticationData.token
+  const bookUserId = bookUser.id
+
+  const config = {
+    headers: {
+      'AuthToken': token
+    },}
 
   try{
     console.log(bookUserId)
-    const response = await axios.get('/hotel-booking/booking/application-user/' + bookUserId)
+    const response = await axios.get('/hotel-booking/booking/application-user/' + bookUserId, config)
     return response.data
   }catch(error: any){
     const message = error.response.data.message || error.message || error.toString();

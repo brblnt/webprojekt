@@ -5,7 +5,7 @@ import { AccommodationItem } from "./AccommodationItem";
 import { getAllAccommodations } from "../../../services/apiRequests";
 import { Accommodation } from "../../../types/Accommodation";
 import { remove } from "../../../features/accommodation/accommodationSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export interface AccommodationItemProps {
   query: SearchQuery;
@@ -23,10 +23,15 @@ export const AccommodationList: FC<AccommodationItemProps> = ({ query }) => {
     dispatch(remove(accommodationId) as any);
   };
   
+  const { user } = useSelector((state: any) => {
+    return state.auth;
+  });
+
+  const token = user.authenticationData.token
 
   useEffect(() => {
     const loadAccommodation = async () => {
-      const accommodation = await getAllAccommodations();
+      const accommodation = await getAllAccommodations(token);
       if (query.sortBy === "default") {
         setAccommodation(accommodation);
       } else if (query.sortBy === "cheapest") {

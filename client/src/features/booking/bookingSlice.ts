@@ -29,9 +29,9 @@ export const createBook = createAsyncThunk(
 
 export const getbookings = createAsyncThunk(
   "books/get",
-  async (bookUserId: any, thunkAPI) => {
+  async (bookUser: any, thunkAPI) => {
     try {
-      return await bookingService.getbook(bookUserId);
+      return await bookingService.getbook(bookUser);
     } catch (error: any) {
       const message =
         (error.response &&
