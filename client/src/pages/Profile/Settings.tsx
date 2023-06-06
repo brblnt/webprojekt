@@ -33,10 +33,10 @@ export const Settings = () => {
   const { user } = useSelector(
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
+  const token = user.authenticationData.token;
 
   const dispatch = useDispatch();
   const [file, setFile] = useState<File>();
-  const [pic, setPic] = useState(user.authenticationData.imgPath);
   const [password, setPassword] = useState(user.authenticationData.password);
   const [userName, setUserName] = useState(user.authenticationData.userName);
   const [firstName, setFirstName] = useState(user.firstName);
@@ -79,13 +79,19 @@ export const Settings = () => {
       const fileName = Date.now() + "_" + file.name;
       const formData = new FormData();
       formData.append("file", file, fileName);
+      formData.append("token", token);
+      console.log(formData);
+
       if (user) {
         const updatedAuth = {
           ...user.authenticationData,
-          imgPath: user.authenticationData.imgPath ? [...user.authenticationData.imgPath, fileName] : [fileName],
+          imgPath: user.authenticationData.imgPath
+            ? [...user.authenticationData.imgPath, fileName]
+            : [fileName],
         };
         try {
           await dispatch(uploadFile(formData) as any);
+          console.log(formData);
           await dispatch(updateAuth(updatedAuth) as any);
         } catch (error) {
           console.log(error);
@@ -121,9 +127,9 @@ export const Settings = () => {
   };
 
   const handleDelete = async () => {
-    const userData = user
+    const userData = user;
     dispatch(remove(userData) as any);
-    dispatch(logout() as any)
+    dispatch(logout() as any);
     navigate("/login");
   };
 

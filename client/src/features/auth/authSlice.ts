@@ -98,9 +98,9 @@ export const remove = createAsyncThunk(
 
 export const uploadFile = createAsyncThunk(
   "auth/upload",
-  async ({image, token}: any, thunkAPI) => {
+  async (file: FormData, thunkAPI) => {
     try {
-      return await authService.uploadFile(image, token);
+      return await authService.uploadFile(file);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -108,7 +108,7 @@ export const uploadFile = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-        return thunkAPI.rejectWithValue(message);
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );

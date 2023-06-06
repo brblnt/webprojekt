@@ -21,7 +21,6 @@ public class ImageController extends HotelBookingController {
 
     private final ImageService imageService;
 
-    @PreAuthorize(GET_BY_ID_PERMISSION_ALL)
     @GetMapping("/{fileName}")
     public ResponseEntity<Resource> getImage(final @PathVariable("fileName") String fileName) throws NotFoundException, ImageIOException {
         final Resource resource = imageService.getImage(fileName);
@@ -31,7 +30,7 @@ public class ImageController extends HotelBookingController {
 
     @PreAuthorize(CREATE_PERMISSION_ALL)
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadImage(final @RequestParam("file") MultipartFile file) throws ImageIOException {
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) throws ImageIOException {
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body("File is required!");
         }

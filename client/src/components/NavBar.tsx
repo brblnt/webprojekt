@@ -259,13 +259,12 @@ const UserLoggedIn = () => {
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
 
-    const token = user.authenticationData.token
+  const token = user.authenticationData.token;
 
   const [userP, setUser] = useState<ApplicationUser | null>(null);
-    
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
 
   const onLogout = () => {
     dispatch(logout() as any);
@@ -275,7 +274,9 @@ const UserLoggedIn = () => {
   return (
     <Menu>
       <MenuButton>
-        <Avatar/>
+        <Avatar
+          src={`http://localhost:3010/hotel-booking/images/${user.authenticationData.imgPath}`}
+        ></Avatar>
       </MenuButton>
       <MenuList>
         <MenuItem as="a" href={`/profile/${user.authenticationData.userName}`}>
