@@ -21,6 +21,7 @@ public class AccommodationController extends HotelBookingController {
 
     private final AccommodationServiceImpl accommodationService;
 
+    @PreAuthorize(GET_ALL_PERMISSION_ALL)
     @GetMapping
     public ResponseEntity<List<AccommodationDTO>> getAll() {
         final List<AccommodationDTO> result = accommodationService.getAll();
@@ -36,6 +37,7 @@ public class AccommodationController extends HotelBookingController {
         return ResponseEntity.ok().body(result);
     }
 
+    @PreAuthorize(GET_BY_ID_PERMISSION_ALL)
     @GetMapping("/{id}")
     public ResponseEntity<AccommodationDTO> getById(final @PathVariable("id") Long id) throws NotFoundException {
         final AccommodationDTO result = accommodationService.getById(id);

@@ -95,6 +95,7 @@ export const AccommodationDetail = () => {
       const fileName = Date.now() + "_" + file.name;
       const formData = new FormData();
       formData.append("file", file, fileName);
+      formData.append("token", token);
       const updatedAccom: Accommodation = {
         ...accommodation,
         id: accommodation?.id as number,
@@ -112,8 +113,8 @@ export const AccommodationDetail = () => {
         rooms: accommodation?.rooms as Room[],
       };
       try {
-        await dispatch(uploadFile({formData, token}) as any);
-        await dispatch(update({updatedAccom, token}) as any);
+        await dispatch(uploadFile(formData) as any);
+        await dispatch(update(updatedAccom) as any);
       } catch (error) {
         console.log(error);
       }

@@ -1,5 +1,7 @@
 package nostra.cosa.hotelbooking.controller;
 
+import static nostra.cosa.hotelbooking.auth.constants.PermissionConstants.*;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import nostra.cosa.hotelbooking.service.exceptions.ImageIOException;
@@ -7,6 +9,7 @@ import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.impl.ImageService;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,8 +28,9 @@ public class ImageController extends HotelBookingController {
         return ResponseEntity.ok().body(resource);
     }
 
+    @PreAuthorize(CREATE_PERMISSION_ALL)
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadImage(final @RequestParam("file") MultipartFile file) throws ImageIOException {
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) throws ImageIOException {
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body("File is required!");
         }

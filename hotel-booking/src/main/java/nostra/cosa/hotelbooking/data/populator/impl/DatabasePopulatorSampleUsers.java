@@ -9,6 +9,7 @@ import nostra.cosa.hotelbooking.auth.constants.PermissionConstants;
 import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
 import nostra.cosa.hotelbooking.auth.dto.PermissionDTO;
 import nostra.cosa.hotelbooking.auth.dto.enums.Role;
+import nostra.cosa.hotelbooking.auth.service.HotelBookingAuthenticationService;
 import nostra.cosa.hotelbooking.data.entity.ApplicationUser;
 import nostra.cosa.hotelbooking.data.entity.AuthenticationData;
 import nostra.cosa.hotelbooking.data.populator.DatabasePopulator;
@@ -23,6 +24,8 @@ import org.springframework.stereotype.Component;
 public class DatabasePopulatorSampleUsers  implements DatabasePopulator {
 
   private final AuthenticationRepository authenticationRepository;
+
+  private final HotelBookingAuthenticationService authenticationService;
 
   private final ApplicationUserRepository applicationUserRepository;
 
@@ -58,5 +61,6 @@ public class DatabasePopulatorSampleUsers  implements DatabasePopulator {
             "",
             "");
     applicationUserRepository.save(sampleAdminApplicationUser);
+    authenticationService.saveUser(sampleAdminAuthData);
   }
 }

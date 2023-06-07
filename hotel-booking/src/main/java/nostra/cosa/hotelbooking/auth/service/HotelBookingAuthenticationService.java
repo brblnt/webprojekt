@@ -109,12 +109,16 @@ public class HotelBookingAuthenticationService {
         }
     }
 
-    private void saveUser(final AuthenticationDataDTO authData) {
+    public void saveUser(final AuthenticationDataDTO authData) {
         final AuthorizationDTO user = new AuthorizationDTO(authData, authData.getUserName(), authData.getPassword());
         userDetailsManager.createUser(user);
         final Authentication authentication = UsernamePasswordAuthenticationToken.authenticated(authData.getUserName(), authData.getPassword(), user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
         log.info("User: {} logged in", authData.getUserName());
+    }
+
+    public void deleteUser(final AuthenticationDataDTO authData) {
+        userDetailsManager.deleteUser(authData.getUserName());
     }
 
     private void clearSession(final HttpServletRequest request) {

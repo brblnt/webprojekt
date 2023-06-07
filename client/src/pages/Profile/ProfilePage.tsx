@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 import {
   Heading,
@@ -17,6 +18,7 @@ export const ProfilePage = () => {
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
   const [userP, setUser] = useState<ApplicationUser | null>(null);
+  const [pic, setPic] = useState("");
 
   const token = user.authenticationData.token;
 
@@ -26,7 +28,7 @@ export const ProfilePage = () => {
       setUser(users);
     };
     loadUser(user.id);
-  }, [user.id]);
+  }, [user.id, token]);
 
   return (
     <div>
@@ -40,7 +42,7 @@ export const ProfilePage = () => {
         >
           <Avatar
             size={"xl"}
-            src={`http://localhost:3010/hotel-booking/images/${userP?.authenticationData.imgPath && userP?.authenticationData.imgPath[0]}`}
+            src={`http://localhost:3010/hotel-booking/images/${userP?.authenticationData.imgPath}`}
             mb={4}
             pos={"relative"}
           />
