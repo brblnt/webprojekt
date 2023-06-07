@@ -4,13 +4,9 @@ import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import nostra.cosa.hotelbooking.auth.dto.AuthenticationDataDTO;
-import nostra.cosa.hotelbooking.data.entity.Accommodation;
+import nostra.cosa.hotelbooking.auth.service.HotelBookingAuthenticationService;
 import nostra.cosa.hotelbooking.data.entity.ApplicationUser;
-import nostra.cosa.hotelbooking.data.entity.AuthenticationData;
-import nostra.cosa.hotelbooking.data.repository.AccommodationRepository;
 import nostra.cosa.hotelbooking.data.repository.ApplicationUserRepository;
-import nostra.cosa.hotelbooking.service.dto.AccommodationDTO;
 import nostra.cosa.hotelbooking.service.dto.ApplicationUserDTO;
 import nostra.cosa.hotelbooking.service.exceptions.NotFoundException;
 import nostra.cosa.hotelbooking.service.service.BookingService;
@@ -31,6 +27,8 @@ public class ApplicationUserServiceImpl implements BookingService<ApplicationUse
   private final ApplicationUserUtilities applicationUserUtilities;
   private final Converter<ApplicationUser, ApplicationUserDTO> convertApplicationUserEntityToDTO;
   private final Converter<ApplicationUserDTO, ApplicationUser> convertApplicationUserDTOToEntity;
+  private final HotelBookingAuthenticationService hotelBookingAuthenticationService;
+  private final AuthenticationServiceImpl authenticationService;
 
   @Override
   public List<ApplicationUserDTO> getAll() {
@@ -72,8 +70,15 @@ public class ApplicationUserServiceImpl implements BookingService<ApplicationUse
   @Override
   public Boolean delete(Long id) {
     try {
+      ApplicationUserDTO applicationUserDTO = getById(id);
+      // We need these deletions, because if we delete the applicationUser, the token is deleted -> 403 code.
+      authenticationService.delete(id);
       applicationUserRepository.deleteById(id);
+      hotelBookingAuthenticationService.deleteUser(applicationUserDTO.getAuthenticationData());
       return true;
+    } catch (NotFoundException e) {
+      log.warn("Data not found for [DELETE]");
+      return false;
     } catch (IllegalArgumentException e) {
       log.warn("Data integrity violation [DELETE]");
       return false;

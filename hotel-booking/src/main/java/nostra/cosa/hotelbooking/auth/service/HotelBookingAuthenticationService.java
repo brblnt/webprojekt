@@ -117,6 +117,10 @@ public class HotelBookingAuthenticationService {
         log.info("User: {} logged in", authData.getUserName());
     }
 
+    public void deleteUser(final AuthenticationDataDTO authData) {
+        userDetailsManager.deleteUser(authData.getUserName());
+    }
+
     private void clearSession(final HttpServletRequest request) {
         final HttpSession session = request.getSession(false);
         SecurityContextHolder.clearContext();
