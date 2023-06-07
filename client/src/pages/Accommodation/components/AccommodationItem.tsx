@@ -50,7 +50,7 @@ export const AccommodationItem: FC<AccommodationItemProps> = ({
       pos="relative"
       mt={3}
     >
-      <Flex ml="0">
+      <Flex ml="0" maxWidth={"35%"}>
         <Image
           rounded="md"
           w={{ base: "100%", md: "45rem" }}

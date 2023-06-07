@@ -259,9 +259,20 @@ const UserLoggedIn = () => {
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
 
+
+
+
   const token = user.authenticationData.token;
 
   const [userP, setUser] = useState<ApplicationUser | null>(null);
+
+  useEffect(() => {
+    const loadUser = async (userId: any) => {
+      const users = await getApplicationUserById(userId, token);
+      setUser(users);
+    };
+    loadUser(user.id);
+  }, [user.id, token]);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -275,7 +286,7 @@ const UserLoggedIn = () => {
     <Menu>
       <MenuButton>
         <Avatar
-          src={`http://localhost:3010/hotel-booking/images/${user.authenticationData.imgPath}`}
+          src={`http://localhost:3010/hotel-booking/images/${userP?.authenticationData.imgPath && userP?.authenticationData.imgPath[0]}`}
         ></Avatar>
       </MenuButton>
       <MenuList>
