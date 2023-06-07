@@ -26,7 +26,7 @@ Mint egy badboy, rossz arcokkal lógok, minden megvan, minden pénzt elszórok..
 
 ## Egyéb
 
-![bmw](https://scontent-vie1-1.xx.fbcdn.net/v/t39.30808-6/241380572_3373818422844752_6191908046131295863_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=a26aad&_nc_ohc=YyxuwZPHIpgAX9Mi6O4&_nc_ht=scontent-vie1-1.xx&oh=00_AfAuKsqjBaToG21W3aAzYXRYrk27xw1aspFNy91ZRpniZQ&oe=646145E6)
+![bmw](https://scontent-vie1-1.xx.fbcdn.net/v/t39.30808-6/241380572_3373818422844752_6191908046131295863_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=a26aad&_nc_ohc=DDyWBLxi2TYAX9V7dM2&_nc_ht=scontent-vie1-1.xx&oh=00_AfBqmufDGCBEiyr239Q5BWl2fO5iHwPv82-acgT0tuOBiw&oe=6484DE66)
 
 
 ![alekosz](https://scontent-vie1-1.xx.fbcdn.net/v/t1.15752-9/345700744_791905042358482_2694988470567581526_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=ae9488&_nc_ohc=Q8SyDmoE9v4AX9fXrGW&_nc_ht=scontent-vie1-1.xx&oh=03_AdRhiYyVStwI-Tj_BuQt43kEab7z9Zuo7BCumc03BG8FlQ&oe=64830A56)
