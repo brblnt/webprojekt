@@ -28,7 +28,7 @@ import org.springframework.security.web.authentication.Http403ForbiddenEntryPoin
 @RequiredArgsConstructor
 public class ApplicationSecurityConfig {
 
-    private static final String[] URL_WHITELIST = {"/user/login", "/user/register", "hotel-booking/room", "hotel-booking/accommodation"};
+    private static final String[] URL_WHITELIST = {"/user/login", "/user/register", "hotel-booking/room", "hotel-booking/accommodation", "/hotel-booking/images/**"};
 
     @Value("${authentication.token.name}")
     private String tokenName;

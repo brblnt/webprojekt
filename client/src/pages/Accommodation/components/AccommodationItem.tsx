@@ -13,7 +13,6 @@ import {
   ModalHeader,
   ModalBody,
   ModalCloseButton,
-  useDisclosure,
   useColorModeValue,
   Center,
 } from "@chakra-ui/react";
@@ -143,19 +142,6 @@ export const ButtonLayoutDesktop: FC<ButtonLayoutDesktopProps> = ({
 
   const dispatch = useDispatch();
 
-  const accommodationId = accommodation.id.toString()
-
-/*  const { isOpen, onOpen, onClose } = useDisclosure();
-
-
-  const openModal = () => {
-    onOpen();
-  };
-
-  const openUpdateModal = () => {
-    onOpen();
-  };
-*/
   const [isAddRoomModalOpen, setAddRoomModalOpen] = useState(false);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
 

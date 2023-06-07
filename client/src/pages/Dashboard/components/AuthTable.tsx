@@ -69,11 +69,6 @@ const AuthTableRow = ({
         <Td>{formatBooleanValue(auth.accountCredentialsNonExpired)}</Td>
         <Td>{formatBooleanValue(auth.accountEnabled)}</Td>
         <Td>
-          <Button colorScheme={"red"} onClick={handleDelete}>
-            <DeleteIcon />
-          </Button>
-        </Td>
-        <Td>
           <Button onClick={handleEdit}>
             <EditIcon />
           </Button>
@@ -141,7 +136,6 @@ export const AuthTable = () => {
               <Th>Non Locked</Th>
               <Th>Credentials Non Expired</Th>
               <Th>Enabled</Th>
-              <Th>DELETE</Th>
               <Th>UPDATE</Th>
             </Tr>
           </Thead>
@@ -167,7 +161,6 @@ export const AuthTable = () => {
               <Th>Non Locked</Th>
               <Th>Credentials Non Expired</Th>
               <Th>Enabled</Th>
-              <Th>DELETE</Th>
               <Th>UPDATE</Th>
             </Tr>
           </Tfoot>
