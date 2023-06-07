@@ -27,9 +27,11 @@ export const BookingCreatePage = () => {
     null
   );
 
+  const token = user.authenticationData.token
+
   useEffect(() => {
     const loadAccommodation = async (accommodation_id: number) => {
-      const accommodation = await getAccommodationById(accommodation_id);
+      const accommodation = await getAccommodationById(accommodation_id, token);
       setAccommodation(accommodation);
     };
     loadAccommodation(Number(accommodationId));
@@ -63,7 +65,8 @@ export const BookingCreatePage = () => {
     e.preventDefault();
     const bookData ={
       user: { 
-        id: user.id
+        id: user.id,
+        token: user.authenticationData.token
       },
       accommodation: {
         id: accommodationId
@@ -98,7 +101,7 @@ export const BookingCreatePage = () => {
     <>
       <FormControl id="bookingDateStart">
         <FormLabel>Choose Room</FormLabel>
-        <Select id="sortBy" focusBorderColor="pink.300"
+        <Select placeholder="Choose Room" id="sortBy" focusBorderColor="pink.300"
           onChange={onChange}
           name="roomId"
           value={roomId}

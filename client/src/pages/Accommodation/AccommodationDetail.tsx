@@ -54,12 +54,14 @@ export const AccommodationDetail = () => {
     (state: { auth: { user: ApplicationUser } }) => state.auth
   );
 
+  const token = user.authenticationData.token
+
   useEffect(() => {
-    const loadAccommodation = async (accommodation_id: number) => {
-      const accommodation = await getAccommodationById(accommodation_id);
+    const loadAccommodation = async (accommodation_id: number, token: any) => {
+      const accommodation = await getAccommodationById(accommodation_id, token);
       setAccommodation(accommodation);
     };
-    loadAccommodation(Number(accommodationId));
+    loadAccommodation(Number(accommodationId),token);
   }, [accommodationId]);
 
   const activeRoomCount =
@@ -93,6 +95,7 @@ export const AccommodationDetail = () => {
       const fileName = Date.now() + "_" + file.name;
       const formData = new FormData();
       formData.append("file", file, fileName);
+      formData.append("token", token);
       const updatedAccom: Accommodation = {
         ...accommodation,
         id: accommodation?.id as number,
@@ -130,20 +133,21 @@ export const AccommodationDetail = () => {
   const [rooms, setRooms] = useState<Room[] | null>(null);
 
   const loadRooms = async () => {
-    const rooms = await getAllRooms();
+    const rooms = await getAllRooms(token);
     setRooms(rooms);
   };
 
   const isRoomModalOpen = (roomId: number) => roomModals[roomId] || false;
 
-  const handleUpdate = async (updatedRoom: Room) => {
-    await dispatch(updateRoom(updatedRoom) as any);
+  const handleUpdate = async (updatedRoom: any) => {
+    console.log(updatedRoom)
+    await dispatch(updateRoom({updatedRoom, accommodation}) as any);
     loadRooms();
   };
 
   const handleDelete = async (roomid: number) => {
     const roomId = roomid.toString();
-    await dispatch(removeRoom(roomId) as any);
+    await dispatch(removeRoom({roomId, accommodation}) as any);
     //onDelete();
   };
 

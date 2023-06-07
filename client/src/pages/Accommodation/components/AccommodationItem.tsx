@@ -23,7 +23,7 @@ import { RoomCreatePage } from "../../Room/RoomCreatePage";
 import { useDispatch, useSelector } from "react-redux";
 import { ApplicationUser } from "../../../types/ApplicationUser";
 import { Role } from "../../../types/enums/Role";
-import { remove, update } from "../../../features/accommodation/accommodationSlice";
+import { getaccomms, remove, update } from "../../../features/accommodation/accommodationSlice";
 import { AccommodationUpdatePage } from "./AccommodationUpdatePage";
 
 export interface AccommodationItemProps {
@@ -176,8 +176,16 @@ export const ButtonLayoutDesktop: FC<ButtonLayoutDesktopProps> = ({
     setUpdateModalOpen(false);
   };
 
+  const userData = user
+
   const handleUpdate = async (updatedAccommodation: Accommodation) => {
     await dispatch(update(updatedAccommodation) as any);
+    await dispatch(getaccomms(userData) as any)
+  };
+
+  const handleDelete = async () => {
+    await dispatch(remove(accommodation) as any)
+    await dispatch(getaccomms(userData) as any)
   };
 
   return (
@@ -195,7 +203,7 @@ export const ButtonLayoutDesktop: FC<ButtonLayoutDesktopProps> = ({
             w={"256px"}
             colorScheme={"red"}
             boxShadow={"dark-lg"}
-            onClick={() => dispatch(remove(accommodationId) as any)}
+            onClick={handleDelete}
           >
             Delete
           </Button>

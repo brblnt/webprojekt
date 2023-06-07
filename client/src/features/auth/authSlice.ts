@@ -35,7 +35,7 @@ export const register = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      return thunkAPI.rejectWithValue(message);
+      return console.log(message);
     }
   }
 );
@@ -53,7 +53,7 @@ export const login = createAsyncThunk(
           error.response.data.message) ||
         error.message ||
         error.toString();
-      return thunkAPI.rejectWithValue(message);
+        return console.log(message);
     }
   }
 );

@@ -13,4 +13,5 @@ export type AuthenticationData = {
   accountCredentialsNonExpired: boolean;
   accountEnabled: boolean;
   // permission: Permission;
+  token: string;
 }

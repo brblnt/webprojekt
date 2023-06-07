@@ -74,6 +74,7 @@ export const AccommodationCreatePage = () => {
       id: "",
       authenticationData: {
         id: user.authenticationData.id,
+        token: user.authenticationData.token
       },
       accommodationName,
       address: {

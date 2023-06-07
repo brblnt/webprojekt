@@ -30,7 +30,7 @@ public class ImageController extends HotelBookingController {
 
     @PreAuthorize(CREATE_PERMISSION_ALL)
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadImage(final @RequestParam("file") MultipartFile file) throws ImageIOException {
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) throws ImageIOException {
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body("File is required!");
         }
