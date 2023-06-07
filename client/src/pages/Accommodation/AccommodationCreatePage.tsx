@@ -20,7 +20,6 @@ import {  useDispatch, useSelector } from "react-redux";
 
 export const AccommodationCreatePage = () => {
   const dispatch = useDispatch();
-
   const { user } = useSelector((state: any) => {
     return state.auth;
   });

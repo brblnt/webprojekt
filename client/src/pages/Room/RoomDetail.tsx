@@ -1,28 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import {
-  Box,
-  Container,
-  Stack,
-  Text,
-  Image,
-  Flex,
-  Heading,
   SimpleGrid,
-  StackDivider,
   List,
   ListItem,
-  VStack,
-  Button,
   Center,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  Input,
 } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import { Room } from "../../types/Room";

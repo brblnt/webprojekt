@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { Accommodation } from "../../types/Accommodation";
 import accommodationService from "./accommodationService";
-
 const initialState = {
   accommodations: [],
   isError: false,

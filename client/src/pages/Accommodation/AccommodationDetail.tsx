@@ -333,7 +333,7 @@ export const AccommodationDetail = () => {
                 <VStack w="100%">
                   {accommodation.authenticationData.id ===
                   user.authenticationData.id ? (
-                    <Button onClick={openUpdateModal}>Update</Button>
+                    <Button onClick={openUpdateModal}>Upload Picture</Button>
                   ) : (
                     <Button
                       bg="pink.400"
