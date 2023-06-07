@@ -47,9 +47,9 @@ export const getaccomms = createAsyncThunk(
 
 export const remove = createAsyncThunk(
   "accommodations/remove",
-  async (accommodation: any, thunkAPI) => {
+  async (accommodationData: any, thunkAPI) => {
     try {
-      return await accommodationService.remove(accommodation);
+      return await accommodationService.remove(accommodationData);
     } catch (error: any) {
       const message =
         (error.response &&

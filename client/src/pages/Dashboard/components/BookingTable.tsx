@@ -24,8 +24,9 @@ import { getAllBookings } from "../../../services/apiRequests";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { Booking } from "../../../types/Booking";
 import { BookingEditForm } from "./BookingEditForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { remove, update } from "../../../features/booking/bookingSlice";
+import { ApplicationUser } from "../../../types/ApplicationUser";
 
 export const BookingTableRow = ({
   booking,
@@ -47,11 +48,18 @@ export const BookingTableRow = ({
     return value ? "True" : "False";
   };
 
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
+
+  const token = user.authenticationData.token
+
+
   const dispatch = useDispatch();
 
   const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
     const bookingId = booking.id.toString();
-    await dispatch(remove(bookingId) as any);
+    await dispatch(remove({bookingId, token}) as any);
     onDelete();
   };
 
@@ -102,14 +110,20 @@ export const BookingTable = () => {
 
   const dispatch = useDispatch();
 
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
+
+  const token = user.authenticationData.token
+
 
   const loadBookings = async () => {
-    const bookings = await getAllBookings();
+    const bookings = await getAllBookings(token);
     setBookings(bookings);
   };
 
   const handleUpdate = async (updatedBooking: Booking) => {
-    await dispatch(update(updatedBooking) as any);
+    await dispatch(update({updatedBooking, token}) as any);
     loadBookings();
   };
 

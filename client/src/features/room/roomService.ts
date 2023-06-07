@@ -2,9 +2,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify';
 
 // Delete room by ID
-const remove = async (roomId: string, accommodation: any) => {
-
-  const token = accommodation.authenticationData.token
+const remove = async (roomId: string, token: any) => {
 
   const config = {
     headers: {
@@ -25,11 +23,8 @@ const remove = async (roomId: string, accommodation: any) => {
 
 
 // Update room by ID
-const update = async (room: any, accommodation: any) => {
+const update = async (room: any, token: any) => {
 
-  const token = accommodation.authenticationData.token
-
-  console.log(room)
 
   const config = {
     headers: {

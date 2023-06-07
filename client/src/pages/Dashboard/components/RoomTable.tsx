@@ -24,8 +24,9 @@ import { getAllRooms } from "../../../services/apiRequests";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { Room } from "../../../types/Room";
 import { RoomEditForm } from "./RoomEditForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { removeRoom, updateRoom } from "../../../features/room/roomSlice";
+import { ApplicationUser } from "../../../types/ApplicationUser";
 
 export const RoomTableRow = ({
   room,
@@ -48,9 +49,15 @@ export const RoomTableRow = ({
 
   const dispatch = useDispatch();
 
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
+
+  const token = user.authenticationData.token
+
   const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
     const roomId = room.id.toString();
-    await dispatch(removeRoom(roomId) as any);
+    await dispatch(removeRoom({roomId, token}) as any);
     onDelete();
   };
 
@@ -96,14 +103,20 @@ export const RoomTableRow = ({
 export const RoomTable = () => {
   const [rooms, setRooms] = useState<Room[] | null>(null);
 
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
+
+  const token = user.authenticationData.token
+
   const loadRooms = async () => {
-    const rooms = await getAllRooms();
+    const rooms = await getAllRooms(token);
     setRooms(rooms);
   };
   const dispatch = useDispatch();
 
   const handleUpdate = async (updatedRoom: Room) => {
-    await dispatch(updateRoom(updatedRoom) as any);
+    await dispatch(updateRoom({updatedRoom, token}) as any);
     loadRooms();
   };
 

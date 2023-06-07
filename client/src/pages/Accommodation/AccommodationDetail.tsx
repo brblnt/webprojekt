@@ -141,13 +141,13 @@ export const AccommodationDetail = () => {
 
   const handleUpdate = async (updatedRoom: any) => {
     console.log(updatedRoom)
-    await dispatch(updateRoom({updatedRoom, accommodation}) as any);
+    await dispatch(updateRoom({updatedRoom, token}) as any);
     loadRooms();
   };
 
   const handleDelete = async (roomid: number) => {
     const roomId = roomid.toString();
-    await dispatch(removeRoom({roomId, accommodation}) as any);
+    await dispatch(removeRoom({roomId, token}) as any);
     //onDelete();
   };
 

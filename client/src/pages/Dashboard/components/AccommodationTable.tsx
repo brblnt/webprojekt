@@ -24,8 +24,9 @@ import { getAllAccommodations } from "../../../services/apiRequests";
 import { Accommodation } from "../../../types/Accommodation";
 import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
 import { AccommodationEditForm } from "./AccommodationEditForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { remove, update } from "../../../features/accommodation/accommodationSlice";
+import { ApplicationUser } from "../../../types/ApplicationUser";
 
 export const AccommodationTableRow = ({
   accommodation,
@@ -45,8 +46,8 @@ export const AccommodationTableRow = ({
   const dispatch = useDispatch();
 
   const handleDelete = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    const accommodationId = accommodation.id.toString();
-    await dispatch(remove(accommodationId) as any);
+    const accommodationData = accommodation
+    await dispatch(remove(accommodationData) as any);
     onDelete();
   };
 
@@ -96,9 +97,15 @@ export const AccommodationTable = () => {
   );
   const dispatch = useDispatch();
 
+  const { user } = useSelector(
+    (state: { auth: { user: ApplicationUser } }) => state.auth
+  );
+
+  const token = user.authenticationData.token
+
 
   const loadAccommodation = async () => {
-    const accommodations = await getAllAccommodations();
+    const accommodations = await getAllAccommodations(token);
     setAccommodations(accommodations);
   };
 

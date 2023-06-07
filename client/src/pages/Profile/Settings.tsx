@@ -35,6 +35,8 @@ export const Settings = () => {
   );
   const token = user.authenticationData.token;
 
+  const token = user.authenticationData.token
+
   const dispatch = useDispatch();
   const [file, setFile] = useState<File>();
   const [password, setPassword] = useState(user.authenticationData.password);
@@ -127,9 +129,9 @@ export const Settings = () => {
   };
 
   const handleDelete = async () => {
-    const userData = user;
-    dispatch(remove(userData) as any);
-    dispatch(logout() as any);
+    const userData = user
+    dispatch(remove({userData, token}) as any);
+    dispatch(logout() as any)
     navigate("/login");
   };
 

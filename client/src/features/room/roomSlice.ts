@@ -12,9 +12,9 @@ const initialState = {
 
 export const removeRoom = createAsyncThunk(
   "room/remove",
-  async ({roomId,  accommodation}: any) => {
+  async ({roomId,  token}: any) => {
     try {
-      return await roomService.remove(roomId, accommodation);
+      return await roomService.remove(roomId, token);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -29,11 +29,11 @@ export const removeRoom = createAsyncThunk(
 
 export const updateRoom = createAsyncThunk(
   "room/update",
-  async ({updatedRoom, accommodation}: any) => {
+  async ({updatedRoom, token}: any) => {
     try {
       console.log(updatedRoom)
-      console.log(accommodation)
-      return await roomService.update(updatedRoom, accommodation);
+      console.log(token)
+      return await roomService.update(updatedRoom, token);
     } catch (error: any) {
       const message =
         (error.response &&
